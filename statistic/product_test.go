@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"net/url"
+	"time"
 
 	. "github.com/Shop2market/go-client/statistic"
 	. "github.com/onsi/ginkgo"
@@ -16,10 +17,13 @@ var _ = Describe("Product statistics", func() {
 	Username = "username"
 	Password = "password"
 	Context("Request for daily statistics", func() {
+		startDate := time.Date(2015, 1, 1, 0, 0, 0, 0, time.UTC)
+		endDate := time.Date(2015, 1, 31, 0, 0, 0, 0, time.UTC)
+
 		It("calls the statitics api with correct params", func() {
 			server := NewMockedServer("fixtures/shop_code_statistics_response.json")
 			Endpoint = server.URL
-			FindDailyProduct(1, 2, "20150101", "20150131", []string{"a001", "b002", "c003"})
+			FindDailyProduct(1, 2, startDate, endDate, []string{"a001", "b002", "c003"})
 			Expect(server.Requests).To(HaveLen(1))
 
 			expectedUrl, _ := url.ParseRequestURI("/api/v1/shops/1/publishers/2/shop_products/statistics.json?shop_codes%5B%5D=a001&shop_codes%5B%5D=b002&shop_codes%5B%5D=c003&time_id=20150101%3A20150131")
@@ -34,7 +38,7 @@ var _ = Describe("Product statistics", func() {
 		It("parses response", func() {
 			server := NewMockedServer("fixtures/shop_code_statistics_response.json")
 			Endpoint = server.URL
-			stats, err := FindDailyProduct(1, 2, "20150101", "20150131", []string{"a001", "b002", "c003"})
+			stats, err := FindDailyProduct(1, 2, startDate, endDate, []string{"a001", "b002", "c003"})
 			Expect(err).NotTo(HaveOccurred())
 			Expect(stats).To(HaveLen(2))
 			Expect(stats[0].Id).To(Equal(98769059))
@@ -44,7 +48,7 @@ var _ = Describe("Product statistics", func() {
 		It("returns error if json broken", func() {
 			server := NewMockedServer("fixtures/broken_stats_response.json")
 			Endpoint = server.URL
-			_, err := FindDailyProduct(1, 2, "20150101", "20150131", []string{"a001", "b002", "c003"})
+			_, err := FindDailyProduct(1, 2, startDate, endDate, []string{"a001", "b002", "c003"})
 			Expect(err).To(HaveOccurred())
 		})
 	})

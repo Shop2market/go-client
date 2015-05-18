@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"time"
 )
 
 var Endpoint string
@@ -82,7 +83,7 @@ type DailyStatistic struct {
 	TimeId                  string  `json:"time_id"`
 }
 
-func FindDailyProduct(shopId, publisherId int, startDate, stopDate string, shopCodes []string) ([]*StatisticProduct, error) {
+func FindDailyProduct(shopId, publisherId int, startDate, stopDate time.Time, shopCodes []string) ([]*StatisticProduct, error) {
 	url, err := getStatsUrl(shopId, publisherId, startDate, stopDate, shopCodes)
 	if err != nil {
 		return nil, err
@@ -106,13 +107,13 @@ func FindDailyProduct(shopId, publisherId int, startDate, stopDate string, shopC
 	return stats, nil
 }
 
-func getStatsUrl(shopId, publisherId int, startDate, stopDate string, shopCodes []string) (string, error) {
+func getStatsUrl(shopId, publisherId int, startDate, stopDate time.Time, shopCodes []string) (string, error) {
 	statsUrl, err := url.Parse(fmt.Sprintf("%s/api/v1/shops/%d/publishers/%d/shop_products/statistics.json", Endpoint, shopId, publisherId))
 	if err != nil {
 		return "", err
 	}
 	query := statsUrl.Query()
-	query.Add("time_id", fmt.Sprintf("%s:%s", startDate, stopDate))
+	query.Add("time_id", fmt.Sprintf("%s:%s", DailyTimeId(startDate), DailyTimeId(stopDate)))
 
 	for _, shopCode := range shopCodes {
 		query.Add("shop_codes[]", shopCode)
