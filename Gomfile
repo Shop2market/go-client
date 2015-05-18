@@ -1,0 +1,2 @@
+gom 'github.com/onsi/ginkgo/ginkgo', :tag => 'v1.1.0'
+gom 'github.com/onsi/gomega', :tag => 'v1.0'
