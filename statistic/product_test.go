@@ -5,12 +5,12 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
-	"net/url"
 	"time"
 
 	. "github.com/Shop2market/go-client/statistic"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"github.com/onsi/gomega/ghttp"
 )
 
 var _ = Describe("Product statistics", func() {
@@ -21,23 +21,29 @@ var _ = Describe("Product statistics", func() {
 		endDate := time.Date(2015, 1, 31, 0, 0, 0, 0, time.UTC)
 
 		It("calls the statitics api with correct params", func() {
-			server := NewMockedServer("fixtures/shop_code_statistics_response.json")
-			Endpoint = server.URL
+			server := ghttp.NewServer()
+			server.AppendHandlers(
+				ghttp.CombineHandlers(
+					ghttp.VerifyRequest("GET", "/api/v1/shops/1/publishers/2/shop_products/statistics.json", "shop_codes%5B%5D=a001&shop_codes%5B%5D=b002&shop_codes%5B%5D=c003&time_id=20150101%3A20150131"),
+					ghttp.VerifyBasicAuth(Username, Password),
+					ghttp.RespondWith(http.StatusOK, "[]"),
+				),
+			)
+
+			Endpoint = server.URL()
 			FindDailyProduct(1, 2, startDate, endDate, []string{"a001", "b002", "c003"})
-			Expect(server.Requests).To(HaveLen(1))
-
-			expectedUrl, _ := url.ParseRequestURI("/api/v1/shops/1/publishers/2/shop_products/statistics.json?shop_codes%5B%5D=a001&shop_codes%5B%5D=b002&shop_codes%5B%5D=c003&time_id=20150101%3A20150131")
-
-			Expect(expectedUrl).To(Equal(server.Requests[0].URL))
-
-			username, password, _ := server.Requests[0].BasicAuth()
-			Expect(username).To(Equal(Username))
-			Expect(password).To(Equal(Password))
 		})
 
 		It("parses response", func() {
-			server := NewMockedServer("fixtures/shop_code_statistics_response.json")
-			Endpoint = server.URL
+			content, err := ioutil.ReadFile("fixtures/shop_code_statistics_response.json")
+			Expect(err).NotTo(HaveOccurred())
+
+			server := ghttp.NewServer()
+			server.AppendHandlers(
+				ghttp.RespondWith(http.StatusOK, string(content)),
+			)
+			Endpoint = server.URL()
+
 			stats, err := FindDailyProduct(1, 2, startDate, endDate, []string{"a001", "b002", "c003"})
 			Expect(err).NotTo(HaveOccurred())
 			Expect(stats).To(HaveLen(2))
@@ -46,9 +52,16 @@ var _ = Describe("Product statistics", func() {
 		})
 
 		It("returns error if json broken", func() {
-			server := NewMockedServer("fixtures/broken_stats_response.json")
-			Endpoint = server.URL
-			_, err := FindDailyProduct(1, 2, startDate, endDate, []string{"a001", "b002", "c003"})
+			content, err := ioutil.ReadFile("fixtures/broken_stats_response.json")
+			Expect(err).NotTo(HaveOccurred())
+
+			server := ghttp.NewServer()
+			server.AppendHandlers(
+				ghttp.RespondWith(http.StatusOK, string(content)),
+			)
+
+			Endpoint = server.URL()
+			_, err = FindDailyProduct(1, 2, startDate, endDate, []string{"a001", "b002", "c003"})
 			Expect(err).To(HaveOccurred())
 		})
 	})
