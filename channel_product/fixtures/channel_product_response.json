@@ -1,0 +1,18 @@
+[
+   {
+      "product_id":{
+         "shop_code":"151656",
+         "shop_id":1,
+         "publisher_id":5
+      },
+      "active":true
+   },
+   {
+      "product_id":{
+         "shop_code":"149350",
+         "shop_id":1,
+         "publisher_id":5
+      },
+      "active":true
+   }
+]
