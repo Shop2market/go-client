@@ -40,6 +40,86 @@ var _ = Describe("Store", func() {
 	})
 
 	Context("requests channel products", func() {
+		Context("parameters construction", func() {
+			It("supports enabled", func() {
+				server := ghttp.NewServer()
+				server.AppendHandlers(
+					ghttp.CombineHandlers(
+						ghttp.VerifyRequest("GET", "/shops/1/publishers/5/products", "enabled=true"),
+						ghttp.RespondWith(http.StatusOK, "[]"),
+					),
+				)
+				Endpoint = server.URL()
+
+				enabled := true
+				Find(&ProductsQuery{ShopId: 1, PublisherId: 5, Enabled: &enabled})
+			})
+			It("supports enabled, false", func() {
+				server := ghttp.NewServer()
+				server.AppendHandlers(
+					ghttp.CombineHandlers(
+						ghttp.VerifyRequest("GET", "/shops/1/publishers/5/products", "enabled=false"),
+						ghttp.RespondWith(http.StatusOK, "[]"),
+					),
+				)
+				Endpoint = server.URL()
+
+				enabled := false
+				Find(&ProductsQuery{ShopId: 1, PublisherId: 5, Enabled: &enabled})
+			})
+			It("supports limit", func() {
+				server := ghttp.NewServer()
+				server.AppendHandlers(
+					ghttp.CombineHandlers(
+						ghttp.VerifyRequest("GET", "/shops/1/publishers/5/products", "limit=1"),
+						ghttp.RespondWith(http.StatusOK, "[]"),
+					),
+				)
+				Endpoint = server.URL()
+
+				limit := 1
+				Find(&ProductsQuery{ShopId: 1, PublisherId: 5, Limit: &limit})
+			})
+			It("supports skip", func() {
+				server := ghttp.NewServer()
+				server.AppendHandlers(
+					ghttp.CombineHandlers(
+						ghttp.VerifyRequest("GET", "/shops/1/publishers/5/products", "skip=1"),
+						ghttp.RespondWith(http.StatusOK, "[]"),
+					),
+				)
+				Endpoint = server.URL()
+
+				skip := 1
+				Find(&ProductsQuery{ShopId: 1, PublisherId: 5, Skip: &skip})
+			})
+			It("supports manually_deactivated", func() {
+				server := ghttp.NewServer()
+				server.AppendHandlers(
+					ghttp.CombineHandlers(
+						ghttp.VerifyRequest("GET", "/shops/1/publishers/5/products", "manually_deactivated=true"),
+						ghttp.RespondWith(http.StatusOK, "[]"),
+					),
+				)
+				Endpoint = server.URL()
+
+				manuallyDeactivated := true
+				Find(&ProductsQuery{ShopId: 1, PublisherId: 5, ManuallyDeactivated: &manuallyDeactivated})
+			})
+			It("supports manually_deactivated, false", func() {
+				server := ghttp.NewServer()
+				server.AppendHandlers(
+					ghttp.CombineHandlers(
+						ghttp.VerifyRequest("GET", "/shops/1/publishers/5/products", "manually_deactivated=false"),
+						ghttp.RespondWith(http.StatusOK, "[]"),
+					),
+				)
+				Endpoint = server.URL()
+
+				manuallyDeactivated := false
+				Find(&ProductsQuery{ShopId: 1, PublisherId: 5, ManuallyDeactivated: &manuallyDeactivated})
+			})
+		})
 		It("sends correct parameters", func() {
 			server := ghttp.NewServer()
 			server.AppendHandlers(
@@ -50,7 +130,10 @@ var _ = Describe("Store", func() {
 			)
 			Endpoint = server.URL()
 
-			Find(1, 5, 0, 10)
+			enabled := true
+			limit := 10
+			skip := 0
+			Find(&ProductsQuery{ShopId: 1, PublisherId: 5, Enabled: &enabled, Limit: &limit, Skip: &skip})
 		})
 
 		It("deserializes response", func() {
@@ -64,7 +147,7 @@ var _ = Describe("Store", func() {
 
 			Endpoint = server.URL()
 
-			Expect(Find(1, 5, 0, 10)).To(Equal([]*Product{
+			Expect(Find(&ProductsQuery{ShopId: 1, PublisherId: 5})).To(Equal([]*Product{
 				&Product{
 					Id: &ProductId{
 						ShopCode:    "151656",

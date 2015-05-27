@@ -20,17 +20,49 @@ type ProductId struct {
 	PublisherId int    `json:"publisher_id"`
 }
 
-func Find(shopId, publisherId, skip, limit int) ([]*Product, error) {
-	productUrl, err := url.Parse(fmt.Sprintf("%s/shops/%d/publishers/%d/products", Endpoint, shopId, publisherId))
+type ProductsQuery struct {
+	ShopId              int
+	PublisherId         int
+	Skip                *int
+	Limit               *int
+	Enabled             *bool
+	ManuallyDeactivated *bool
+}
+
+func (productsQuery *ProductsQuery) RawQuery() string {
+	query := url.Values{}
+	if productsQuery.Enabled != nil {
+		if *productsQuery.Enabled {
+			query.Add("enabled", "true")
+		} else {
+			query.Add("enabled", "false")
+		}
+	}
+
+	if productsQuery.ManuallyDeactivated != nil {
+		if *productsQuery.ManuallyDeactivated {
+			query.Add("manually_deactivated", "true")
+		} else {
+			query.Add("manually_deactivated", "false")
+		}
+	}
+
+	if productsQuery.Limit != nil {
+		query.Add("limit", strconv.Itoa(*productsQuery.Limit))
+	}
+	if productsQuery.Skip != nil {
+		query.Add("skip", strconv.Itoa(*productsQuery.Skip))
+	}
+
+	return query.Encode()
+}
+
+func Find(productsQuery *ProductsQuery) ([]*Product, error) {
+	productUrl, err := url.Parse(fmt.Sprintf("%s/shops/%d/publishers/%d/products", Endpoint, productsQuery.ShopId, productsQuery.PublisherId))
 	if err != nil {
 		return nil, err
 	}
-	query := productUrl.Query()
-	query.Add("enabled", "true")
-	query.Add("limit", strconv.Itoa(limit))
-	query.Add("skip", strconv.Itoa(skip))
-
-	productUrl.RawQuery = query.Encode()
+	productUrl.RawQuery = productsQuery.RawQuery()
 
 	response, err := http.Get(productUrl.String())
 	if err != nil {
