@@ -106,6 +106,19 @@ var _ = Describe("Store", func() {
 				manuallyDeactivated := true
 				Find(&ProductsQuery{ShopId: 1, PublisherId: 5, ManuallyDeactivated: &manuallyDeactivated})
 			})
+			It("supports shop_codes", func() {
+				server := ghttp.NewServer()
+				server.AppendHandlers(
+					ghttp.CombineHandlers(
+						ghttp.VerifyRequest("GET", "/shops/1/publishers/5/products", "shop_codes%5B%5D=ED1&shop_codes%5B%5D=ED2"),
+						ghttp.RespondWith(http.StatusOK, "[]"),
+					),
+				)
+				Endpoint = server.URL()
+
+				shopCodes := []string{"ED1", "ED2"}
+				Find(&ProductsQuery{ShopId: 1, PublisherId: 5, ShopCodes: &shopCodes})
+			})
 			It("supports manually_deactivated, false", func() {
 				server := ghttp.NewServer()
 				server.AppendHandlers(

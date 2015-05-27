@@ -27,6 +27,7 @@ type ProductsQuery struct {
 	Limit               *int
 	Enabled             *bool
 	ManuallyDeactivated *bool
+	ShopCodes           *[]string
 }
 
 func (productsQuery *ProductsQuery) RawQuery() string {
@@ -44,6 +45,11 @@ func (productsQuery *ProductsQuery) RawQuery() string {
 			query.Add("manually_deactivated", "true")
 		} else {
 			query.Add("manually_deactivated", "false")
+		}
+	}
+	if productsQuery.ShopCodes != nil {
+		for _, shopCode := range *productsQuery.ShopCodes {
+			query.Add("shop_codes[]", shopCode)
 		}
 	}
 
