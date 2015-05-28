@@ -26,7 +26,8 @@ var _ = Describe("Store", func() {
 					ShopId:      1,
 					PublisherId: 5,
 				},
-				Active: true,
+				Active:              true,
+				ManuallyDeactivated: true,
 			},
 			&Product{
 				Id: &ProductId{
@@ -167,7 +168,8 @@ var _ = Describe("Store", func() {
 						ShopId:      1,
 						PublisherId: 5,
 					},
-					Active: true,
+					Active:              true,
+					ManuallyDeactivated: true,
 				},
 				&Product{
 					Id: &ProductId{

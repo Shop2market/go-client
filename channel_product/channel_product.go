@@ -11,8 +11,9 @@ import (
 var Endpoint string
 
 type Product struct {
-	Id     *ProductId `json:"product_id"`
-	Active bool       `json:"active"`
+	Id                  *ProductId `json:"product_id"`
+	Active              bool       `json:"active"`
+	ManuallyDeactivated bool       `json:"manually_deactivated"`
 }
 type ProductId struct {
 	ShopCode    string `json:"shop_code"`

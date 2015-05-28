@@ -5,6 +5,7 @@
          "shop_id":1,
          "publisher_id":5
       },
+      "manually_deactivated":true,
       "active":true
    },
    {
