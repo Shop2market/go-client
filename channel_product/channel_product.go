@@ -35,9 +35,9 @@ func (productsQuery *ProductsQuery) RawQuery() string {
 	query := url.Values{}
 	if productsQuery.Enabled != nil {
 		if *productsQuery.Enabled {
-			query.Add("enabled", "true")
+			query.Add("active", "true")
 		} else {
-			query.Add("enabled", "false")
+			query.Add("active", "false")
 		}
 	}
 

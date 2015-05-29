@@ -46,7 +46,7 @@ var _ = Describe("Store", func() {
 				server := ghttp.NewServer()
 				server.AppendHandlers(
 					ghttp.CombineHandlers(
-						ghttp.VerifyRequest("GET", "/shops/1/publishers/5/products", "enabled=true"),
+						ghttp.VerifyRequest("GET", "/shops/1/publishers/5/products", "active=true"),
 						ghttp.RespondWith(http.StatusOK, "[]"),
 					),
 				)
@@ -59,7 +59,7 @@ var _ = Describe("Store", func() {
 				server := ghttp.NewServer()
 				server.AppendHandlers(
 					ghttp.CombineHandlers(
-						ghttp.VerifyRequest("GET", "/shops/1/publishers/5/products", "enabled=false"),
+						ghttp.VerifyRequest("GET", "/shops/1/publishers/5/products", "active=false"),
 						ghttp.RespondWith(http.StatusOK, "[]"),
 					),
 				)
@@ -138,7 +138,7 @@ var _ = Describe("Store", func() {
 			server := ghttp.NewServer()
 			server.AppendHandlers(
 				ghttp.CombineHandlers(
-					ghttp.VerifyRequest("GET", "/shops/1/publishers/5/products", "enabled=true&limit=10&skip=0"),
+					ghttp.VerifyRequest("GET", "/shops/1/publishers/5/products", "active=true&limit=10&skip=0"),
 					ghttp.RespondWith(http.StatusOK, "[]"),
 				),
 			)
