@@ -13,8 +13,10 @@ var Endpoint string
 type Product struct {
 	Id                  *ProductId `json:"product_id"`
 	Active              bool       `json:"active"`
+	Enabled             bool       `json:"enabled"`
 	ManuallyDeactivated bool       `json:"manually_deactivated"`
 }
+
 type ProductId struct {
 	ShopCode    string `json:"shop_code"`
 	ShopId      int    `json:"shop_id"`
@@ -27,6 +29,7 @@ type ProductsQuery struct {
 	Skip                *int
 	Limit               *int
 	Active              *bool
+	Enabled             *bool
 	ManuallyDeactivated *bool
 	ShopCodes           *[]string
 }
@@ -38,6 +41,13 @@ func (productsQuery *ProductsQuery) RawQuery() string {
 			query.Add("active", "true")
 		} else {
 			query.Add("active", "false")
+		}
+	}
+	if productsQuery.Enabled != nil {
+		if *productsQuery.Enabled {
+			query.Add("enabled", "true")
+		} else {
+			query.Add("enabled", "false")
 		}
 	}
 
