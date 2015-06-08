@@ -26,15 +26,15 @@ type ProductsQuery struct {
 	PublisherId         int
 	Skip                *int
 	Limit               *int
-	Enabled             *bool
+	Active              *bool
 	ManuallyDeactivated *bool
 	ShopCodes           *[]string
 }
 
 func (productsQuery *ProductsQuery) RawQuery() string {
 	query := url.Values{}
-	if productsQuery.Enabled != nil {
-		if *productsQuery.Enabled {
+	if productsQuery.Active != nil {
+		if *productsQuery.Active {
 			query.Add("active", "true")
 		} else {
 			query.Add("active", "false")
