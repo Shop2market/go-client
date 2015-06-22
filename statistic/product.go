@@ -24,13 +24,6 @@ type StatisticProduct struct {
 	Statistics []*DailyStatistic
 }
 
-func (statsProduct *StatisticProduct) TotalRoi() float64 {
-	var total float64
-	for _, stat := range statsProduct.Statistics {
-		total += stat.Roi
-	}
-	return total
-}
 func (statsProduct *StatisticProduct) TotalCosts() float64 {
 	var total float64
 	for _, stat := range statsProduct.Statistics {
@@ -48,10 +41,10 @@ func (statsProduct *StatisticProduct) TotalTraffic() int {
 	}
 	return total
 }
-func (statsProduct *StatisticProduct) TotalContributedProfit() float64 {
+func (statsProduct *StatisticProduct) TotalProfit() float64 {
 	var total float64
 	for _, stat := range statsProduct.Statistics {
-		total += stat.ContributedProfit
+		total += stat.Profit
 	}
 	return total
 }
@@ -73,7 +66,7 @@ type DailyStatistic struct {
 	Orders                  float64 `json:"orders"`
 	Quantity                float64 `json:"quantity"`
 	Roas                    float64 `json:"roas"`
-	Roi                     float64 `json:"roi"`
+	Profit                  float64 `json:"profit"`
 	Traffic                 float64 `json:"traffic"`
 	Tos                     float64 `json:"tos"`
 	Contributed             float64 `json:"contributed"`

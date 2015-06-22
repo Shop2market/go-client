@@ -98,7 +98,7 @@ var _ = Describe("Product statistics", func() {
 			Expect(products[0].Statistics[0].Orders).To(Equal(1.0))
 			Expect(products[0].Statistics[0].Quantity).To(Equal(1.0))
 			Expect(products[0].Statistics[0].Roas).To(Equal(189.00000000000003))
-			Expect(products[0].Statistics[0].Roi).To(Equal(8.00548459804658))
+			Expect(products[0].Statistics[0].Profit).To(Equal(8.00548459804658))
 			Expect(products[0].Statistics[0].Traffic).To(Equal(10.0))
 			Expect(products[0].Statistics[0].Tos).To(Equal(50.475))
 			Expect(products[0].Statistics[0].Contributed).To(Equal(0.45454545454545453))
@@ -114,14 +114,14 @@ var _ = Describe("Product statistics", func() {
 			product := &StatisticProduct{
 				Statistics: []*DailyStatistic{
 					&DailyStatistic{
-						Roi: 1,
+						Profit: 1,
 					},
 					&DailyStatistic{
-						Roi: 2.2,
+						Profit: 2.2,
 					},
 				},
 			}
-			Expect(product.TotalRoi()).To(Equal(3.2))
+			Expect(product.TotalProfit()).To(Equal(3.2))
 		})
 
 		It("should sum up Costs", func() {
@@ -137,20 +137,6 @@ var _ = Describe("Product statistics", func() {
 			}
 			Expect(product.TotalCosts()).To(Equal(3.2))
 		})
-		It("should sum up ContributedProfit", func() {
-			product := &StatisticProduct{
-				Statistics: []*DailyStatistic{
-					&DailyStatistic{
-						ContributedProfit: 1,
-					},
-					&DailyStatistic{
-						ContributedProfit: 2.2,
-					},
-				},
-			}
-			Expect(product.TotalContributedProfit()).To(Equal(3.2))
-		})
-
 		It("should sum up Traffic", func() {
 			product := &StatisticProduct{
 				Statistics: []*DailyStatistic{
