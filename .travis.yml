@@ -1,10 +1,2 @@
 language: go
 sudo: required
-go:
-  - tip
-install:
-before_install:
-  - go get github.com/mattn/gom
-script:
-  - $HOME/gopath/bin/gom install
-  - $HOME/gopath/bin/gom exec ginkgo -r
