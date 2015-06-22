@@ -1,8 +1,9 @@
 language: go
 go:
   - tip
+build:
 before_install:
   - go get github.com/mattn/gom
 script:
   - $HOME/gopath/bin/gom install
-  - $HOME/gopath/bin/gom test -r
+  - $HOME/gopath/bin/gom exec ginkgo -r
