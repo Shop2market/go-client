@@ -1,7 +1,8 @@
 language: go
+sudo: required
 go:
   - tip
-build:
+install:
 before_install:
   - go get github.com/mattn/gom
 script:
