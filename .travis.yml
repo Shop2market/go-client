@@ -1,2 +1,11 @@
 language: go
 sudo: required
+go:
+  - 1.4
+  - 1.2
+install:
+  - go get github.com/mattn/gom
+script:
+  - $HOME/gopath/bin/gom install
+  - $HOME/gopath/bin/gom test ./statistic
+  - $HOME/gopath/bin/gom test ./channel_product
