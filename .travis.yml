@@ -5,7 +5,8 @@ go:
   - 1.2
 install:
   - go get github.com/mattn/gom
+  - go get github.com/onsi/ginkgo/ginkgo
+  - go get github.com/onsi/gomega
 script:
   - $HOME/gopath/bin/gom install
-  - $HOME/gopath/bin/gom test ./statistic
-  - $HOME/gopath/bin/gom test ./channel_product
+  - $HOME/gopath/bin/gom exec ginkgo -r
