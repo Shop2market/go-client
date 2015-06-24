@@ -2,7 +2,6 @@ language: go
 sudo: required
 go:
   - 1.4
-  - 1.2
 install:
   - go get github.com/mattn/gom
   - go get github.com/onsi/ginkgo/ginkgo
