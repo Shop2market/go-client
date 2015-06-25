@@ -75,13 +75,8 @@ func (productsQuery *ProductsQuery) RawQuery() string {
 }
 
 func Find(productsQuery *ProductsQuery) ([]*Product, error) {
-	productUrl, err := url.Parse(fmt.Sprintf("%s/shops/%d/publishers/%d/products", Endpoint, productsQuery.ShopId, productsQuery.PublisherId))
-	if err != nil {
-		return nil, err
-	}
-	productUrl.RawQuery = productsQuery.RawQuery()
-
-	response, err := http.Get(productUrl.String())
+	productUrl, err := buildQueryUrl(productsQuery)
+	response, err := http.Get(productUrl)
 	if err != nil {
 		return nil, err
 	}
@@ -91,4 +86,13 @@ func Find(productsQuery *ProductsQuery) ([]*Product, error) {
 		return nil, err
 	}
 	return products, nil
+}
+
+func buildQueryUrl(productsQuery *ProductsQuery) (string, error) {
+	productUrl, err := url.Parse(fmt.Sprintf("%s/shops/%d/publishers/%d/products", Endpoint, productsQuery.ShopId, productsQuery.PublisherId))
+	if err != nil {
+		return "", err
+	}
+	productUrl.RawQuery = productsQuery.RawQuery()
+	return productUrl.String(), nil
 }

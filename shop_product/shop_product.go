@@ -5,11 +5,38 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"strconv"
 )
 
 var Endpoint string
 var Username string
 var Password string
+
+type ProductsQuery struct {
+	ShopId    int
+	ShopCodes *[]string
+	Limit     *int
+	Skip      *int
+}
+
+func (productsQuery *ProductsQuery) RawQuery() string {
+	query := url.Values{}
+
+	if productsQuery.ShopCodes != nil {
+		for _, shopCode := range *productsQuery.ShopCodes {
+			query.Add("shop_codes[]", shopCode)
+		}
+	}
+
+	if productsQuery.Limit != nil {
+		query.Add("limit", strconv.Itoa(*productsQuery.Limit))
+	}
+	if productsQuery.Skip != nil {
+		query.Add("skip", strconv.Itoa(*productsQuery.Skip))
+	}
+
+	return query.Encode()
+}
 
 type Product struct {
 	ProductName    string `json:"product_name"`
@@ -25,8 +52,8 @@ type Product struct {
 	ShopCategory   string `json:"shop_category"`
 }
 
-func Find(shopId int, shopCodes []string) ([]*Product, error) {
-	url, err := shopUrl(shopId, shopCodes)
+func Find(productQuery *ProductsQuery) ([]*Product, error) {
+	url, err := shopUrl(productQuery)
 	if err != nil {
 		return nil, err
 	}
@@ -50,16 +77,11 @@ func Find(shopId int, shopCodes []string) ([]*Product, error) {
 	return products, nil
 }
 
-func shopUrl(shopId int, shopCodes []string) (string, error) {
-	s2mUrl, err := url.Parse(fmt.Sprintf("%s/api/v1/shops/%d/shop_products.json", Endpoint, shopId))
+func shopUrl(productQuery *ProductsQuery) (string, error) {
+	s2mUrl, err := url.Parse(fmt.Sprintf("%s/api/v1/shops/%d/shop_products.json", Endpoint, productQuery.ShopId))
 	if err != nil {
 		return "", err
 	}
-	query := s2mUrl.Query()
-
-	for _, shopCode := range shopCodes {
-		query.Add("shop_codes[]", shopCode)
-	}
-	s2mUrl.RawQuery = query.Encode()
+	s2mUrl.RawQuery = productQuery.RawQuery()
 	return s2mUrl.String(), nil
 }
