@@ -74,6 +74,8 @@ func (productsQuery *ProductsQuery) RawQuery() string {
 	return query.Encode()
 }
 
+type Finder func(*ProductsQuery) ([]*Product, error)
+
 func Find(productsQuery *ProductsQuery) ([]*Product, error) {
 	productUrl, err := buildQueryUrl(productsQuery)
 	response, err := http.Get(productUrl)
