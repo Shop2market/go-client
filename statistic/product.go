@@ -108,6 +108,8 @@ func (productsQuery *DailyProductsQuery) RawQuery() string {
 	return query.Encode()
 }
 
+type DailyProductFinder func(*DailyProductsQuery) ([]*StatisticProduct, error)
+
 func FindDailyProduct(query *DailyProductsQuery) ([]*StatisticProduct, error) {
 	url, err := getStatsUrl(query)
 	if err != nil {

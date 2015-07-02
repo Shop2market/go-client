@@ -52,6 +52,8 @@ type Product struct {
 	ShopCategory   string `json:"shop_category"`
 }
 
+type Finder func(productQuery *ProductsQuery) ([]*Product, error)
+
 func Find(productQuery *ProductsQuery) ([]*Product, error) {
 	url, err := shopUrl(productQuery)
 	if err != nil {
