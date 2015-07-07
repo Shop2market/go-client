@@ -139,12 +139,6 @@ func getStatsUrl(query *DailyProductsQuery) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	// query := statsUrl.Query()
-	// query.Add("time_id", fmt.Sprintf("%s:%s", DailyTimeId(startDate), DailyTimeId(stopDate)))
-	//
-	// for _, shopCode := range shopCodes {
-	// 	query.Add("shop_codes[]", shopCode)
-	// }
 	statsUrl.RawQuery = query.RawQuery()
 	return statsUrl.String(), nil
 }
