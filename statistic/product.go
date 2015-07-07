@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"strconv"
 	"time"
 )
 
@@ -76,8 +77,41 @@ type DailyStatistic struct {
 	TimeId                  string  `json:"time_id"`
 }
 
-func FindDailyProduct(shopId, publisherId int, startDate, stopDate time.Time, shopCodes []string) ([]*StatisticProduct, error) {
-	url, err := getStatsUrl(shopId, publisherId, startDate, stopDate, shopCodes)
+type DailyProductsQuery struct {
+	ShopId      int
+	PublisherId int
+	StartDate   time.Time
+	StopDate    time.Time
+	ShopCodes   *[]string
+	Limit       *int
+	Skip        *int
+}
+
+func (productsQuery *DailyProductsQuery) RawQuery() string {
+	query := url.Values{}
+
+	query.Add("time_id", fmt.Sprintf("%s:%s", DailyTimeId(productsQuery.StartDate), DailyTimeId(productsQuery.StopDate)))
+
+	if productsQuery.ShopCodes != nil {
+		for _, shopCode := range *productsQuery.ShopCodes {
+			query.Add("shop_codes[]", shopCode)
+		}
+	}
+
+	if productsQuery.Limit != nil {
+		query.Add("limit", strconv.Itoa(*productsQuery.Limit))
+	}
+	if productsQuery.Skip != nil {
+		query.Add("skip", strconv.Itoa(*productsQuery.Skip))
+	}
+
+	return query.Encode()
+}
+
+type DailyProductFinder func(*DailyProductsQuery) ([]*StatisticProduct, error)
+
+func FindDailyProduct(query *DailyProductsQuery) ([]*StatisticProduct, error) {
+	url, err := getStatsUrl(query)
 	if err != nil {
 		return nil, err
 	}
@@ -100,17 +134,11 @@ func FindDailyProduct(shopId, publisherId int, startDate, stopDate time.Time, sh
 	return stats, nil
 }
 
-func getStatsUrl(shopId, publisherId int, startDate, stopDate time.Time, shopCodes []string) (string, error) {
-	statsUrl, err := url.Parse(fmt.Sprintf("%s/api/v1/shops/%d/publishers/%d/shop_products/statistics.json", Endpoint, shopId, publisherId))
+func getStatsUrl(query *DailyProductsQuery) (string, error) {
+	statsUrl, err := url.Parse(fmt.Sprintf("%s/api/v1/shops/%d/publishers/%d/shop_products/statistics.json", Endpoint, query.ShopId, query.PublisherId))
 	if err != nil {
 		return "", err
 	}
-	query := statsUrl.Query()
-	query.Add("time_id", fmt.Sprintf("%s:%s", DailyTimeId(startDate), DailyTimeId(stopDate)))
-
-	for _, shopCode := range shopCodes {
-		query.Add("shop_codes[]", shopCode)
-	}
-	statsUrl.RawQuery = query.Encode()
+	statsUrl.RawQuery = query.RawQuery()
 	return statsUrl.String(), nil
 }

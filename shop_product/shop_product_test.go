@@ -62,7 +62,7 @@ var _ = Describe("ShopProduct", func() {
 		Password = "password"
 		Endpoint = server.URL()
 
-		products, err := Find(1, []string{"001", "002"})
+		products, err := Find(&ProductsQuery{ShopId: 1, ShopCodes: &[]string{"001", "002"}})
 		Expect(err).NotTo(HaveOccurred())
 		Expect(products).To(HaveLen(2))
 		Expect(products).To(ContainElement(&Product{
@@ -92,6 +92,51 @@ var _ = Describe("ShopProduct", func() {
 			SellingPrice:   1250,
 			ShopCategory:   "Huishouden -> Stofzuigen -> Stofzakken",
 		}))
+
+	})
+
+	Context("parameters construction", func() {
+
+		It("supports limit", func() {
+			server := ghttp.NewServer()
+			server.AppendHandlers(
+				ghttp.CombineHandlers(
+					ghttp.VerifyRequest("GET", "/api/v1/shops/1/shop_products.json", "limit=1"),
+					ghttp.RespondWith(http.StatusOK, "[]"),
+				),
+			)
+			Endpoint = server.URL()
+
+			limit := 1
+			Find(&ProductsQuery{ShopId: 1, Limit: &limit})
+		})
+		It("supports skip", func() {
+			server := ghttp.NewServer()
+			server.AppendHandlers(
+				ghttp.CombineHandlers(
+					ghttp.VerifyRequest("GET", "/api/v1/shops/1/shop_products.json", "skip=1"),
+					ghttp.RespondWith(http.StatusOK, "[]"),
+				),
+			)
+			Endpoint = server.URL()
+
+			skip := 1
+			Find(&ProductsQuery{ShopId: 1, Skip: &skip})
+		})
+
+		It("supports shop_codes", func() {
+			server := ghttp.NewServer()
+			server.AppendHandlers(
+				ghttp.CombineHandlers(
+					ghttp.VerifyRequest("GET", "/api/v1/shops/1/shop_products.json", "shop_codes%5B%5D=ED1&shop_codes%5B%5D=ED2"),
+					ghttp.RespondWith(http.StatusOK, "[]"),
+				),
+			)
+			Endpoint = server.URL()
+
+			shopCodes := []string{"ED1", "ED2"}
+			Find(&ProductsQuery{ShopId: 1, ShopCodes: &shopCodes})
+		})
 
 	})
 })

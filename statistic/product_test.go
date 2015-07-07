@@ -31,7 +31,7 @@ var _ = Describe("Product statistics", func() {
 			)
 
 			Endpoint = server.URL()
-			FindDailyProduct(1, 2, startDate, endDate, []string{"a001", "b002", "c003"})
+			FindDailyProduct(&DailyProductsQuery{ShopId: 1, PublisherId: 2, StartDate: startDate, StopDate: endDate, ShopCodes: &[]string{"a001", "b002", "c003"}})
 		})
 
 		It("parses response", func() {
@@ -44,7 +44,7 @@ var _ = Describe("Product statistics", func() {
 			)
 			Endpoint = server.URL()
 
-			stats, err := FindDailyProduct(1, 2, startDate, endDate, []string{"a001", "b002", "c003"})
+			stats, err := FindDailyProduct(&DailyProductsQuery{ShopId: 1, PublisherId: 2, StartDate: startDate, StopDate: endDate, ShopCodes: &[]string{"a001", "b002", "c003"}})
 			Expect(err).NotTo(HaveOccurred())
 			Expect(stats).To(HaveLen(2))
 			Expect(stats[0].Id).To(Equal(98769059))
@@ -61,7 +61,7 @@ var _ = Describe("Product statistics", func() {
 			)
 
 			Endpoint = server.URL()
-			_, err = FindDailyProduct(1, 2, startDate, endDate, []string{"a001", "b002", "c003"})
+			_, err = FindDailyProduct(&DailyProductsQuery{ShopId: 1, PublisherId: 2, StartDate: startDate, StopDate: endDate, ShopCodes: &[]string{"a001", "b002", "c003"}})
 			Expect(err).To(HaveOccurred())
 		})
 	})
