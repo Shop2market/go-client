@@ -110,7 +110,7 @@ var _ = Describe("Product statistics", func() {
 	})
 
 	Context("Statistic totals", func() {
-		It("should sum up Roi", func() {
+		It("should sum up Profit", func() {
 			product := &StatisticProduct{
 				Statistics: []*DailyStatistic{
 					&DailyStatistic{
@@ -149,6 +149,19 @@ var _ = Describe("Product statistics", func() {
 				},
 			}
 			Expect(product.TotalTraffic()).To(Equal(3))
+		})
+		It("should sum up CMargin", func() {
+			product := &StatisticProduct{
+				Statistics: []*DailyStatistic{
+					&DailyStatistic{
+						CMargin: 9.1,
+					},
+					&DailyStatistic{
+						CMargin: 90.9,
+					},
+				},
+			}
+			Expect(product.TotalCMargin()).To(Equal(100.0))
 		})
 	})
 })

@@ -42,10 +42,19 @@ func (statsProduct *StatisticProduct) TotalTraffic() int {
 	}
 	return total
 }
+
 func (statsProduct *StatisticProduct) TotalProfit() float64 {
 	var total float64
 	for _, stat := range statsProduct.Statistics {
 		total += stat.Profit
+	}
+	return total
+}
+
+func (statsProduct *StatisticProduct) TotalCMargin() float64 {
+	var total float64
+	for _, stat := range statsProduct.Statistics {
+		total += stat.CMargin
 	}
 	return total
 }
