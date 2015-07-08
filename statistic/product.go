@@ -54,7 +54,7 @@ type DailyStatistic struct {
 	BounceRate              float64 `json:"bounce_rate"`
 	CCPO                    float64 `json:"ccpo"`
 	CEXAmount               float64 `json:"cex_amount"`
-	ContributedProfit       float64 `json:"contributed_profit"`
+	CMargin                 float64 `json:"cmargin"`
 	Contribution            float64 `json:"contribution"`
 	Conversion              float64 `json:"conversion"`
 	Costs                   float64 `json:"costs"`

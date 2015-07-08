@@ -25,5 +25,5 @@ _testmain.go
 
 
 _vendor/*
-
+*.coverprofile
 .DS_Store
