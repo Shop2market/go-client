@@ -86,7 +86,7 @@ var _ = Describe("Product statistics", func() {
 			Expect(products[0].Statistics[0].BounceRate).To(BeEquivalentTo(40))
 			Expect(products[0].Statistics[0].CCPO).To(Equal(2.1999999999999997))
 			Expect(products[0].Statistics[0].CEXAmount).To(Equal(86.36363636363636))
-			Expect(products[0].Statistics[0].ContributedProfit).To(Equal(9.00548459804658))
+			Expect(products[0].Statistics[0].CMargin).To(Equal(9.00548459804658))
 			Expect(products[0].Statistics[0].Contribution).To(Equal(45.45454545454545))
 			Expect(products[0].Statistics[0].Conversion).To(BeEquivalentTo(10))
 			Expect(products[0].Statistics[0].Costs).To(Equal(13.12))
@@ -110,7 +110,7 @@ var _ = Describe("Product statistics", func() {
 	})
 
 	Context("Statistic totals", func() {
-		It("should sum up Roi", func() {
+		It("should sum up Profit", func() {
 			product := &StatisticProduct{
 				Statistics: []*DailyStatistic{
 					&DailyStatistic{
@@ -149,6 +149,19 @@ var _ = Describe("Product statistics", func() {
 				},
 			}
 			Expect(product.TotalTraffic()).To(Equal(3))
+		})
+		It("should sum up CMargin", func() {
+			product := &StatisticProduct{
+				Statistics: []*DailyStatistic{
+					&DailyStatistic{
+						CMargin: 9.1,
+					},
+					&DailyStatistic{
+						CMargin: 90.9,
+					},
+				},
+			}
+			Expect(product.TotalCMargin()).To(Equal(100.0))
 		})
 	})
 })

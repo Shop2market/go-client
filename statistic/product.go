@@ -42,6 +42,7 @@ func (statsProduct *StatisticProduct) TotalTraffic() int {
 	}
 	return total
 }
+
 func (statsProduct *StatisticProduct) TotalProfit() float64 {
 	var total float64
 	for _, stat := range statsProduct.Statistics {
@@ -50,11 +51,19 @@ func (statsProduct *StatisticProduct) TotalProfit() float64 {
 	return total
 }
 
+func (statsProduct *StatisticProduct) TotalCMargin() float64 {
+	var total float64
+	for _, stat := range statsProduct.Statistics {
+		total += stat.CMargin
+	}
+	return total
+}
+
 type DailyStatistic struct {
 	BounceRate              float64 `json:"bounce_rate"`
 	CCPO                    float64 `json:"ccpo"`
 	CEXAmount               float64 `json:"cex_amount"`
-	ContributedProfit       float64 `json:"contributed_profit"`
+	CMargin                 float64 `json:"cmargin"`
 	Contribution            float64 `json:"contribution"`
 	Conversion              float64 `json:"conversion"`
 	Costs                   float64 `json:"costs"`
