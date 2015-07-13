@@ -99,7 +99,12 @@ type DailyProductsQuery struct {
 func (productsQuery *DailyProductsQuery) RawQuery() string {
 	query := url.Values{}
 
-	query.Add("time_id", fmt.Sprintf("%s:%s", DailyTimeId(productsQuery.StartDate), DailyTimeId(productsQuery.StopDate)))
+	startDateKey, stopDateKey := DailyTimeId(productsQuery.StartDate), DailyTimeId(productsQuery.StopDate)
+	if startDateKey == stopDateKey {
+		query.Add("time_id", fmt.Sprintf("%s", startDateKey))
+	} else {
+		query.Add("time_id", fmt.Sprintf("%s:%s", startDateKey, stopDateKey))
+	}
 
 	if productsQuery.ShopCodes != nil {
 		for _, shopCode := range *productsQuery.ShopCodes {

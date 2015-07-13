@@ -34,6 +34,20 @@ var _ = Describe("Product statistics", func() {
 			FindDailyProduct(&DailyProductsQuery{ShopId: 1, PublisherId: 2, StartDate: startDate, StopDate: endDate, ShopCodes: &[]string{"a001", "b002", "c003"}})
 		})
 
+		It("calls sends only one time id if start and stop date are the same", func() {
+			server := ghttp.NewServer()
+			server.AppendHandlers(
+				ghttp.CombineHandlers(
+					ghttp.VerifyRequest("GET", "/api/v1/shops/1/publishers/2/shop_products/statistics.json", "shop_codes%5B%5D=a001&shop_codes%5B%5D=b002&shop_codes%5B%5D=c003&time_id=20150101"),
+					ghttp.VerifyBasicAuth(Username, Password),
+					ghttp.RespondWith(http.StatusOK, "[]"),
+				),
+			)
+
+			Endpoint = server.URL()
+			FindDailyProduct(&DailyProductsQuery{ShopId: 1, PublisherId: 2, StartDate: startDate, StopDate: startDate, ShopCodes: &[]string{"a001", "b002", "c003"}})
+		})
+
 		It("parses response", func() {
 			content, err := ioutil.ReadFile("fixtures/shop_code_statistics_response.json")
 			Expect(err).NotTo(HaveOccurred())
