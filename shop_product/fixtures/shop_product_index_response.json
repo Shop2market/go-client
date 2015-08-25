@@ -10,6 +10,7 @@
 "delivery_period": "Voor 20.00 uur besteld, morgen in huis!",
 "product_in_stock": 306,
 "selling_price": 1999,
+"cost_price": null,
 "shop_category": "Keuken -> Funcooking -> Overige funcooking"
 },
 {
@@ -22,6 +23,7 @@
 "product_brand": "BESTRON",
 "delivery_period": "Op werkdagen voor 21.00 besteld, morgen in huis",
 "product_in_stock": 47,
+"cost_price": 200,
 "selling_price": 1250,
 "shop_category": "Huishouden -> Stofzuigen -> Stofzakken"
 }
