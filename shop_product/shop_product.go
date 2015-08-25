@@ -49,6 +49,7 @@ type Product struct {
 	DeliveryPeriod string `json:"delivery_period"`
 	ProductInStock int    `json:"product_in_stock"`
 	SellingPrice   int    `json:"selling_price"`
+	CostPrice      *int   `json:"cost_price"`
 	ShopCategory   string `json:"shop_category"`
 }
 

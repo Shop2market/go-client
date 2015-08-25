@@ -13,6 +13,8 @@ import (
 )
 
 var _ = Describe("ShopProduct", func() {
+	costPrice := 200
+
 	It("deserializes a shop product", func() {
 		products := []*Product{}
 		body, _ := ioutil.ReadFile("fixtures/shop_product_index_response.json")
@@ -30,6 +32,7 @@ var _ = Describe("ShopProduct", func() {
 				DeliveryPeriod: "Voor 20.00 uur besteld, morgen in huis!",
 				ProductInStock: 306,
 				SellingPrice:   1999,
+				CostPrice:      nil,
 				ShopCategory:   "Keuken -> Funcooking -> Overige funcooking",
 			},
 			&Product{
@@ -42,6 +45,7 @@ var _ = Describe("ShopProduct", func() {
 				ProductBrand:   "BESTRON",
 				DeliveryPeriod: "Op werkdagen voor 21.00 besteld, morgen in huis",
 				ProductInStock: 47,
+				CostPrice:      &costPrice,
 				SellingPrice:   1250,
 				ShopCategory:   "Huishouden -> Stofzuigen -> Stofzakken",
 			},
@@ -90,6 +94,7 @@ var _ = Describe("ShopProduct", func() {
 			DeliveryPeriod: "Op werkdagen voor 21.00 besteld, morgen in huis",
 			ProductInStock: 47,
 			SellingPrice:   1250,
+			CostPrice:      &costPrice,
 			ShopCategory:   "Huishouden -> Stofzuigen -> Stofzakken",
 		}))
 
