@@ -3,6 +3,7 @@ sudo: required
 go:
   - 1.4
 install:
+  - go get github.com/daviddengcn/go-colortext
   - go get github.com/mattn/gom
   - go get github.com/onsi/ginkgo/ginkgo
   - go get github.com/onsi/gomega
