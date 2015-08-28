@@ -14,20 +14,20 @@ var Username string
 var Password string
 
 type StatisticProduct struct {
-	Id         int    `json:"id"`
-	Name       string `json:"name"`
-	Ean        string `json:"product_ean"`
-	Brand      string `json:"product_brand"`
-	ShopCode   string `json:"shop_code"`
-	MaxCPO     int    `json:"max_cpo"`
-	Category   string `json:"product_category_name"`
-	Price      int    `json:"product_price"`
-	Statistics []*DailyStatistic
+	Id       int    `json:"id"`
+	Name     string `json:"name"`
+	Ean      string `json:"product_ean"`
+	Brand    string `json:"product_brand"`
+	ShopCode string `json:"shop_code"`
+	MaxCPO   int    `json:"max_cpo"`
+	Category string `json:"product_category_name"`
+	Price    int    `json:"product_price"`
+	Statistics
 }
 
-func (statsProduct *StatisticProduct) TotalCosts() float64 {
+func (stats Statistics) TotalCosts() float64 {
 	var total float64
-	for _, stat := range statsProduct.Statistics {
+	for _, stat := range stats {
 		total += stat.Costs
 	}
 	return total
@@ -35,31 +35,33 @@ func (statsProduct *StatisticProduct) TotalCosts() float64 {
 
 // Totals up the traffic from the daily stats record and
 // converts to int cause traffic would be a whole number
-func (statsProduct *StatisticProduct) TotalTraffic() int {
+func (stats Statistics) TotalTraffic() int {
 	var total int
-	for _, stat := range statsProduct.Statistics {
+	for _, stat := range stats {
 		total += int(stat.Traffic)
 	}
 	return total
 }
 
-func (statsProduct *StatisticProduct) TotalProfit() float64 {
+func (stats Statistics) TotalProfit() float64 {
 	var total float64
-	for _, stat := range statsProduct.Statistics {
+	for _, stat := range stats {
 		total += stat.Profit
 	}
 	return total
 }
 
-func (statsProduct *StatisticProduct) TotalCMargin() float64 {
+func (stats Statistics) TotalCMargin() float64 {
 	var total float64
-	for _, stat := range statsProduct.Statistics {
+	for _, stat := range stats {
 		total += stat.CMargin
 	}
 	return total
 }
 
-type DailyStatistic struct {
+type Statistics []*Statistic
+
+type Statistic struct {
 	BounceRate              float64 `json:"bounce_rate"`
 	CCPO                    float64 `json:"ccpo"`
 	CEXAmount               float64 `json:"cex_amount"`

@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
-	"net/http/httptest"
 	"time"
 
 	. "github.com/Shop2market/go-client/statistic"
@@ -126,11 +125,11 @@ var _ = Describe("Product statistics", func() {
 	Context("Statistic totals", func() {
 		It("should sum up Profit", func() {
 			product := &StatisticProduct{
-				Statistics: []*DailyStatistic{
-					&DailyStatistic{
+				Statistics: Statistics{
+					&Statistic{
 						Profit: 1,
 					},
-					&DailyStatistic{
+					&Statistic{
 						Profit: 2.2,
 					},
 				},
@@ -140,11 +139,11 @@ var _ = Describe("Product statistics", func() {
 
 		It("should sum up Costs", func() {
 			product := &StatisticProduct{
-				Statistics: []*DailyStatistic{
-					&DailyStatistic{
+				Statistics: Statistics{
+					&Statistic{
 						Costs: 1,
 					},
-					&DailyStatistic{
+					&Statistic{
 						Costs: 2.2,
 					},
 				},
@@ -153,11 +152,11 @@ var _ = Describe("Product statistics", func() {
 		})
 		It("should sum up Traffic", func() {
 			product := &StatisticProduct{
-				Statistics: []*DailyStatistic{
-					&DailyStatistic{
+				Statistics: Statistics{
+					&Statistic{
 						Traffic: 1.0,
 					},
-					&DailyStatistic{
+					&Statistic{
 						Traffic: 2.1,
 					},
 				},
@@ -166,11 +165,11 @@ var _ = Describe("Product statistics", func() {
 		})
 		It("should sum up CMargin", func() {
 			product := &StatisticProduct{
-				Statistics: []*DailyStatistic{
-					&DailyStatistic{
+				Statistics: Statistics{
+					&Statistic{
 						CMargin: 9.1,
 					},
-					&DailyStatistic{
+					&Statistic{
 						CMargin: 90.9,
 					},
 				},
@@ -179,23 +178,3 @@ var _ = Describe("Product statistics", func() {
 		})
 	})
 })
-
-type MockedServer struct {
-	*httptest.Server
-	Requests []*http.Request
-	Response []byte
-}
-
-func NewMockedServer(responseFileName string) *MockedServer {
-	ser := &MockedServer{}
-	ser.Server = httptest.NewServer(ser)
-	ser.Requests = []*http.Request{}
-	data, _ := ioutil.ReadFile(responseFileName)
-	ser.Response = data
-	return ser
-}
-func (ser *MockedServer) ServeHTTP(resp http.ResponseWriter, req *http.Request) {
-	ser.Requests = append(ser.Requests, req)
-	resp.WriteHeader(200)
-	resp.Write(ser.Response)
-}
