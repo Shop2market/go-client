@@ -44,11 +44,7 @@ func (stats Statistics) TotalTraffic() int {
 }
 
 func (stats Statistics) TotalProfit() float64 {
-	var total float64
-	for _, stat := range stats {
-		total += stat.Profit
-	}
-	return total
+	return stats.TotalCMargin() - stats.TotalCosts()
 }
 
 func (stats Statistics) TotalCMargin() float64 {
@@ -78,7 +74,6 @@ type Statistic struct {
 	Orders                  float64 `json:"orders"`
 	Quantity                float64 `json:"quantity"`
 	Roas                    float64 `json:"roas"`
-	Profit                  float64 `json:"profit"`
 	Traffic                 float64 `json:"traffic"`
 	Tos                     float64 `json:"tos"`
 	Contributed             float64 `json:"contributed"`

@@ -111,7 +111,6 @@ var _ = Describe("Product statistics", func() {
 			Expect(products[0].Statistics[0].Orders).To(Equal(1.0))
 			Expect(products[0].Statistics[0].Quantity).To(Equal(1.0))
 			Expect(products[0].Statistics[0].Roas).To(Equal(189.00000000000003))
-			Expect(products[0].Statistics[0].Profit).To(Equal(8.00548459804658))
 			Expect(products[0].Statistics[0].Traffic).To(Equal(10.0))
 			Expect(products[0].Statistics[0].Tos).To(Equal(50.475))
 			Expect(products[0].Statistics[0].Contributed).To(Equal(0.45454545454545453))
@@ -123,18 +122,19 @@ var _ = Describe("Product statistics", func() {
 	})
 
 	Context("Statistic totals", func() {
-		It("should sum up Profit", func() {
+		It("should sum up Profit from CMargin and costs", func() {
 			product := &StatisticProduct{
 				Statistics: Statistics{
 					&Statistic{
-						Profit: 1,
+						CMargin: 5,
+						Costs:   1,
 					},
 					&Statistic{
-						Profit: 2.2,
+						CMargin: 6,
 					},
 				},
 			}
-			Expect(product.TotalProfit()).To(Equal(3.2))
+			Expect(product.TotalProfit()).To(Equal(float64(6 + 5 - 1)))
 		})
 
 		It("should sum up Costs", func() {
