@@ -11,10 +11,10 @@ import (
 var Endpoint string
 
 type Product struct {
-	Id                  *ProductId `json:"product_id"`
-	Active              bool       `json:"active"`
-	Enabled             bool       `json:"enabled"`
-	ManuallyDeactivated bool       `json:"manually_deactivated"`
+	Id          *ProductId `json:"product_id"`
+	Active      bool       `json:"active"`
+	Enabled     bool       `json:"enabled"`
+	ManuallySet bool       `json:"manually_set"`
 }
 
 type ProductId struct {
@@ -24,14 +24,14 @@ type ProductId struct {
 }
 
 type ProductsQuery struct {
-	ShopId              int
-	PublisherId         int
-	Skip                *int
-	Limit               *int
-	Active              *bool
-	Enabled             *bool
-	ManuallyDeactivated *bool
-	ShopCodes           *[]string
+	ShopId      int
+	PublisherId int
+	Skip        *int
+	Limit       *int
+	Active      *bool
+	Enabled     *bool
+	ManuallySet *bool
+	ShopCodes   *[]string
 }
 
 func (productsQuery *ProductsQuery) RawQuery() string {
@@ -51,11 +51,11 @@ func (productsQuery *ProductsQuery) RawQuery() string {
 		}
 	}
 
-	if productsQuery.ManuallyDeactivated != nil {
-		if *productsQuery.ManuallyDeactivated {
-			query.Add("manually_deactivated", "true")
+	if productsQuery.ManuallySet != nil {
+		if *productsQuery.ManuallySet {
+			query.Add("manually_set", "true")
 		} else {
-			query.Add("manually_deactivated", "false")
+			query.Add("manually_set", "false")
 		}
 	}
 	if productsQuery.ShopCodes != nil {
