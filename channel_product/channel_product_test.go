@@ -26,9 +26,9 @@ var _ = Describe("Store", func() {
 					ShopId:      1,
 					PublisherId: 5,
 				},
-				Active:              true,
-				Enabled:             true,
-				ManuallyDeactivated: true,
+				Active:      true,
+				Enabled:     true,
+				ManuallySet: true,
 			},
 			&Product{
 				Id: &ProductId{
@@ -128,14 +128,14 @@ var _ = Describe("Store", func() {
 				server := ghttp.NewServer()
 				server.AppendHandlers(
 					ghttp.CombineHandlers(
-						ghttp.VerifyRequest("GET", "/shops/1/publishers/5/products", "manually_deactivated=true"),
+						ghttp.VerifyRequest("GET", "/shops/1/publishers/5/products", "manually_set=true"),
 						ghttp.RespondWith(http.StatusOK, "[]"),
 					),
 				)
 				Endpoint = server.URL()
 
 				manuallyDeactivated := true
-				Find(&ProductsQuery{ShopId: 1, PublisherId: 5, ManuallyDeactivated: &manuallyDeactivated})
+				Find(&ProductsQuery{ShopId: 1, PublisherId: 5, ManuallySet: &manuallyDeactivated})
 			})
 			It("supports shop_codes", func() {
 				server := ghttp.NewServer()
@@ -154,14 +154,14 @@ var _ = Describe("Store", func() {
 				server := ghttp.NewServer()
 				server.AppendHandlers(
 					ghttp.CombineHandlers(
-						ghttp.VerifyRequest("GET", "/shops/1/publishers/5/products", "manually_deactivated=false"),
+						ghttp.VerifyRequest("GET", "/shops/1/publishers/5/products", "manually_set=false"),
 						ghttp.RespondWith(http.StatusOK, "[]"),
 					),
 				)
 				Endpoint = server.URL()
 
 				manuallyDeactivated := false
-				Find(&ProductsQuery{ShopId: 1, PublisherId: 5, ManuallyDeactivated: &manuallyDeactivated})
+				Find(&ProductsQuery{ShopId: 1, PublisherId: 5, ManuallySet: &manuallyDeactivated})
 			})
 		})
 		It("sends correct parameters", func() {
@@ -198,9 +198,9 @@ var _ = Describe("Store", func() {
 						ShopId:      1,
 						PublisherId: 5,
 					},
-					Active:              true,
-					Enabled:             true,
-					ManuallyDeactivated: true,
+					Active:      true,
+					Enabled:     true,
+					ManuallySet: true,
 				},
 				&Product{
 					Id: &ProductId{
