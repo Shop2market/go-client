@@ -54,6 +54,13 @@ func (stats Statistics) TotalCMargin() float64 {
 	}
 	return total
 }
+func (stats Statistics) TotalCEXAmount() float64 {
+	var total float64
+	for _, stat := range stats {
+		total += stat.CEXAmount
+	}
+	return total
+}
 
 type Statistics []*Statistic
 

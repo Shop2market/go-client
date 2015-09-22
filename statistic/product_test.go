@@ -176,5 +176,19 @@ var _ = Describe("Product statistics", func() {
 			}
 			Expect(product.TotalCMargin()).To(Equal(100.0))
 		})
+
+		It("should sum up CEXAmount", func() {
+			product := &StatisticProduct{
+				Statistics: Statistics{
+					&Statistic{
+						CEXAmount: 9.1,
+					},
+					&Statistic{
+						CEXAmount: 90.9,
+					},
+				},
+			}
+			Expect(product.TotalCEXAmount()).To(Equal(100.0))
+		})
 	})
 })
