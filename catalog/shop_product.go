@@ -17,6 +17,14 @@ const FloorPriceKey string = "Cost Price"
 const StockKey string = "Product in stock"
 const CategoryKey string = "Category"
 const ShopCodeKey string = "Shop Code"
+const ProductNameKey string = "Product Name"
+const PictureLinkKey string = "Picture Link"
+const DeeplinkKey string = "Deeplink"
+const ProductEanKey string = "Product Ean"
+const ProductBrandKey string = "Product Brand"
+const DeliveryPeriodKey string = "Delivery Period"
+const ProductInStockKey string = "Product in stock"
+const SellingPriceKey string = "Selling Price"
 
 func (s ShopProduct) Description() string {
 	return s[DescriptionKey]
@@ -33,6 +41,32 @@ func (s ShopProduct) Category() string {
 func (s ShopProduct) ShopCode() string {
 	return s[ShopCodeKey]
 }
+func (s ShopProduct) ProductName() string {
+	return s[ProductNameKey]
+}
+func (s ShopProduct) PictureLink() string {
+	return s[PictureLinkKey]
+}
+func (s ShopProduct) Deeplink() string {
+	return s[DeeplinkKey]
+}
+func (s ShopProduct) ProductEan() string {
+	return s[ProductEanKey]
+}
+func (s ShopProduct) ProductBrand() string {
+	return s[ProductBrandKey]
+}
+func (s ShopProduct) DeliveryPeriod() string {
+	return s[DeliveryPeriodKey]
+}
+func (s ShopProduct) ProductInStock() string {
+	return s[ProductInStockKey]
+}
+func (s ShopProduct) SellingPrice() string {
+	return s[SellingPriceKey]
+}
+
+type Finder func(int) (<-chan ShopProduct, <-chan error)
 
 func Find(shopId int) (<-chan ShopProduct, <-chan error) {
 	shopProductChannel := make(chan ShopProduct)
