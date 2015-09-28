@@ -14,7 +14,7 @@ type Product struct {
 	Id          *ProductId `json:"product_id"`
 	Active      bool       `json:"active"`
 	Enabled     bool       `json:"enabled"`
-	ManuallySet bool       `json:"manually_set"`
+	ManuallySet *bool      `json:"manually_set,omitempty"`
 }
 
 type ProductId struct {

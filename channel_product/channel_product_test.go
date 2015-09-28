@@ -18,6 +18,7 @@ var _ = Describe("Store", func() {
 		products := []*Product{}
 		body, _ := ioutil.ReadFile("fixtures/channel_product_response.json")
 		json.Unmarshal(body, &products)
+		manuallySet := true
 
 		Expect(products).To(Equal([]*Product{
 			&Product{
@@ -28,7 +29,7 @@ var _ = Describe("Store", func() {
 				},
 				Active:      true,
 				Enabled:     true,
-				ManuallySet: true,
+				ManuallySet: &manuallySet,
 			},
 			&Product{
 				Id: &ProductId{
@@ -183,6 +184,7 @@ var _ = Describe("Store", func() {
 		It("deserializes response", func() {
 			content, err := ioutil.ReadFile("fixtures/channel_product_response.json")
 			Expect(err).NotTo(HaveOccurred())
+			manuallySet := true
 
 			server := ghttp.NewServer()
 			server.AppendHandlers(
@@ -200,7 +202,7 @@ var _ = Describe("Store", func() {
 					},
 					Active:      true,
 					Enabled:     true,
-					ManuallySet: true,
+					ManuallySet: &manuallySet,
 				},
 				&Product{
 					Id: &ProductId{
