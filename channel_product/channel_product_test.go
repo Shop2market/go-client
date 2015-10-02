@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
+	"time"
 
 	. "github.com/Shop2market/go-client/channel_product"
 
@@ -163,6 +164,20 @@ var _ = Describe("Store", func() {
 
 				manuallyDeactivated := false
 				Find(&ProductsQuery{ShopId: 1, PublisherId: 5, ManuallySet: &manuallyDeactivated})
+			})
+			It("supports last_updated_before, false", func() {
+				server := ghttp.NewServer()
+				server.AppendHandlers(
+					ghttp.CombineHandlers(
+						ghttp.VerifyRequest("GET", "/shops/1/publishers/5/products", "last_updated_before=2014-09-12"),
+						ghttp.RespondWith(http.StatusOK, "[]"),
+					),
+				)
+				Endpoint = server.URL()
+
+				lastUpdatedBefore := time.Date(2014, 9, 12, 0, 0, 0, 0, time.UTC)
+
+				Find(&ProductsQuery{ShopId: 1, PublisherId: 5, LastUpdatedBefore: &lastUpdatedBefore})
 			})
 		})
 		It("sends correct parameters", func() {

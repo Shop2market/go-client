@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+	"time"
 )
 
 var Endpoint string
@@ -24,14 +25,15 @@ type ProductId struct {
 }
 
 type ProductsQuery struct {
-	ShopId      int
-	PublisherId int
-	Skip        *int
-	Limit       *int
-	Active      *bool
-	Enabled     *bool
-	ManuallySet *bool
-	ShopCodes   *[]string
+	ShopId            int
+	PublisherId       int
+	Skip              *int
+	Limit             *int
+	Active            *bool
+	Enabled           *bool
+	ManuallySet       *bool
+	LastUpdatedBefore *time.Time
+	ShopCodes         *[]string
 }
 
 func (productsQuery *ProductsQuery) RawQuery() string {
@@ -69,6 +71,9 @@ func (productsQuery *ProductsQuery) RawQuery() string {
 	}
 	if productsQuery.Skip != nil {
 		query.Add("skip", strconv.Itoa(*productsQuery.Skip))
+	}
+	if productsQuery.LastUpdatedBefore != nil {
+		query.Add("last_updated_before", (*productsQuery.LastUpdatedBefore).Format("2006-01-02"))
 	}
 
 	return query.Encode()
