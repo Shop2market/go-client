@@ -43,7 +43,21 @@ var _ = Describe("Store", func() {
 			},
 		}))
 	})
+	Context("posts touch on channel products", func() {
+		It("PUT's to touch", func() {
+			shopCodes := []string{"a", "b"}
+			server := ghttp.NewServer()
+			server.AppendHandlers(
+				ghttp.CombineHandlers(
+					ghttp.VerifyRequest("PUT", "/shops/1/publishers/5/products/touch", ""),
+					ghttp.VerifyJSONRepresenting(shopCodes),
+				),
+			)
+			Endpoint = server.URL()
 
+			Touch(1, 5, shopCodes)
+		})
+	})
 	Context("requests channel products", func() {
 		Context("parameters construction", func() {
 			It("supports active", func() {
