@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"time"
 )
 
 var Endpoint string
@@ -27,6 +28,10 @@ type Statistic struct {
 }
 
 type TimeId string
+
+func NewTimeId(date time.Time) TimeId {
+	return TimeId(fmt.Sprintf("%d%02d%02d", date.Year(), date.Month(), date.Day()))
+}
 
 func Find(shopId, publisherId int, startTimeId, stopTimeId TimeId) (*StatisticIterator, error) {
 	url, err := buildUrl(shopId, publisherId, startTimeId, stopTimeId, nil)
