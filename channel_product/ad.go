@@ -3,6 +3,7 @@ package channel_product
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"net/url"
 )
@@ -51,6 +52,10 @@ func FindAds(productsQuery *AdQuery) ([]*Ad, error) {
 		return nil, err
 	}
 	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK {
+		body, _ := ioutil.ReadAll(response.Body)
+		return nil, fmt.Errorf("Failed fetching ads: %s, code %d\n%s", productUrl, response.StatusCode, string(body))
+	}
 
 	ads := []*Ad{}
 	err = json.NewDecoder(response.Body).Decode(&ads)
