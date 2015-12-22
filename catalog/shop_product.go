@@ -97,5 +97,5 @@ func Find(shopId int) (<-chan ShopProduct, <-chan error) {
 }
 
 func catalogUrl(shopId int) string {
-	return fmt.Sprintf("%s/shops/%d.jsonl", Endpoint, shopId)
+	return fmt.Sprintf("%s/sorted_shops/%d.jsonl", Endpoint, shopId)
 }

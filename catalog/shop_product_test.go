@@ -54,7 +54,7 @@ var _ = Describe("ShopProduct", func() {
 		Endpoint = server.URL()
 		server.AppendHandlers(
 			ghttp.CombineHandlers(
-				ghttp.VerifyRequest("GET", "/shops/1.jsonl"),
+				ghttp.VerifyRequest("GET", "/sorted_shops/1.jsonl"),
 				ghttp.RespondWith(http.StatusOK, ""),
 			),
 		)
