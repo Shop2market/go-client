@@ -28,7 +28,6 @@ var _ = Describe("ChannelCategory", func() {
 		Endpoint = server.URL()
 
 		categories, err := Find(&Query{ShopId: 1, PublisherId: 2})
-		categories.BuildPaths()
 		Expect(err).NotTo(HaveOccurred())
 		Expect(categories).To(HaveLen(5))
 		Expect(categories).To(ContainElement(&ChannelCategory{

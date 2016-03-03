@@ -26,7 +26,7 @@ type ChannelCategory struct {
 }
 type ChannelCategories []*ChannelCategory
 
-func (categories ChannelCategories) BuildPaths() {
+func (categories ChannelCategories) buildPaths() {
 	for i := range categories {
 		paths := buildPath(categories[i], categories)
 		categories[i].Path = strings.Join(paths, " -> ")
@@ -66,6 +66,7 @@ func Find(query *Query) (ChannelCategories, error) {
 	if err := json.NewDecoder(response.Body).Decode(&categories); err != nil {
 		return nil, err
 	}
+	categories.buildPaths()
 	return categories, nil
 }
 
