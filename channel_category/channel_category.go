@@ -60,6 +60,7 @@ func Find(query *Query) (ChannelCategories, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer response.Body.Close()
 	categories := ChannelCategories{}
 
 	if err := json.NewDecoder(response.Body).Decode(&categories); err != nil {

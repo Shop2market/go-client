@@ -71,6 +71,7 @@ func Find(productQuery *ProductsQuery) ([]*Product, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer response.Body.Close()
 	products := []*Product{}
 	err = json.NewDecoder(response.Body).Decode(&products)
 	if err != nil {
