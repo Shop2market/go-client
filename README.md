@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/Shop2market/go-client.svg?branch=master)](https://travis-ci.org/Shop2market/go-client)
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/Shop2market/go-client)](https://goreportcard.com/report/github.com/Shop2market/go-client)
+
 Go client for s2m api
 
 Currently in alpha and POC state.
