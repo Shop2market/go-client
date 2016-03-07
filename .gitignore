@@ -25,6 +25,7 @@ _testmain.go
 
 
 _vendor/*
+vendor/*
 *.coverprofile
 .DS_Store
 tmp/

@@ -5,8 +5,6 @@ go:
   - 1.5.2
   - 1.5.3
   - 1.6
-env:
-  - GOM_VENDOR_NAME=_vendor
 install:
   - go get github.com/daviddengcn/go-colortext
   - go get github.com/mattn/gom
@@ -14,4 +12,4 @@ install:
   - go get github.com/onsi/gomega
 script:
   - $HOME/gopath/bin/gom install
-  - $HOME/gopath/bin/gom exec ginkgo -r
+  - $HOME/gopath/bin/gom exec ginkgo -r -skipPackage vendor
