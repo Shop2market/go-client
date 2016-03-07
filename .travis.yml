@@ -5,6 +5,8 @@ go:
   - 1.5.2
   - 1.5.3
   - 1.6
+env:
+  - GOM_VENDOR_NAME=_vendor
 install:
   - go get github.com/daviddengcn/go-colortext
   - go get github.com/mattn/gom
