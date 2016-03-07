@@ -17,23 +17,23 @@ type Query struct {
 	PublisherId int
 }
 
-type ChannelCategory struct {
+type Category struct {
 	Name       string `json:"name"`
 	ParentID   int    `json:"parent_id"`
 	ExternalID string `json:"external_id"`
 	Path       string `json:"-"`
 	ID         int    `json:"id"`
 }
-type ChannelCategories []*ChannelCategory
 
-func (categories ChannelCategories) buildPaths() {
-	for i := range categories {
-		paths := buildPath(categories[i], categories)
-		categories[i].Path = strings.Join(paths, " -> ")
+func buildPaths(categories *[]*Category) {
+	cats := *categories
+	for i := range cats {
+		paths := buildPath(cats[i], cats)
+		cats[i].Path = strings.Join(paths, " -> ")
 	}
 }
 
-func buildPath(category *ChannelCategory, categories []*ChannelCategory) []string {
+func buildPath(category *Category, categories []*Category) []string {
 	if category.ParentID == 0 {
 		return []string{category.Name}
 	}
@@ -45,7 +45,7 @@ func buildPath(category *ChannelCategory, categories []*ChannelCategory) []strin
 	return []string{}
 }
 
-func Find(query *Query) (ChannelCategories, error) {
+func Find(query *Query) ([]*Category, error) {
 	url, err := apiUrl(query)
 	if err != nil {
 		return nil, err
@@ -61,12 +61,12 @@ func Find(query *Query) (ChannelCategories, error) {
 		return nil, err
 	}
 	defer response.Body.Close()
-	categories := ChannelCategories{}
+	categories := []*Category{}
 
 	if err := json.NewDecoder(response.Body).Decode(&categories); err != nil {
 		return nil, err
 	}
-	categories.buildPaths()
+	buildPaths(&categories)
 	return categories, nil
 }
 
