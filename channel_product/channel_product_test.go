@@ -28,9 +28,10 @@ var _ = Describe("Store", func() {
 					ShopId:      1,
 					PublisherId: 5,
 				},
-				Active:      true,
-				Enabled:     true,
-				ManuallySet: &manuallySet,
+				Active:             true,
+				Enabled:            true,
+				ManuallySet:        &manuallySet,
+				ChannelCategoryIDs: []int{1, 2},
 			},
 			&Product{
 				Id: &ProductId{
@@ -38,8 +39,9 @@ var _ = Describe("Store", func() {
 					ShopId:      1,
 					PublisherId: 5,
 				},
-				Active:  true,
-				Enabled: true,
+				Active:             true,
+				Enabled:            true,
+				ChannelCategoryIDs: []int{1, 2},
 			},
 		}))
 	})
@@ -229,9 +231,10 @@ var _ = Describe("Store", func() {
 						ShopId:      1,
 						PublisherId: 5,
 					},
-					Active:      true,
-					Enabled:     true,
-					ManuallySet: &manuallySet,
+					Active:             true,
+					Enabled:            true,
+					ManuallySet:        &manuallySet,
+					ChannelCategoryIDs: []int{1, 2},
 				},
 				&Product{
 					Id: &ProductId{
@@ -239,12 +242,12 @@ var _ = Describe("Store", func() {
 						ShopId:      1,
 						PublisherId: 5,
 					},
-					Active:  true,
-					Enabled: true,
+					Active:             true,
+					Enabled:            true,
+					ChannelCategoryIDs: []int{1, 2},
 				},
 			}))
 
 		})
 	})
-
 })

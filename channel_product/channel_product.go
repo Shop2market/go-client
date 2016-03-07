@@ -13,10 +13,11 @@ import (
 var Endpoint string
 
 type Product struct {
-	Id          *ProductId `json:"product_id"`
-	Active      bool       `json:"active"`
-	Enabled     bool       `json:"enabled"`
-	ManuallySet *bool      `json:"manually_set,omitempty"`
+	Id                 *ProductId `json:"product_id"`
+	Active             bool       `json:"active"`
+	Enabled            bool       `json:"enabled"`
+	ManuallySet        *bool      `json:"manually_set,omitempty"`
+	ChannelCategoryIDs []int      `json:"channel_category_ids"`
 }
 
 type ProductId struct {
