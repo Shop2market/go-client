@@ -45,6 +45,8 @@ func buildPath(category *Category, categories []*Category) []string {
 	return []string{}
 }
 
+type Finder func(*Query) ([]*Category, error)
+
 func Find(query *Query) ([]*Category, error) {
 	url, err := apiUrl(query)
 	if err != nil {
