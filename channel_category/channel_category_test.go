@@ -11,7 +11,7 @@ import (
 	"github.com/onsi/gomega/ghttp"
 )
 
-var _ = Describe("ChannelCategory", func() {
+var _ = Describe("Category", func() {
 	It("Retrives categories", func() {
 		content, err := ioutil.ReadFile("fixtures/channel_categories_index_response.json")
 		Expect(err).NotTo(HaveOccurred())
@@ -30,21 +30,21 @@ var _ = Describe("ChannelCategory", func() {
 		categories, err := Find(&Query{ShopId: 1, PublisherId: 2})
 		Expect(err).NotTo(HaveOccurred())
 		Expect(categories).To(HaveLen(5))
-		Expect(categories).To(ContainElement(&ChannelCategory{
+		Expect(categories).To(ContainElement(&Category{
 			Name:       "Consumer Electronics",
 			ParentID:   0,
 			ExternalID: "12345_1",
 			Path:       "Consumer Electronics",
 			ID:         1,
 		}))
-		Expect(categories).To(ContainElement(&ChannelCategory{
+		Expect(categories).To(ContainElement(&Category{
 			Name:       "Home and Living",
 			ParentID:   0,
 			ExternalID: "12345_2",
 			Path:       "Home and Living",
 			ID:         2,
 		}))
-		Expect(categories).To(ContainElement(&ChannelCategory{
+		Expect(categories).To(ContainElement(&Category{
 			Name:       "Lamps",
 			ParentID:   2,
 			ExternalID: "12345_5",
