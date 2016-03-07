@@ -7,7 +7,8 @@
       },
       "manually_set":true,
       "active":true,
-      "enabled":true
+      "enabled":true,
+      "channel_category_ids":[1,2]
    },
    {
       "product_id":{
@@ -16,6 +17,7 @@
          "publisher_id":5
       },
       "active":true,
-      "enabled":true
+      "enabled":true,
+      "channel_category_ids":[1,2]
    }
 ]
