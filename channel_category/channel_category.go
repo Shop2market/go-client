@@ -47,6 +47,11 @@ func buildPath(category *Category, categories []*Category) []string {
 
 type Finder func(*Query) ([]*Category, error)
 
+// Use for tests to stub calls to API
+func DummyFinder(query *Query) ([]*Category, error) {
+	return []*Category{}, nil
+}
+
 func Find(query *Query) ([]*Category, error) {
 	url, err := apiUrl(query)
 	if err != nil {

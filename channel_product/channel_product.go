@@ -83,6 +83,11 @@ func (productsQuery *ProductsQuery) RawQuery() string {
 
 type Finder func(*ProductsQuery) ([]*Product, error)
 
+// Use for tests to stub calls to API
+func DummyFinder(productsQuery *ProductsQuery) ([]*Product, error) {
+	return []*Product{}, nil
+}
+
 func Find(productsQuery *ProductsQuery) ([]*Product, error) {
 	productUrl, err := buildQueryUrl(productsQuery)
 	response, err := http.Get(productUrl)
