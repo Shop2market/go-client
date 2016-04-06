@@ -30,6 +30,13 @@ var _ = Describe("Category", func() {
 		categories, err := Find(&Query{ShopId: 1, PublisherId: 2})
 		Expect(err).NotTo(HaveOccurred())
 		Expect(categories).To(HaveLen(5))
+
+		Expect(categories[0].ID).To(Equal(1))
+		Expect(categories[1].ID).To(Equal(2))
+		Expect(categories[2].ID).To(Equal(3))
+		Expect(categories[3].ID).To(Equal(4))
+		Expect(categories[4].ID).To(Equal(5))
+
 		Expect(categories).To(ContainElement(&Category{
 			Name:       "Consumer Electronics",
 			ParentID:   0,

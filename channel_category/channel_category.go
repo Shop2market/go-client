@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"sort"
 	"strings"
 )
 
@@ -52,6 +53,14 @@ func DummyFinder(query *Query) ([]*Category, error) {
 	return []*Category{}, nil
 }
 
+type Categories []*Category
+
+type CategoriesByID struct{ Categories }
+
+func (s Categories) Len() int               { return len(s) }
+func (s Categories) Swap(i, j int)          { s[i], s[j] = s[j], s[i] }
+func (s CategoriesByID) Less(i, j int) bool { return s.Categories[i].ID < s.Categories[j].ID }
+
 func Find(query *Query) ([]*Category, error) {
 	url, err := apiUrl(query)
 	if err != nil {
@@ -74,6 +83,7 @@ func Find(query *Query) ([]*Category, error) {
 		return nil, err
 	}
 	buildPaths(&categories)
+	sort.Sort(CategoriesByID{categories})
 	return categories, nil
 }
 

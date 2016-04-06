@@ -1,7 +1,7 @@
 [
+  {"name":"Lamps", "id":5, "parent_id":2, "external_id":"12345_5"},
   {"name":"Consumer Electronics", "id":1, "parent_id":0, "external_id":"12345_1"},
   {"name":"Home and Living", "id":2, "parent_id":0, "external_id":"12345_2"},
-  {"name":"TVs", "id":3, "parent_id":1, "external_id":"12345_3"},
   {"name":"LCDs", "id":4, "parent_id":3, "external_id":"12345_4"},
-  {"name":"Lamps", "id":5, "parent_id":2, "external_id":"12345_5"}
+  {"name":"TVs", "id":3, "parent_id":1, "external_id":"12345_3"}
 ]

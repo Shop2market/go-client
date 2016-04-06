@@ -249,5 +249,43 @@ var _ = Describe("Store", func() {
 			}))
 
 		})
+		It("deserializes response", func() {
+			content, err := ioutil.ReadFile("fixtures/channel_product_response.json")
+			Expect(err).NotTo(HaveOccurred())
+			manuallySet := true
+
+			server := ghttp.NewServer()
+			server.AppendHandlers(
+				ghttp.RespondWith(http.StatusOK, string(content)),
+			)
+
+			Endpoint = server.URL()
+
+			Expect(FindSorted(&ProductsQuery{ShopId: 1, PublisherId: 5})).To(Equal([]*Product{
+				&Product{
+					Id: &ProductId{
+						ShopCode:    "149350",
+						ShopId:      1,
+						PublisherId: 5,
+					},
+					Active:             true,
+					Enabled:            true,
+					ChannelCategoryIDs: []int{1, 2},
+				},
+				&Product{
+					Id: &ProductId{
+						ShopCode:    "151656",
+						ShopId:      1,
+						PublisherId: 5,
+					},
+					Active:             true,
+					Enabled:            true,
+					ManuallySet:        &manuallySet,
+					ChannelCategoryIDs: []int{1, 2},
+				},
+			}))
+
+		})
+
 	})
 })

@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"sort"
 	"strconv"
 	"time"
 )
@@ -86,6 +87,22 @@ type Finder func(*ProductsQuery) ([]*Product, error)
 // Use for tests to stub calls to API
 func DummyFinder(productsQuery *ProductsQuery) ([]*Product, error) {
 	return []*Product{}, nil
+}
+
+type Products []*Product
+
+type ProductsByShopCode struct{ Products }
+
+func (s Products) Len() int      { return len(s) }
+func (s Products) Swap(i, j int) { s[i], s[j] = s[j], s[i] }
+func (s ProductsByShopCode) Less(i, j int) bool {
+	return s.Products[i].Id.ShopCode < s.Products[j].Id.ShopCode
+}
+
+func FindSorted(productsQuery *ProductsQuery) ([]*Product, error) {
+	products, err := Find(productsQuery)
+	sort.Sort(ProductsByShopCode{products})
+	return products, err
 }
 
 func Find(productsQuery *ProductsQuery) ([]*Product, error) {
