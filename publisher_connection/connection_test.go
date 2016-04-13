@@ -14,11 +14,11 @@ import (
 
 var _ = Describe("Connection", func() {
 	It("unmarshals publisher connection", func() {
-		connections := []Connection{}
+		connections := []*Connection{}
 		body, _ := ioutil.ReadFile("fixtures/connection_response.json")
 		json.Unmarshal(body, &connections)
-		Expect(connections).To(Equal([]Connection{
-			Connection{
+		Expect(connections).To(Equal([]*Connection{
+			&Connection{
 				ID:                 11107,
 				Imported:           true,
 				Connected:          true,
@@ -52,8 +52,8 @@ var _ = Describe("Connection", func() {
 		connections, err := Find(&Query{ShopId: 1, PublisherId: 2})
 		Expect(err).NotTo(HaveOccurred())
 		Expect(server.ReceivedRequests()).Should(HaveLen(1))
-		Expect(connections).To(Equal([]Connection{
-			Connection{
+		Expect(connections).To(Equal([]*Connection{
+			&Connection{
 				ID:                 11107,
 				Imported:           true,
 				Connected:          true,

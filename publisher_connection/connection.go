@@ -31,7 +31,7 @@ type Query struct {
 	PublisherId int
 }
 
-func Find(query *Query) ([]Connection, error) {
+func Find(query *Query) ([]*Connection, error) {
 	url, err := apiUrl(query)
 	if err != nil {
 		return nil, err
@@ -47,7 +47,7 @@ func Find(query *Query) ([]Connection, error) {
 		return nil, err
 	}
 	defer response.Body.Close()
-	connections := []Connection{}
+	connections := []*Connection{}
 
 	if err := json.NewDecoder(response.Body).Decode(&connections); err != nil {
 		return nil, err
@@ -61,4 +61,11 @@ func apiUrl(query *Query) (string, error) {
 		return "", err
 	}
 	return url.String(), nil
+}
+
+type Finder func(*Query) ([]*Connection, error)
+
+// Use for tests to stub calls to API
+func DummyFinder(query *Query) ([]*Connection, error) {
+	return []*Connection{}, nil
 }
