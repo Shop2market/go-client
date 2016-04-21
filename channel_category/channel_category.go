@@ -19,12 +19,12 @@ type Query struct {
 }
 
 type Category struct {
-	Name       string  `json:"name"`
-	ParentID   int     `json:"parent_id"`
-	ExternalID string  `json:"external_id"`
-	Path       string  `json:"-"`
-	ID         int     `json:"id"`
-	CPC        float64 `json:"cpc"`
+	Name       string   `json:"name"`
+	ParentID   int      `json:"parent_id"`
+	ExternalID string   `json:"external_id"`
+	Path       string   `json:"-"`
+	ID         int      `json:"id"`
+	CPC        *float64 `json:"cpc"`
 }
 
 func buildPaths(categories *[]*Category) {
