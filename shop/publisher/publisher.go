@@ -23,7 +23,7 @@ type Publisher struct {
 }
 
 // Finder - Main find functor, can be overloaded for stubs or assigned with package Find function
-type Finder func(shopId, publisherId int) (*Publisher, error)
+type Finder func(query *Query) (*Publisher, error)
 
 func Find(query *Query) (*Publisher, error) {
 	url, err := apiUrl(query)
