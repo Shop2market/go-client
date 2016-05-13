@@ -37,6 +37,9 @@ var _ = Describe("Category", func() {
 		Expect(categories[3].ID).To(Equal(4))
 		Expect(categories[4].ID).To(Equal(5))
 
+		cpcValue1 := 23.3
+		cpcValue2 := 23.1
+
 		Expect(categories).To(ContainElement(&Category{
 			Name:       "Consumer Electronics",
 			ParentID:   0,
@@ -50,6 +53,7 @@ var _ = Describe("Category", func() {
 			ExternalID: "12345_2",
 			Path:       "Home and Living",
 			ID:         2,
+			CPC:        &cpcValue1,
 		}))
 		Expect(categories).To(ContainElement(&Category{
 			Name:       "Lamps",
@@ -57,6 +61,7 @@ var _ = Describe("Category", func() {
 			ExternalID: "12345_5",
 			Path:       "Home and Living -> Lamps",
 			ID:         5,
+			CPC:        &cpcValue2,
 		}))
 	})
 })
