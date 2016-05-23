@@ -26,6 +26,7 @@ type Ad struct {
 	ROI             *float64 `json:"roi"`
 	Revenue         float64  `json:"revenue"`
 	Margin          float64  `json:"margin"`
+	QuarantinedAt   *string  `json:"quarantined_at"`
 }
 
 type AdQuery struct {
