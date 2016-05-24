@@ -52,7 +52,7 @@ var _ = Describe("Channel product", func() {
 		Endpoint = server.URL()
 		ads, _ := FindAds(&AdQuery{ProductsQuery: &ProductsQuery{ShopId: 1, PublisherId: 5}})
 		Expect(ads).To((HaveLen(2)))
-		strPtr := "2015-11-04T14:16:58.52Z"
-		Expect(ads[0].QuarantinedAt).To(Equal(&strPtr))
+		timestr := "2015-11-04 14:16:58.52 +0000 UTC"
+		Expect(ads[0].QuarantinedAt.String()).To(Equal(timestr))
 	})
 })
