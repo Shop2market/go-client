@@ -6,26 +6,28 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"time"
 )
 
 type Ad struct {
 	*Product
-	ProductName     string   `json:"product_name"`
-	PictureLink     string   `json:"picture_link"`
-	Deeplink        string   `json:"deeplink"`
-	ShopCode        string   `json:"shop_code"`
-	ProductEan      string   `json:"product_ean"`
-	Category        string   `json:"category"`
-	Brand           string   `json:"brand"`
-	DeliveryPeriod  string   `json:"delivery_period"`
-	ProductsInStock int      `json:"products_in_stock"`
-	Price           int      `json:"price"`
-	Traffic         int      `json:"traffic"`
-	Profit          float64  `json:"profit"`
-	Costs           float64  `json:"costs"`
-	ROI             *float64 `json:"roi"`
-	Revenue         float64  `json:"revenue"`
-	Margin          float64  `json:"margin"`
+	ProductName     string     `json:"product_name"`
+	PictureLink     string     `json:"picture_link"`
+	Deeplink        string     `json:"deeplink"`
+	ShopCode        string     `json:"shop_code"`
+	ProductEan      string     `json:"product_ean"`
+	Category        string     `json:"category"`
+	Brand           string     `json:"brand"`
+	DeliveryPeriod  string     `json:"delivery_period"`
+	ProductsInStock int        `json:"products_in_stock"`
+	Price           int        `json:"price"`
+	Traffic         int        `json:"traffic"`
+	Profit          float64    `json:"profit"`
+	Costs           float64    `json:"costs"`
+	ROI             *float64   `json:"roi"`
+	Revenue         float64    `json:"revenue"`
+	Margin          float64    `json:"margin"`
+	QuarantinedAt   *time.Time `json:"quarantined_at"`
 }
 
 type AdQuery struct {
