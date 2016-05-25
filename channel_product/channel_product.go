@@ -11,14 +11,17 @@ import (
 	"time"
 )
 
+// Endpoint - Marmoset endpoint
 var Endpoint string
 
+// Product - Channel product from marmoset
 type Product struct {
-	Id                 *ProductId `json:"product_id"`
-	Active             bool       `json:"active"`
-	Enabled            bool       `json:"enabled"`
-	ManuallySet        *bool      `json:"manually_set,omitempty"`
-	ChannelCategoryIDs []int      `json:"channel_category_ids"`
+	Id                 *ProductId       `json:"product_id"`
+	Active             bool             `json:"active"`
+	Enabled            bool             `json:"enabled"`
+	ManuallySet        *bool            `json:"manually_set,omitempty"`
+	ChannelCategoryIDs []int            `json:"channel_category_ids"`
+	Taxonomies         map[string][]int `json:"taxonomies"`
 }
 
 type ProductId struct {
