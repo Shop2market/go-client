@@ -1,0 +1,70 @@
+[{
+  "id": 233,
+  "name": "Energy Label",
+  "categories": [
+    {
+      "id": 10001,
+      "name": "Green",
+      "mapping_allowed": true,
+      "cpc": null,
+      "industry_id": null,
+      "parent_id": 0
+    },
+    {
+      "id": 10002,
+      "name": "Black",
+      "mapping_allowed": true,
+      "cpc": null,
+      "industry_id": null,
+      "parent_id": 12
+    },
+    {
+      "id": 10003,
+      "name": "Grey",
+      "mapping_allowed": true,
+      "cpc": null,
+      "industry_id": null,
+      "parent_id": 10002
+    },
+    {
+      "id": 10011,
+      "name": "A",
+      "mapping_allowed": true,
+      "cpc": null,
+      "industry_id": null,
+      "parent_id": 10001
+    },
+    {
+      "id": 10111,
+      "name": "A+",
+      "mapping_allowed": true,
+      "cpc": null,
+      "industry_id": null,
+      "parent_id": 10011
+    },
+    {
+      "id": 10021,
+      "name": "B",
+      "mapping_allowed": true,
+      "cpc": null,
+      "industry_id": null,
+      "parent_id": 10001
+    },
+    {
+      "id": 10012,
+      "name": "G",
+      "mapping_allowed": true,
+      "cpc": null,
+      "industry_id": null,
+      "parent_id": 1012
+    },
+    {
+      "id": 1012,
+      "name": "Broken",
+      "mapping_allowed": true,
+      "cpc": null,
+      "industry_id": null,
+      "parent_id": 10012
+    }
+  ]
+}]

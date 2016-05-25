@@ -1,0 +1,149 @@
+
+[
+  {
+    "id": 234,
+    "name": "Age group",
+    "categories": [
+      {
+        "id": 335990,
+        "name": "1-3 years",
+        "mapping_allowed": true,
+        "cpc": 13,
+        "industry_id": null,
+        "parent_id": 0
+      },
+      {
+        "id": 335993,
+        "name": "11-14 years",
+        "mapping_allowed": false,
+        "cpc": null,
+        "industry_id": null,
+        "parent_id": 0
+      },
+      {
+        "id": 335994,
+        "name": "14-18 years",
+        "mapping_allowed": true,
+        "cpc": null,
+        "industry_id": null,
+        "parent_id": 0
+      },
+      {
+        "id": 335995,
+        "name": "18-26 years",
+        "mapping_allowed": true,
+        "cpc": null,
+        "industry_id": null,
+        "parent_id": 0
+      },
+      {
+        "id": 335996,
+        "name": "26-40 years",
+        "mapping_allowed": true,
+        "cpc": null,
+        "industry_id": null,
+        "parent_id": 0
+      },
+      {
+        "id": 335991,
+        "name": "4-7 years",
+        "mapping_allowed": true,
+        "cpc": null,
+        "industry_id": null,
+        "parent_id": 0
+      },
+      {
+        "id": 335997,
+        "name": "40-60 years",
+        "mapping_allowed": true,
+        "cpc": null,
+        "industry_id": null,
+        "parent_id": 0
+      },
+      {
+        "id": 335998,
+        "name": "60 + years",
+        "mapping_allowed": true,
+        "cpc": null,
+        "industry_id": null,
+        "parent_id": 0
+      },
+      {
+        "id": 335992,
+        "name": "7-11 years",
+        "mapping_allowed": false,
+        "cpc": null,
+        "industry_id": null,
+        "parent_id": 0
+      },
+      {
+        "id": 335999,
+        "name": "Test",
+        "mapping_allowed": true,
+        "cpc": null,
+        "industry_id": 2,
+        "parent_id": 335990
+      }
+    ]
+  },
+  {
+    "id": 232,
+    "name": "Delivery time",
+    "categories": [
+      {
+        "id": 335984,
+        "name": "1 day",
+        "mapping_allowed": true,
+        "cpc": null,
+        "industry_id": 8,
+        "parent_id": 0
+      },
+      {
+        "id": 335989,
+        "name": "1 week",
+        "mapping_allowed": true,
+        "cpc": null,
+        "industry_id": null,
+        "parent_id": 0
+      },
+      {
+        "id": 335988,
+        "name": "2-3 days",
+        "mapping_allowed": true,
+        "cpc": null,
+        "industry_id": null,
+        "parent_id": 0
+      }
+    ]
+  },
+  {
+    "id": 233,
+    "name": "Gender",
+    "categories": [
+      {
+        "id": 335986,
+        "name": "Female",
+        "mapping_allowed": true,
+        "cpc": null,
+        "industry_id": null,
+        "parent_id": 0
+      },
+      {
+        "id": 335987,
+        "name": "I have no idea",
+        "mapping_allowed": true,
+        "cpc": null,
+        "industry_id": null,
+        "parent_id": 0
+      },
+      {
+        "id": 335985,
+        "name": "Male",
+        "mapping_allowed": true,
+        "cpc": null,
+        "industry_id": null,
+        "parent_id": 0
+      }
+    ]
+  }
+]
