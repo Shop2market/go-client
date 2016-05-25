@@ -17,6 +17,7 @@ type Query struct {
 	PublisherId int
 }
 
+// Category - Categories inside taxonomy
 type Category struct {
 	Name       string   `json:"name"`
 	ParentID   int      `json:"parent_id"`
@@ -25,6 +26,8 @@ type Category struct {
 	ID         int      `json:"id"`
 	CPC        *float64 `json:"cpc"`
 }
+
+// Taxonomy - Root structure to hold Taxonomy type
 type Taxonomy struct {
 	ID         int        `json:"id"`
 	Name       string     `json:"name"`
@@ -34,7 +37,11 @@ type Taxonomy struct {
 // Finder - Main find functor, can be overloaded for stubs or assigned with package Find function
 type Finder func(query *Query) ([]Taxonomy, error)
 
-// Need to solve the problem of having cyclic items and categories with broken paths.
+// Use for tests to stub calls to API
+func DummyFinder(query *Query) ([]Taxonomy, error) {
+	return []Taxonomy{}, nil
+}
+
 func buildPaths(categories []Category) {
 	cats := categories
 	for i := range cats {
