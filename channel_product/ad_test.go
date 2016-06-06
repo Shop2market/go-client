@@ -54,5 +54,7 @@ var _ = Describe("Channel product", func() {
 		Expect(ads).To((HaveLen(2)))
 		timestr := "2015-11-04 14:16:58.52 +0000 UTC"
 		Expect(ads[0].QuarantinedAt.String()).To(Equal(timestr))
+		Expect(ads[0].StockStatus).To(Equal("yes"))
+		Expect(ads[0].ProductsInStock).To(Equal(0))
 	})
 })
