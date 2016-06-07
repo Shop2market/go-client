@@ -24,6 +24,7 @@ const ProductEanKey string = "Product Ean"
 const ProductBrandKey string = "Product Brand"
 const DeliveryPeriodKey string = "Delivery Period"
 const ProductInStockKey string = "Product in stock"
+const StockStatusKey string = "Stock Status"
 const SellingPriceKey string = "Selling Price"
 
 func (s ShopProduct) Description() string {
@@ -62,6 +63,10 @@ func (s ShopProduct) DeliveryPeriod() string {
 func (s ShopProduct) ProductInStock() string {
 	return s[ProductInStockKey]
 }
+func (s ShopProduct) StockStatus() string {
+	return s[StockStatusKey]
+}
+
 func (s ShopProduct) SellingPrice() string {
 	return s[SellingPriceKey]
 }
