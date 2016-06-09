@@ -19,6 +19,7 @@ type Connection struct {
 	Connected          bool   `json:"connected"`
 	ConnectionType     string `json:"connection_type"`
 	ConnectionProvider string `json:"connection_provider"`
+	ConnectionToLive   string `json:"connection_to_live"`
 	*ConnectionDetails `json:"connection"`
 }
 
