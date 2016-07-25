@@ -35,11 +35,15 @@ var _ = Describe("AggregatedStatistic", func() {
 
 		Expect(iterator.More()).To(BeTrue())
 		roi := -1.0
+		maxCPC := 0.02
+		eCPC := 0.1
 		Expect(iterator.Next()).To(Equal(&Statistic{
 			ShopCode: "100964",
 			Traffic:  2,
 			Costs:    0.22,
 			Profit:   -0.22,
+			MaxCPC:   &maxCPC,
+			ECPC:     &eCPC,
 			ROI:      &roi,
 		}))
 
