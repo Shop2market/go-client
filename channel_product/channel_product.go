@@ -38,6 +38,7 @@ type ProductsQuery struct {
 	Active            *bool
 	Enabled           *bool
 	ManuallySet       *bool
+	ManuallySetTip    *bool
 	LastUpdatedBefore *time.Time
 	ShopCodes         *[]string
 }
@@ -64,6 +65,13 @@ func (productsQuery *ProductsQuery) RawQuery() string {
 			query.Add("manually_set", "true")
 		} else {
 			query.Add("manually_set", "false")
+		}
+	}
+	if productsQuery.ManuallySetTip != nil {
+		if *productsQuery.ManuallySetTip {
+			query.Add("manually_set_tip", "true")
+		} else {
+			query.Add("manually_set_tip", "false")
 		}
 	}
 	if productsQuery.ShopCodes != nil {

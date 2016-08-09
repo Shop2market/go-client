@@ -156,6 +156,32 @@ var _ = Describe("Store", func() {
 				manuallyDeactivated := true
 				Find(&ProductsQuery{ShopId: 1, PublisherId: 5, ManuallySet: &manuallyDeactivated})
 			})
+			It("supports manually_set_tip false", func() {
+				server := ghttp.NewServer()
+				server.AppendHandlers(
+					ghttp.CombineHandlers(
+						ghttp.VerifyRequest("GET", "/shops/1/publishers/5/products", "manually_set_tip=false"),
+						ghttp.RespondWith(http.StatusOK, "[]"),
+					),
+				)
+				Endpoint = server.URL()
+
+				manuallySetTip := false
+				Find(&ProductsQuery{ShopId: 1, PublisherId: 5, ManuallySetTip: &manuallySetTip})
+			})
+			It("supports manually_set_tip true", func() {
+				server := ghttp.NewServer()
+				server.AppendHandlers(
+					ghttp.CombineHandlers(
+						ghttp.VerifyRequest("GET", "/shops/1/publishers/5/products", "manually_set_tip=true"),
+						ghttp.RespondWith(http.StatusOK, "[]"),
+					),
+				)
+				Endpoint = server.URL()
+
+				manuallySetTip := true
+				Find(&ProductsQuery{ShopId: 1, PublisherId: 5, ManuallySetTip: &manuallySetTip})
+			})
 			It("supports shop_codes", func() {
 				server := ghttp.NewServer()
 				server.AppendHandlers(
