@@ -26,8 +26,10 @@ var _ = Describe("ShopProduct", func() {
 		productChan, errorChan := Find(1)
 		product := <-productChan
 		Expect(product["Shop Code"]).To(Equal("20201"))
+		Expect(product.SubCategory()).To(Equal(""))
 		product = <-productChan
 		Expect(product["Shop Code"]).To(Equal("20301"))
+		Expect(product.SubCategory()).To(Equal("Sub category name"))
 		product = <-productChan
 		Expect(errorChan).Should(BeClosed())
 		Expect(productChan).Should(BeClosed())
