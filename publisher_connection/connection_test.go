@@ -25,6 +25,7 @@ var _ = Describe("Connection", func() {
 				ConnectionType:     "custom",
 				ConnectionProvider: "beslist_marketplace",
 				ConnectToLive:      true,
+				ProductApiEnabled:  true,
 				ConnectionDetails: &ConnectionDetails{
 					ShopId:              stringPtr("46834"),
 					ProductUpdateApiKey: stringPtr("6754856"),
@@ -60,6 +61,7 @@ var _ = Describe("Connection", func() {
 				ConnectionType:     "custom",
 				ConnectionProvider: "beslist_marketplace",
 				ConnectToLive:      true,
+				ProductApiEnabled:  true,
 				ConnectionDetails: &ConnectionDetails{
 					ShopId:              stringPtr("46834"),
 					ProductUpdateApiKey: stringPtr("6754856"),
