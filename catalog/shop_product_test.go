@@ -26,8 +26,10 @@ var _ = Describe("ShopProduct", func() {
 		productChan, errorChan := Find(1)
 		product := <-productChan
 		Expect(product["Shop Code"]).To(Equal("20201"))
+		Expect(product["Variant ID"]).To(Equal("2"))
 		product = <-productChan
 		Expect(product["Shop Code"]).To(Equal("20301"))
+		Expect(product["Variant ID"]).To(Equal("1"))
 		product = <-productChan
 		Expect(errorChan).Should(BeClosed())
 		Expect(productChan).Should(BeClosed())

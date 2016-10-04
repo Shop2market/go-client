@@ -17,6 +17,7 @@ const FloorPriceKey string = "Cost Price"
 const StockKey string = "Product in stock"
 const CategoryKey string = "Category"
 const ShopCodeKey string = "Shop Code"
+const VariantIDKey string = "Variant ID"
 const ProductNameKey string = "Product Name"
 const PictureLinkKey string = "Picture Link"
 const DeeplinkKey string = "Deeplink"
@@ -41,6 +42,10 @@ func (s ShopProduct) Category() string {
 }
 func (s ShopProduct) ShopCode() string {
 	return s[ShopCodeKey]
+}
+
+func (s ShopProduct) VariantID() string {
+	return s[VariantIDKey]
 }
 func (s ShopProduct) ProductName() string {
 	return s[ProductNameKey]
