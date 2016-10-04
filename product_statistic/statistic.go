@@ -25,6 +25,8 @@ type Statistic struct {
 	CMargin                 float64  `json:"cmargin"`
 	Profit                  float64  `json:"profit"`
 	ROI                     *float64 `json:"roi"`
+	ECPC                    *float64 `json:"ecpc"`
+	MaxCPC                  *float64 `json:"max_cpc"`
 }
 
 type TimeId string

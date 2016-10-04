@@ -16,6 +16,7 @@ const DescriptionKey string = "Product Description"
 const FloorPriceKey string = "Cost Price"
 const StockKey string = "Product in stock"
 const CategoryKey string = "Category"
+const SubCategoryKey string = "Sub category"
 const ShopCodeKey string = "Shop Code"
 const VariantIDKey string = "Variant ID"
 const ProductNameKey string = "Product Name"
@@ -39,6 +40,9 @@ func (s ShopProduct) Stock() (int, error) {
 }
 func (s ShopProduct) Category() string {
 	return s[CategoryKey]
+}
+func (s ShopProduct) SubCategory() string {
+	return s[SubCategoryKey]
 }
 func (s ShopProduct) ShopCode() string {
 	return s[ShopCodeKey]

@@ -8,7 +8,6 @@ import (
 )
 
 type ConnectionDetails struct {
-	Enabled             bool    `json:"enabled"`
 	ShopId              *string `json:"shop_id,omitempty"`
 	ProductUpdateApiKey *string `json:"product_update_api_key,omitempty"`
 }
@@ -19,6 +18,8 @@ type Connection struct {
 	Connected          bool   `json:"connected"`
 	ConnectionType     string `json:"connection_type"`
 	ConnectionProvider string `json:"connection_provider"`
+	ConnectToLive      bool   `json:"connect_to_live"`
+	ProductApiEnabled  bool   `json:"product_api_enabled"`
 	*ConnectionDetails `json:"connection"`
 }
 
