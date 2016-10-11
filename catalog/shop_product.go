@@ -18,6 +18,7 @@ const StockKey string = "Product in stock"
 const CategoryKey string = "Category"
 const SubCategoryKey string = "Sub category"
 const ShopCodeKey string = "Shop Code"
+const VariantIDKey string = "Variant ID"
 const ProductNameKey string = "Product Name"
 const PictureLinkKey string = "Picture Link"
 const DeeplinkKey string = "Deeplink"
@@ -45,6 +46,10 @@ func (s ShopProduct) SubCategory() string {
 }
 func (s ShopProduct) ShopCode() string {
 	return s[ShopCodeKey]
+}
+
+func (s ShopProduct) VariantID() string {
+	return s[VariantIDKey]
 }
 func (s ShopProduct) ProductName() string {
 	return s[ProductNameKey]
