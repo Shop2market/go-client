@@ -22,7 +22,7 @@ var _ = Describe("Product", func() {
 			Endpoint = server.URL()
 			server.AppendHandlers(
 				ghttp.CombineHandlers(
-					ghttp.VerifyRequest("GET", "/shops/1792/mongo/products", "sorted=true&recent=true"),
+					ghttp.VerifyRequest("GET", "/shops/1792/mongo/products", "sorted=true"),
 					ghttp.RespondWith(http.StatusOK, string(content)),
 				),
 			)
@@ -86,7 +86,7 @@ var _ = Describe("Product", func() {
 			Endpoint = server.URL()
 			server.AppendHandlers(
 				ghttp.CombineHandlers(
-					ghttp.VerifyRequest("GET", "/shops/1792/mongo/products", "sorted=true&recent=true"),
+					ghttp.VerifyRequest("GET", "/shops/1792/mongo/products", "sorted=true"),
 					ghttp.RespondWith(http.StatusOK, ""),
 				),
 			)
@@ -100,7 +100,7 @@ var _ = Describe("Product", func() {
 			Endpoint = server.URL()
 			server.AppendHandlers(
 				ghttp.CombineHandlers(
-					ghttp.VerifyRequest("GET", "/shops/1792/mongo/products", "sorted=true&recent=true"),
+					ghttp.VerifyRequest("GET", "/shops/1792/mongo/products", "sorted=true"),
 					ghttp.RespondWith(http.StatusOK, "{["),
 				),
 			)

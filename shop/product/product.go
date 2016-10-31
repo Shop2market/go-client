@@ -92,5 +92,5 @@ func FindAll(shopId int) (<-chan catalog.ShopProduct, <-chan error) {
 }
 
 func catalogUrl(shopId int) string {
-	return fmt.Sprintf("%s/shops/%d/mongo/products?sorted=true&recent=true", Endpoint, shopId)
+	return fmt.Sprintf("%s/shops/%d/mongo/products?sorted=true", Endpoint, shopId)
 }
