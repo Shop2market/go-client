@@ -4,7 +4,6 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/Shop2market/go-client/catalog"
 	. "github.com/Shop2market/go-client/shop/product"
 
 	. "github.com/onsi/ginkgo"
@@ -28,7 +27,7 @@ var _ = Describe("Product", func() {
 			)
 
 			productChan, errorChan := FindAll(1792)
-			var product catalog.ShopProduct
+			var product ShopProduct
 			product = <-productChan
 			Expect(product.ShopCode()).To(Equal("13861613"))
 			Expect(product.ProductName()).To(Equal("adidaS Black leather backpack"))

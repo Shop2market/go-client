@@ -5,13 +5,89 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-
-	"github.com/Shop2market/go-client/catalog"
+	"strconv"
 )
 
 var Endpoint string
 
 type BonoboProduct map[string]interface{}
+type ShopProduct map[string]string
+
+const (
+	DescriptionKey    = "Product Description"
+	FloorPriceKey     = "Cost Price"
+	StockKey          = "Product in stock"
+	CategoryPathKey   = "Category Path"
+	CategoryKey       = "Category"
+	SubCategoryKey    = "Sub category"
+	ShopCodeKey       = "Shop Code"
+	VariantIDKey      = "Variant ID"
+	ProductNameKey    = "Product Name"
+	PictureLinkKey    = "Picture Link"
+	DeeplinkKey       = "Deeplink"
+	ProductEanKey     = "Product Ean"
+	ProductBrandKey   = "Product Brand"
+	DeliveryPeriodKey = "Delivery Period"
+	ProductInStockKey = "Product in stock"
+	StockStatusKey    = "Stock Status"
+	SellingPriceKey   = "Selling Price"
+)
+
+func (s ShopProduct) Description() string {
+	return s[DescriptionKey]
+}
+func (s ShopProduct) FloorPrice() string {
+	return s[FloorPriceKey]
+}
+func (s ShopProduct) Stock() (int, error) {
+	return strconv.Atoi(s[StockKey])
+}
+func (s ShopProduct) Category() string {
+	return s[CategoryKey]
+}
+func (s ShopProduct) CategoryPath() string {
+	return s[CategoryPathKey]
+}
+func (s ShopProduct) SubCategory() string {
+	return s[SubCategoryKey]
+}
+func (s ShopProduct) ShopCode() string {
+	return s[ShopCodeKey]
+}
+
+func (s ShopProduct) VariantID() string {
+	return s[VariantIDKey]
+}
+func (s ShopProduct) ProductName() string {
+	return s[ProductNameKey]
+}
+func (s ShopProduct) PictureLink() string {
+	return s[PictureLinkKey]
+}
+func (s ShopProduct) Deeplink() string {
+	return s[DeeplinkKey]
+}
+func (s ShopProduct) ProductEan() string {
+	return s[ProductEanKey]
+}
+func (s ShopProduct) ProductBrand() string {
+	return s[ProductBrandKey]
+}
+func (s ShopProduct) DeliveryPeriod() string {
+	return s[DeliveryPeriodKey]
+}
+func (s ShopProduct) ProductInStock() string {
+	return s[ProductInStockKey]
+}
+func (s ShopProduct) StockStatus() string {
+	return s[StockStatusKey]
+}
+
+func (s ShopProduct) SellingPrice() string {
+	return s[SellingPriceKey]
+}
+
+type Finder func(int) (<-chan ShopProduct, <-chan error)
 
 func fetchValue(hash map[string]interface{}, key string) string {
 	value, ok := hash[key].(string)
@@ -27,34 +103,34 @@ func fetchNumberValue(hash map[string]interface{}, key string) string {
 	}
 	return ""
 }
-func (bp BonoboProduct) toShopProducts() []catalog.ShopProduct {
-	shopProducts := []catalog.ShopProduct{}
+func (bp BonoboProduct) toShopProducts() []ShopProduct {
+	shopProducts := []ShopProduct{}
 	variants := bp["variants"].([]interface{})
 	for _, variantInterface := range variants {
-		shopProduct := catalog.ShopProduct{}
-		shopProduct[catalog.ShopCodeKey] = fetchValue(bp, "shop_code")
-		shopProduct[catalog.ProductNameKey] = fetchValue(bp, "product_name")
-		shopProduct[catalog.DescriptionKey] = fetchValue(bp, "description")
-		shopProduct[catalog.ProductBrandKey] = fetchValue(bp, "brand")
-		shopProduct[catalog.DeeplinkKey] = fetchValue(bp, "deeplink")
-		shopProduct[catalog.CategoryPathKey] = fetchValue(bp, "category_path")
+		shopProduct := ShopProduct{}
+		shopProduct[ShopCodeKey] = fetchValue(bp, "shop_code")
+		shopProduct[ProductNameKey] = fetchValue(bp, "product_name")
+		shopProduct[DescriptionKey] = fetchValue(bp, "description")
+		shopProduct[ProductBrandKey] = fetchValue(bp, "brand")
+		shopProduct[DeeplinkKey] = fetchValue(bp, "deeplink")
+		shopProduct[CategoryPathKey] = fetchValue(bp, "category_path")
 		variant := variantInterface.(map[string]interface{})
-		shopProduct[catalog.VariantIDKey] = variant["variant_id"].(string)
-		shopProduct[catalog.PictureLinkKey] = fetchValue(variant, "picture_link")
-		shopProduct[catalog.ProductEanKey] = fetchValue(variant, "ean")
-		shopProduct[catalog.FloorPriceKey] = fetchNumberValue(variant, "cost_price_excl")
-		shopProduct[catalog.ProductInStockKey] = fetchNumberValue(variant, "product_in_stock")
-		shopProduct[catalog.StockStatusKey] = fetchValue(variant, "stock_status")
-		shopProduct[catalog.DeliveryPeriodKey] = fetchValue(variant, "delivery_period")
-		shopProduct[catalog.SellingPriceKey] = fetchNumberValue(variant, "price_incl")
+		shopProduct[VariantIDKey] = variant["variant_id"].(string)
+		shopProduct[PictureLinkKey] = fetchValue(variant, "picture_link")
+		shopProduct[ProductEanKey] = fetchValue(variant, "ean")
+		shopProduct[FloorPriceKey] = fetchNumberValue(variant, "cost_price_excl")
+		shopProduct[ProductInStockKey] = fetchNumberValue(variant, "product_in_stock")
+		shopProduct[StockStatusKey] = fetchValue(variant, "stock_status")
+		shopProduct[DeliveryPeriodKey] = fetchValue(variant, "delivery_period")
+		shopProduct[SellingPriceKey] = fetchNumberValue(variant, "price_incl")
 
 		shopProducts = append(shopProducts, shopProduct)
 	}
 	return shopProducts
 }
 
-func FindAll(shopId int) (<-chan catalog.ShopProduct, <-chan error) {
-	shopProductChannel := make(chan catalog.ShopProduct)
+func FindAll(shopId int) (<-chan ShopProduct, <-chan error) {
+	shopProductChannel := make(chan ShopProduct)
 	errorChannel := make(chan error, 5)
 	request, err := http.NewRequest("GET", catalogUrl(shopId), nil)
 	if err != nil {
@@ -72,7 +148,7 @@ func FindAll(shopId int) (<-chan catalog.ShopProduct, <-chan error) {
 		defer resp.Body.Close()
 		decoder := json.NewDecoder(resp.Body)
 		var product BonoboProduct
-		var shopProduct catalog.ShopProduct
+		var shopProduct ShopProduct
 		for {
 			err := decoder.Decode(&product)
 			if err == io.EOF {
