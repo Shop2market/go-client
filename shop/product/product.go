@@ -32,6 +32,7 @@ const (
 	StockStatusKey    = "Stock Status"
 	SellingPriceKey   = "Selling Price"
 	EnabledKey        = "Enabled"
+	DisabledAtKey     = "Disabled At"
 )
 
 func (s ShopProduct) Description() string {
@@ -89,6 +90,9 @@ func (s ShopProduct) SellingPrice() string {
 func (s ShopProduct) Enabled() string {
 	return s[EnabledKey]
 }
+func (s ShopProduct) DisabledAt() string {
+	return s[DisabledAtKey]
+}
 
 type Finder func(int) (<-chan ShopProduct, <-chan error)
 
@@ -134,6 +138,7 @@ func (bp BonoboProduct) toShopProducts() []ShopProduct {
 		shopProduct[DeliveryPeriodKey] = fetchValue(variant, "delivery_period")
 		shopProduct[SellingPriceKey] = fetchNumberValue(variant, "price_incl")
 		shopProduct[EnabledKey] = fetchBool(variant, "enabled")
+		shopProduct[DisabledAtKey] = fetchValue(variant, "disabled_at")
 
 		shopProducts = append(shopProducts, shopProduct)
 	}
