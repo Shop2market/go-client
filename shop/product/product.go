@@ -31,6 +31,7 @@ const (
 	ProductInStockKey = "Product in stock"
 	StockStatusKey    = "Stock Status"
 	SellingPriceKey   = "Selling Price"
+	EnabledKey        = "Enabled"
 )
 
 func (s ShopProduct) Description() string {
@@ -82,9 +83,11 @@ func (s ShopProduct) ProductInStock() string {
 func (s ShopProduct) StockStatus() string {
 	return s[StockStatusKey]
 }
-
 func (s ShopProduct) SellingPrice() string {
 	return s[SellingPriceKey]
+}
+func (s ShopProduct) Enabled() string {
+	return s[EnabledKey]
 }
 
 type Finder func(int) (<-chan ShopProduct, <-chan error)
@@ -102,6 +105,13 @@ func fetchNumberValue(hash map[string]interface{}, key string) string {
 		return fmt.Sprintf("%.0f", value)
 	}
 	return ""
+}
+func fetchBool(hash map[string]interface{}, key string) string {
+	value, ok := hash[key].(bool)
+	if ok && value {
+		return "true"
+	}
+	return "false"
 }
 func (bp BonoboProduct) toShopProducts() []ShopProduct {
 	shopProducts := []ShopProduct{}
@@ -123,6 +133,7 @@ func (bp BonoboProduct) toShopProducts() []ShopProduct {
 		shopProduct[StockStatusKey] = fetchValue(variant, "stock_status")
 		shopProduct[DeliveryPeriodKey] = fetchValue(variant, "delivery_period")
 		shopProduct[SellingPriceKey] = fetchNumberValue(variant, "price_incl")
+		shopProduct[EnabledKey] = fetchBool(variant, "enabled")
 
 		shopProducts = append(shopProducts, shopProduct)
 	}

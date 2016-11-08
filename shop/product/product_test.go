@@ -44,6 +44,7 @@ var _ = Describe("Product", func() {
 			Expect(product.SubCategory()).To(Equal(""))
 			Expect(product.DeliveryPeriod()).To(Equal("1 week"))
 			Expect(product.SellingPrice()).To(Equal("1000"))
+			Expect(product.Enabled()).To(Equal("true"))
 
 			product = <-productChan
 			Expect(product.ShopCode()).To(Equal("13861613"))
