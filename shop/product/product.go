@@ -14,25 +14,26 @@ type BonoboProduct map[string]interface{}
 type ShopProduct map[string]string
 
 const (
-	DescriptionKey    = "Product Description"
-	FloorPriceKey     = "Cost Price"
-	StockKey          = "Product in stock"
-	CategoryPathKey   = "Category Path"
-	CategoryKey       = "Category"
-	SubCategoryKey    = "Sub category"
-	ShopCodeKey       = "Shop Code"
-	VariantIDKey      = "Variant ID"
-	ProductNameKey    = "Product Name"
-	PictureLinkKey    = "Picture Link"
-	DeeplinkKey       = "Deeplink"
-	ProductEanKey     = "Product Ean"
-	ProductBrandKey   = "Product Brand"
-	DeliveryPeriodKey = "Delivery Period"
-	ProductInStockKey = "Product in stock"
-	StockStatusKey    = "Stock Status"
-	SellingPriceKey   = "Selling Price"
-	EnabledKey        = "Enabled"
-	DisabledAtKey     = "Disabled At"
+	DescriptionKey      = "Product Description"
+	FloorPriceKey       = "Cost Price"
+	StockKey            = "Product in stock"
+	CategoryPathKey     = "Category Path"
+	CategoryKey         = "Category"
+	SubCategoryKey      = "Sub category"
+	ShopCodeKey         = "Shop Code"
+	VariantIDKey        = "Variant ID"
+	ProductNameKey      = "Product Name"
+	PictureLinkKey      = "Picture Link"
+	DeeplinkKey         = "Deeplink"
+	ProductEanKey       = "Product Ean"
+	ProductBrandKey     = "Product Brand"
+	DeliveryPeriodKey   = "Delivery Period"
+	ProductInStockKey   = "Product in stock"
+	StockStatusKey      = "Stock Status"
+	EnabledKey          = "Enabled"
+	DisabledAtKey       = "Disabled At"
+	SellingPriceExclKey = "Selling Price Excl"
+	SellingPriceInclKey = "Selling Price Incl"
 )
 
 func (s ShopProduct) Description() string {
@@ -84,8 +85,11 @@ func (s ShopProduct) ProductInStock() string {
 func (s ShopProduct) StockStatus() string {
 	return s[StockStatusKey]
 }
-func (s ShopProduct) SellingPrice() string {
-	return s[SellingPriceKey]
+func (s ShopProduct) SellingPriceIncl() string {
+	return s[SellingPriceInclKey]
+}
+func (s ShopProduct) SellingPriceExcl() string {
+	return s[SellingPriceExclKey]
 }
 func (s ShopProduct) Enabled() string {
 	return s[EnabledKey]
@@ -136,7 +140,8 @@ func (bp BonoboProduct) toShopProducts() []ShopProduct {
 		shopProduct[ProductInStockKey] = fetchNumberValue(variant, "product_in_stock")
 		shopProduct[StockStatusKey] = fetchValue(variant, "stock_status")
 		shopProduct[DeliveryPeriodKey] = fetchValue(variant, "delivery_period")
-		shopProduct[SellingPriceKey] = fetchNumberValue(variant, "price_incl")
+		shopProduct[SellingPriceInclKey] = fetchNumberValue(variant, "price_incl")
+		shopProduct[SellingPriceExclKey] = fetchNumberValue(variant, "price_excl")
 		shopProduct[EnabledKey] = fetchBool(variant, "enabled")
 		shopProduct[DisabledAtKey] = fetchValue(variant, "disabled_at")
 
