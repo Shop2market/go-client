@@ -32,8 +32,8 @@ const (
 	StockStatusKey      = "Stock Status"
 	EnabledKey          = "Enabled"
 	DisabledAtKey       = "Disabled At"
-	SellingPriceExclKey = "Selling Price Excl"
-	SellingPriceInclKey = "Selling Price Incl"
+	SellingPriceExclKey = "Selling Price Ex"
+	SellingPriceInclKey = "Selling Price"
 )
 
 func (s ShopProduct) Description() string {
