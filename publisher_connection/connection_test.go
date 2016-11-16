@@ -29,6 +29,7 @@ var _ = Describe("Connection", func() {
 				ConnectionDetails: &ConnectionDetails{
 					ShopId:              stringPtr("46834"),
 					ProductUpdateApiKey: stringPtr("6754856"),
+					PublicKey:           stringPtr("756374"),
 				},
 			},
 		}))
@@ -65,6 +66,7 @@ var _ = Describe("Connection", func() {
 				ConnectionDetails: &ConnectionDetails{
 					ShopId:              stringPtr("46834"),
 					ProductUpdateApiKey: stringPtr("6754856"),
+					PublicKey:           stringPtr("756374"),
 				},
 			},
 		}))
