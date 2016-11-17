@@ -15,6 +15,7 @@ type ShopProduct map[string]string
 const DescriptionKey string = "Product Description"
 const FloorPriceKey string = "Cost Price"
 const StockKey string = "Product in stock"
+const CategoryPathKey string = "Category Path"
 const CategoryKey string = "Category"
 const SubCategoryKey string = "Sub category"
 const ShopCodeKey string = "Shop Code"
@@ -40,6 +41,9 @@ func (s ShopProduct) Stock() (int, error) {
 }
 func (s ShopProduct) Category() string {
 	return s[CategoryKey]
+}
+func (s ShopProduct) CategoryPath() string {
+	return s[CategoryPathKey]
 }
 func (s ShopProduct) SubCategory() string {
 	return s[SubCategoryKey]
