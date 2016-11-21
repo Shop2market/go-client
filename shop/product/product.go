@@ -163,10 +163,13 @@ func FindAll(shopId int) (<-chan ShopProduct, <-chan error) {
 		errorChannel <- err
 		return shopProductChannel, errorChannel
 	}
+	fmt.Printf("Opened stream for shop %d\n", shopId)
 	go func() {
 		defer close(shopProductChannel)
 		defer close(errorChannel)
 		defer resp.Body.Close()
+		defer fmt.Printf("Closed stream for shop %d\n", shopId)
+
 		decoder := json.NewDecoder(resp.Body)
 		var product BonoboProduct
 		var shopProduct ShopProduct
