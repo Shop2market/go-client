@@ -106,6 +106,8 @@ func Find(shopId int) (<-chan ShopProduct, <-chan error) {
 	resp, err := http.Get(catalogUrl(shopId))
 	if err != nil {
 		errorChannel <- err
+		close(shopProductChannel)
+		close(errorChannel)
 		return shopProductChannel, errorChannel
 	}
 	fmt.Printf("-- Shop ID %d stream opened\n", shopId)
