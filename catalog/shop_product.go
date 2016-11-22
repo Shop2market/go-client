@@ -12,23 +12,28 @@ var Endpoint string
 
 type ShopProduct map[string]string
 
-const DescriptionKey string = "Product Description"
-const FloorPriceKey string = "Cost Price"
-const StockKey string = "Product in stock"
-const CategoryPathKey string = "Category Path"
-const CategoryKey string = "Category"
-const SubCategoryKey string = "Sub category"
-const ShopCodeKey string = "Shop Code"
-const VariantIDKey string = "Variant ID"
-const ProductNameKey string = "Product Name"
-const PictureLinkKey string = "Picture Link"
-const DeeplinkKey string = "Deeplink"
-const ProductEanKey string = "Product Ean"
-const ProductBrandKey string = "Product Brand"
-const DeliveryPeriodKey string = "Delivery Period"
-const ProductInStockKey string = "Product in stock"
-const StockStatusKey string = "Stock Status"
-const SellingPriceKey string = "Selling Price"
+const (
+	DescriptionKey      = "Product Description"
+	FloorPriceKey       = "Cost Price"
+	StockKey            = "Product in stock"
+	CategoryPathKey     = "Category Path"
+	CategoryKey         = "Category"
+	SubCategoryKey      = "Sub category"
+	ShopCodeKey         = "Shop Code"
+	VariantIDKey        = "Variant ID"
+	ProductNameKey      = "Product Name"
+	PictureLinkKey      = "Picture Link"
+	DeeplinkKey         = "Deeplink"
+	ProductEanKey       = "Product Ean"
+	ProductBrandKey     = "Product Brand"
+	DeliveryPeriodKey   = "Delivery Period"
+	ProductInStockKey   = "Product in stock"
+	StockStatusKey      = "Stock Status"
+	EnabledKey          = "Enabled"
+	DisabledAtKey       = "Disabled At"
+	SellingPriceExclKey = "Selling Price Ex"
+	SellingPriceInclKey = "Selling Price"
+)
 
 func (s ShopProduct) Description() string {
 	return s[DescriptionKey]
@@ -80,8 +85,17 @@ func (s ShopProduct) StockStatus() string {
 	return s[StockStatusKey]
 }
 
-func (s ShopProduct) SellingPrice() string {
-	return s[SellingPriceKey]
+func (s ShopProduct) SellingPriceIncl() string {
+	return s[SellingPriceInclKey]
+}
+func (s ShopProduct) SellingPriceExcl() string {
+	return s[SellingPriceExclKey]
+}
+func (s ShopProduct) Enabled() string {
+	return s[EnabledKey]
+}
+func (s ShopProduct) DisabledAt() string {
+	return s[DisabledAtKey]
 }
 
 type Finder func(int) (<-chan ShopProduct, <-chan error)
@@ -92,12 +106,17 @@ func Find(shopId int) (<-chan ShopProduct, <-chan error) {
 	resp, err := http.Get(catalogUrl(shopId))
 	if err != nil {
 		errorChannel <- err
+		close(shopProductChannel)
+		close(errorChannel)
+		return shopProductChannel, errorChannel
 	}
+	fmt.Printf("-- Shop ID %d stream opened\n", shopId)
 	go func() {
 		defer close(shopProductChannel)
 		defer close(errorChannel)
 		decoder := json.NewDecoder(resp.Body)
 		defer resp.Body.Close()
+		defer fmt.Printf("-- Shop ID %d stream closed\n", shopId)
 		for {
 			var shopProduct ShopProduct
 			err := decoder.Decode(&shopProduct)

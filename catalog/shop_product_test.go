@@ -27,9 +27,18 @@ var _ = Describe("ShopProduct", func() {
 		product := <-productChan
 		Expect(product["Shop Code"]).To(Equal("20201"))
 		Expect(product["Variant ID"]).To(Equal("2"))
+		Expect(product["Selling Price"]).To(Equal("2095"))
+		Expect(product["Selling Price Ex"]).To(Equal("2000"))
+		Expect(product["Enabled"]).To(Equal("false"))
+		Expect(product["Disabled At"]).To(Equal("2016-11-08T00:00:01Z"))
+
 		product = <-productChan
 		Expect(product["Shop Code"]).To(Equal("20301"))
 		Expect(product["Variant ID"]).To(Equal("1"))
+		Expect(product["Selling Price"]).To(Equal("965"))
+		Expect(product["Selling Price Ex"]).To(Equal("800"))
+		Expect(product["Enabled"]).To(Equal("true"))
+		Expect(product["Disabled At"]).To(Equal(""))
 		Expect(product.SubCategory()).To(Equal(""))
 		product = <-productChan
 		Expect(errorChan).Should(BeClosed())
