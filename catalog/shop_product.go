@@ -107,13 +107,13 @@ func Find(shopId int) (<-chan ShopProduct, <-chan error) {
 	if err != nil {
 		errorChannel <- err
 	}
-	fmt.Printf("-- Shop ID %d stream opened", shopId)
+	fmt.Printf("-- Shop ID %d stream opened\n", shopId)
 	go func() {
 		defer close(shopProductChannel)
 		defer close(errorChannel)
 		decoder := json.NewDecoder(resp.Body)
 		defer resp.Body.Close()
-		defer fmt.Printf("-- Shop ID %d stream closed", shopId)
+		defer fmt.Printf("-- Shop ID %d stream closed\n", shopId)
 		for {
 			var shopProduct ShopProduct
 			err := decoder.Decode(&shopProduct)
