@@ -99,9 +99,13 @@ func (s ShopProduct) DisabledAt() string {
 	return s[DisabledAtKey]
 }
 
-func (s ShopProduct) UserField(field int) string {
+func (s ShopProduct) UserField(field int) *string {
 	key := fmt.Sprintf("User%d", field)
-	return s[key]
+	v := s[key]
+	if v != "" {
+		return &v
+	}
+	return nil
 }
 
 type Finder func(int) (<-chan ShopProduct, <-chan error)
