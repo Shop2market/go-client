@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 var Endpoint string
@@ -98,6 +99,11 @@ func (s ShopProduct) DisabledAt() string {
 	return s[DisabledAtKey]
 }
 
+func (s ShopProduct) UserField(field int) string {
+	key := fmt.Sprintf("User%d", field)
+	return s[key]
+}
+
 type Finder func(int) (<-chan ShopProduct, <-chan error)
 
 func fetchValue(hash map[string]interface{}, key string) string {
@@ -124,6 +130,7 @@ func fetchBool(hash map[string]interface{}, key string) string {
 func (bp BonoboProduct) toShopProducts() []ShopProduct {
 	shopProducts := []ShopProduct{}
 	variants := bp["variants"].([]interface{})
+	key := ""
 	for _, variantInterface := range variants {
 		shopProduct := ShopProduct{}
 		shopProduct[ShopCodeKey] = fetchValue(bp, "shop_code")
@@ -144,7 +151,10 @@ func (bp BonoboProduct) toShopProducts() []ShopProduct {
 		shopProduct[SellingPriceExclKey] = fetchNumberValue(variant, "price_excl")
 		shopProduct[EnabledKey] = fetchBool(variant, "enabled")
 		shopProduct[DisabledAtKey] = fetchValue(variant, "disabled_at")
-
+		for i := 1; i <= 50; i++ {
+			key = fmt.Sprintf("User%d", i)
+			shopProduct[key] = fetchValue(variant, strings.ToLower(key))
+		}
 		shopProducts = append(shopProducts, shopProduct)
 	}
 	return shopProducts
