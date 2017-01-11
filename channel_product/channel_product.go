@@ -147,11 +147,31 @@ func Touch(shopId, publisherId int, shopCodes []string) error {
 	_, err = http.DefaultClient.Do(req)
 	return err
 }
+func Webhook(shopId int, shopCodes []string) error {
+	url, err := buildWebhoookUrl(shopId)
+	if err != nil {
+		return err
+	}
+	jsonShopCodes, err := json.Marshal(shopCodes)
+	if err != nil {
+		return err
+	}
+	req, err := http.NewRequest("PUT", url, bytes.NewReader(jsonShopCodes))
+	if err != nil {
+		return err
+	}
+	req.Header.Set("Content-Type", "application/json")
+	_, err = http.DefaultClient.Do(req)
+	return err
+}
 func buildTouchUrl(shopId, publisherId int) (string, error) {
 	uri, err := url.Parse(fmt.Sprintf("%s/shops/%d/publishers/%d/products/touch", Endpoint, shopId, publisherId))
 	return uri.String(), err
 }
-
+func buildWebhoookUrl(shopId int) (string, error) {
+	uri, err := url.Parse(fmt.Sprintf("%s/shops/%d/products/webhook", Endpoint, shopId))
+	return uri.String(), err
+}
 func buildQueryUrl(productsQuery *ProductsQuery) (string, error) {
 	productUrl, err := url.Parse(fmt.Sprintf("%s/shops/%d/publishers/%d/products", Endpoint, productsQuery.ShopId, productsQuery.PublisherId))
 	if err != nil {

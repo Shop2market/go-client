@@ -61,6 +61,21 @@ var _ = Describe("Store", func() {
 			Touch(1, 5, shopCodes)
 		})
 	})
+	Context("posts webhook on channel products", func() {
+		It("PUT's to webhook", func() {
+			shopCodes := []string{"a", "b"}
+			server := ghttp.NewServer()
+			server.AppendHandlers(
+				ghttp.CombineHandlers(
+					ghttp.VerifyRequest("PUT", "/shops/1/products/webhook", ""),
+					ghttp.VerifyJSONRepresenting(shopCodes),
+				),
+			)
+			Endpoint = server.URL()
+
+			Webhook(1, shopCodes)
+		})
+	})
 	Context("requests channel products", func() {
 		Context("parameters construction", func() {
 			It("supports active", func() {
