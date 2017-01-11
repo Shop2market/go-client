@@ -35,6 +35,7 @@ const (
 	DisabledAtKey       = "Disabled At"
 	SellingPriceExclKey = "Selling Price Ex"
 	SellingPriceInclKey = "Selling Price"
+	SkuKey              = "Sku"
 )
 
 func (s ShopProduct) Description() string {
@@ -98,7 +99,9 @@ func (s ShopProduct) Enabled() string {
 func (s ShopProduct) DisabledAt() string {
 	return s[DisabledAtKey]
 }
-
+func (s ShopProduct) Sku() string {
+	return s[SkuKey]
+}
 func (s ShopProduct) UserField(field int) *string {
 	key := fmt.Sprintf("User%d", field)
 	v := s[key]
@@ -155,6 +158,7 @@ func (bp BonoboProduct) toShopProducts() []ShopProduct {
 		shopProduct[SellingPriceExclKey] = fetchNumberValue(variant, "price_excl")
 		shopProduct[EnabledKey] = fetchBool(variant, "enabled")
 		shopProduct[DisabledAtKey] = fetchValue(variant, "disabled_at")
+		shopProduct[SkuKey] = fetchValue(variant, "sku")
 		for i := 1; i <= 50; i++ {
 			key = fmt.Sprintf("User%d", i)
 			shopProduct[key] = fetchValue(variant, strings.ToLower(key))
