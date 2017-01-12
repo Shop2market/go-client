@@ -99,8 +99,12 @@ func (s ShopProduct) Enabled() string {
 func (s ShopProduct) DisabledAt() string {
 	return s[DisabledAtKey]
 }
-func (s ShopProduct) Sku() string {
-	return s[SkuKey]
+func (s ShopProduct) Sku() *string {
+	v := s[SkuKey]
+	if v == "" {
+		return nil
+	}
+	return &v
 }
 func (s ShopProduct) UserField(field int) *string {
 	key := fmt.Sprintf("User%d", field)
