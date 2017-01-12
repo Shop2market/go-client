@@ -148,6 +148,9 @@ func Touch(shopId, publisherId int, shopCodes []string) error {
 	return err
 }
 func Webhook(shopId int, shopCodes []string) error {
+	if len(shopCodes) == 0 {
+		return nil
+	}
 	url, err := buildWebhoookUrl(shopId)
 	if err != nil {
 		return err

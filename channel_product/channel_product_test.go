@@ -75,6 +75,12 @@ var _ = Describe("Store", func() {
 
 			Webhook(1, shopCodes)
 		})
+		It("doesn't PUT to webhook", func() {
+			shopCodes := []string{}
+			server := ghttp.NewServer()
+			Endpoint = server.URL()
+			Webhook(1, shopCodes)
+		})
 	})
 	Context("requests channel products", func() {
 		Context("parameters construction", func() {
