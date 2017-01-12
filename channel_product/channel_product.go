@@ -144,7 +144,8 @@ func Touch(shopId, publisherId int, shopCodes []string) error {
 		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	_, err = http.DefaultClient.Do(req)
+	res, err := http.DefaultClient.Do(req)
+	defer res.Body.Close()
 	return err
 }
 func Webhook(shopId int, shopCodes []string) error {
@@ -164,7 +165,8 @@ func Webhook(shopId int, shopCodes []string) error {
 		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	_, err = http.DefaultClient.Do(req)
+	res, err := http.DefaultClient.Do(req)
+	defer res.Body.Close()
 	return err
 }
 func buildTouchUrl(shopId, publisherId int) (string, error) {
