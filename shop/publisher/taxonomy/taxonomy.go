@@ -31,6 +31,7 @@ type Category struct {
 type Taxonomy struct {
 	ID         int        `json:"id"`
 	Name       string     `json:"name"`
+	IsCategory bool       `json:"is_category"`
 	Categories []Category `json:"categories"`
 }
 

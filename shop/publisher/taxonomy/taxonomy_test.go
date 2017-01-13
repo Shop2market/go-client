@@ -32,8 +32,10 @@ var _ = Describe("Shop/Publisher/Taxonomy", func() {
 		Expect(taxonomies).To(HaveLen(4))
 		Expect(taxonomies[0].Categories[1].Path).To(Equal("Shoes -> Boots"))
 		Expect(taxonomies[0].Name).To(Equal("Categories"))
+		Expect(taxonomies[0].IsCategory).To(Equal(true))
 
 		Expect(taxonomies[1].Name).To(Equal("Age group"))
+		Expect(taxonomies[1].IsCategory).To(Equal(false))
 		Expect(taxonomies[1].ID).To(Equal(234))
 		Expect(taxonomies[1].Categories).To(HaveLen(10))
 		Expect(taxonomies[1].Categories[0].Name).To(Equal("1-3 years"))
