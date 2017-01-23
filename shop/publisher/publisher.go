@@ -17,9 +17,10 @@ type Query struct {
 }
 
 type Publisher struct {
-	ID                int    `json:"id"`
-	Name              string `json:"name"`
-	ProductApiEnabled bool   `json:"product_api_enabled"`
+	ID                int      `json:"id"`
+	Name              string   `json:"name"`
+	ProductApiEnabled bool     `json:"product_api_enabled"`
+	TipTypes          []string `json:"tip_types"`
 }
 
 // Finder - Main find functor, can be overloaded for stubs or assigned with package Find function
