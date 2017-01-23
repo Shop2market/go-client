@@ -35,6 +35,13 @@ func NewTimeId(date time.Time) TimeId {
 	return TimeId(fmt.Sprintf("%d%02d%02d", date.Year(), date.Month(), date.Day()))
 }
 
+func FindForTimePeriod(shopId, publisherId int, timePeriod int) *StatisticIterator {
+	startTime := NewTimeId(time.Now().AddDate(0, 0, timePeriod*-1))
+	stopTime := NewTimeId(time.Now())
+	iterator, _ := Find(shopId, publisherId, startTime, stopTime)
+	return iterator
+}
+
 func Find(shopId, publisherId int, startTimeId, stopTimeId TimeId) (*StatisticIterator, error) {
 	url, err := buildUrl(shopId, publisherId, startTimeId, stopTimeId, nil)
 	if err != nil {
