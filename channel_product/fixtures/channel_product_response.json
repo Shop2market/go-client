@@ -8,8 +8,8 @@
       "manually_set":true,
       "active":true,
       "enabled":true,
-      "channel_category_ids":[1,2],
-      "taxonomies": {"1": [2,3]}
+      "manual_channel_category_ids":[1,2],
+      "manual_taxonomies": {"1": [2,3]}
    },
    {
       "product_id":{
@@ -19,6 +19,6 @@
       },
       "active":true,
       "enabled":true,
-      "channel_category_ids":[1,2]
+      "manual_channel_category_ids":[1,2]
    }
 ]
