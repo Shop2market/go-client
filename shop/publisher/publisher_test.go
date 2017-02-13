@@ -31,6 +31,7 @@ var _ = Describe("Shop/Publisher", func() {
 		Expect(publisher).NotTo(BeNil())
 		Expect(publisher.ID).To(Equal(17))
 		Expect(publisher.Name).To(Equal("Kieskeurig.nl"))
+		Expect(publisher.ConversionStatus).To(Equal("converted"))
 		Expect(publisher.ProductApiEnabled).To(Equal(false))
 		Expect(publisher.TipTypes).To(HaveLen(1))
 		Expect(publisher.TipTypes[0]).To(Equal("ROI"))

@@ -20,6 +20,7 @@ type Publisher struct {
 	ID                int      `json:"id"`
 	Name              string   `json:"name"`
 	ProductApiEnabled bool     `json:"product_api_enabled"`
+	ConversionStatus  string   `json:"conversion_status"`
 	TipTypes          []string `json:"tip_types"`
 }
 
