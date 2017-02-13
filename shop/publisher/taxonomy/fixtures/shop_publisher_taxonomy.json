@@ -2,7 +2,37 @@
 [
   {
     "id": 234,
+    "name": "Categories",
+    "is_category": true,
+    "custom": false,
+    "categories": [
+      {
+        "id": 20001,
+        "name": "Shoes",
+        "mapping_allowed": true,
+        "cpc": 13,
+        "industry_id": 1,
+        "parent_id": 0,
+        "external_id": "EX20001",
+        "keywords": "Shoes, boots"
+      },
+      {
+        "id": 20002,
+        "name": "Boots",
+        "mapping_allowed": false,
+        "cpc": 13,
+        "industry_id": 1,
+        "parent_id": 20001,
+        "external_id": "EX20002",
+        "keywords": "boots"
+      }
+    ]
+  },
+  {
+    "id": 234,
     "name": "Age group",
+    "is_category": false,
+    "custom": true,
     "categories": [
       {
         "id": 335990,
@@ -10,7 +40,9 @@
         "mapping_allowed": true,
         "cpc": 13,
         "industry_id": null,
-        "parent_id": 0
+        "parent_id": 0,
+        "external_id": "1234",
+        "keywords": null
       },
       {
         "id": 335993,
@@ -18,7 +50,9 @@
         "mapping_allowed": false,
         "cpc": null,
         "industry_id": null,
-        "parent_id": 0
+        "parent_id": 0,
+        "external_id": "1234",
+        "keywords": null
       },
       {
         "id": 335994,
@@ -26,7 +60,9 @@
         "mapping_allowed": true,
         "cpc": null,
         "industry_id": null,
-        "parent_id": 0
+        "parent_id": 0,
+        "external_id": "1234",
+        "keywords": null
       },
       {
         "id": 335995,
@@ -34,7 +70,9 @@
         "mapping_allowed": true,
         "cpc": null,
         "industry_id": null,
-        "parent_id": 0
+        "parent_id": 0,
+        "external_id": "1234",
+        "keywords": null
       },
       {
         "id": 335996,
@@ -42,7 +80,9 @@
         "mapping_allowed": true,
         "cpc": null,
         "industry_id": null,
-        "parent_id": 0
+        "parent_id": 0,
+        "external_id": "1234",
+        "keywords": null
       },
       {
         "id": 335991,
@@ -50,7 +90,9 @@
         "mapping_allowed": true,
         "cpc": null,
         "industry_id": null,
-        "parent_id": 0
+        "parent_id": 0,
+        "external_id": "1234",
+        "keywords": null
       },
       {
         "id": 335997,
@@ -58,7 +100,9 @@
         "mapping_allowed": true,
         "cpc": null,
         "industry_id": null,
-        "parent_id": 0
+        "parent_id": 0,
+        "external_id": "1234",
+        "keywords": null
       },
       {
         "id": 335998,
@@ -66,7 +110,9 @@
         "mapping_allowed": true,
         "cpc": null,
         "industry_id": null,
-        "parent_id": 0
+        "parent_id": 0,
+        "external_id": "1234",
+        "keywords": null
       },
       {
         "id": 335992,
@@ -74,7 +120,9 @@
         "mapping_allowed": false,
         "cpc": null,
         "industry_id": null,
-        "parent_id": 0
+        "parent_id": 0,
+        "external_id": "1234",
+        "keywords": null
       },
       {
         "id": 335999,
@@ -89,6 +137,8 @@
   {
     "id": 232,
     "name": "Delivery time",
+    "is_category": false,
+    "custom": true,
     "categories": [
       {
         "id": 335984,
@@ -96,7 +146,9 @@
         "mapping_allowed": true,
         "cpc": null,
         "industry_id": 8,
-        "parent_id": 0
+        "parent_id": 0,
+        "external_id": "1234",
+        "keywords": null
       },
       {
         "id": 335989,
@@ -104,7 +156,9 @@
         "mapping_allowed": true,
         "cpc": null,
         "industry_id": null,
-        "parent_id": 0
+        "parent_id": 0,
+        "external_id": "1234",
+        "keywords": null
       },
       {
         "id": 335988,
@@ -112,13 +166,17 @@
         "mapping_allowed": true,
         "cpc": null,
         "industry_id": null,
-        "parent_id": 0
+        "parent_id": 0,
+        "external_id": "1234",
+        "keywords": null
       }
     ]
   },
   {
     "id": 233,
     "name": "Gender",
+    "is_category": false,
+    "custom": true,
     "categories": [
       {
         "id": 335986,
@@ -126,7 +184,9 @@
         "mapping_allowed": true,
         "cpc": null,
         "industry_id": null,
-        "parent_id": 0
+        "parent_id": 0,
+        "external_id": "1234",
+        "keywords": null
       },
       {
         "id": 335987,
@@ -134,7 +194,9 @@
         "mapping_allowed": true,
         "cpc": null,
         "industry_id": null,
-        "parent_id": 0
+        "parent_id": 0,
+        "external_id": "1234",
+        "keywords": null
       },
       {
         "id": 335985,
@@ -142,7 +204,9 @@
         "mapping_allowed": true,
         "cpc": null,
         "industry_id": null,
-        "parent_id": 0
+        "parent_id": 0,
+        "external_id": "1234",
+        "keywords": null
       }
     ]
   }

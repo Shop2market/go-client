@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"sort"
 	"strings"
 )
 
@@ -31,6 +32,7 @@ type Category struct {
 type Taxonomy struct {
 	ID         int        `json:"id"`
 	Name       string     `json:"name"`
+	IsCategory bool       `json:"is_category"`
 	Categories []Category `json:"categories"`
 }
 
@@ -42,11 +44,19 @@ func DummyFinder(query *Query) ([]Taxonomy, error) {
 	return []Taxonomy{}, nil
 }
 
+type Categories []Category
+
+type CategoriesByID struct{ Categories }
+
+func (s Categories) Len() int               { return len(s) }
+func (s Categories) Swap(i, j int)          { s[i], s[j] = s[j], s[i] }
+func (s CategoriesByID) Less(i, j int) bool { return s.Categories[i].ID < s.Categories[j].ID }
+
 func buildPaths(categories []Category) {
 	cats := categories
 	for i := range cats {
 		paths := buildPath(cats[i], cats)
-		cats[i].Path = strings.Join(paths, " -> ")
+		cats[i].Path = strings.Join(paths, "»")
 	}
 }
 
@@ -71,7 +81,6 @@ func Find(query *Query) ([]Taxonomy, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	request, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
@@ -88,9 +97,21 @@ func Find(query *Query) ([]Taxonomy, error) {
 		return nil, err
 	}
 	for i := range taxonomy {
+		sort.Sort(CategoriesByID{taxonomy[i].Categories})
 		buildPaths(taxonomy[i].Categories)
 	}
 	return taxonomy, nil
+}
+func FindById(taxonomies []Taxonomy, taxonomyId int) (*Category, *Taxonomy) {
+	for _, taxonomyObj := range taxonomies {
+		i := sort.Search(len(taxonomyObj.Categories), func(i int) bool {
+			return taxonomyObj.Categories[i].ID >= taxonomyId
+		})
+		if i != len(taxonomyObj.Categories) && taxonomyObj.Categories[i].ID == taxonomyId {
+			return &taxonomyObj.Categories[i], &taxonomyObj
+		}
+	}
+	return nil, nil
 }
 
 func apiUrl(query *Query) (string, error) {
