@@ -33,6 +33,7 @@ const (
 	DisabledAtKey       = "Disabled At"
 	SellingPriceExclKey = "Selling Price Ex"
 	SellingPriceInclKey = "Selling Price"
+	SkuKey              = "Sku"
 )
 
 func (s ShopProduct) Description() string {
@@ -96,6 +97,22 @@ func (s ShopProduct) Enabled() string {
 }
 func (s ShopProduct) DisabledAt() string {
 	return s[DisabledAtKey]
+}
+
+func (s ShopProduct) Sku() *string {
+	v := s[SkuKey]
+	if v == "" {
+		return nil
+	}
+	return &v
+}
+func (s ShopProduct) UserField(field int) *string {
+	key := fmt.Sprintf("User%d", field)
+	v := s[key]
+	if v != "" {
+		return &v
+	}
+	return nil
 }
 
 type Finder func(int) (<-chan ShopProduct, <-chan error)
