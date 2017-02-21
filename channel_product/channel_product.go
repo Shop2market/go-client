@@ -20,8 +20,8 @@ type Product struct {
 	Active             bool             `json:"active"`
 	Enabled            bool             `json:"enabled"`
 	ManuallySet        *bool            `json:"manually_set,omitempty"`
-	ChannelCategoryIDs []int            `json:"channel_category_ids"`
-	Taxonomies         map[string][]int `json:"taxonomies"`
+	ChannelCategoryIDs []int            `json:"manual_channel_category_ids"`
+	Taxonomies         map[string][]int `json:"manual_taxonomies"`
 }
 
 type ProductId struct {
@@ -144,14 +144,39 @@ func Touch(shopId, publisherId int, shopCodes []string) error {
 		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	_, err = http.DefaultClient.Do(req)
+	res, err := http.DefaultClient.Do(req)
+	defer res.Body.Close()
+	return err
+}
+func Webhook(shopId int, shopCodes []string) error {
+	if len(shopCodes) == 0 {
+		return nil
+	}
+	url, err := buildWebhoookUrl(shopId)
+	if err != nil {
+		return err
+	}
+	jsonShopCodes, err := json.Marshal(shopCodes)
+	if err != nil {
+		return err
+	}
+	req, err := http.NewRequest("PUT", url, bytes.NewReader(jsonShopCodes))
+	if err != nil {
+		return err
+	}
+	req.Header.Set("Content-Type", "application/json")
+	res, err := http.DefaultClient.Do(req)
+	defer res.Body.Close()
 	return err
 }
 func buildTouchUrl(shopId, publisherId int) (string, error) {
 	uri, err := url.Parse(fmt.Sprintf("%s/shops/%d/publishers/%d/products/touch", Endpoint, shopId, publisherId))
 	return uri.String(), err
 }
-
+func buildWebhoookUrl(shopId int) (string, error) {
+	uri, err := url.Parse(fmt.Sprintf("%s/shops/%d/products/webhook", Endpoint, shopId))
+	return uri.String(), err
+}
 func buildQueryUrl(productsQuery *ProductsQuery) (string, error) {
 	productUrl, err := url.Parse(fmt.Sprintf("%s/shops/%d/publishers/%d/products", Endpoint, productsQuery.ShopId, productsQuery.PublisherId))
 	if err != nil {
