@@ -33,7 +33,7 @@ const (
 	DisabledAtKey       = "Disabled At"
 	SellingPriceExclKey = "Selling Price Ex"
 	SellingPriceInclKey = "Selling Price"
-	SkuKey              = "Sku"
+	VendorCodeKey       = "Vendor Code"
 )
 
 func (s ShopProduct) Description() string {
@@ -99,8 +99,8 @@ func (s ShopProduct) DisabledAt() string {
 	return s[DisabledAtKey]
 }
 
-func (s ShopProduct) Sku() *string {
-	v := s[SkuKey]
+func (s ShopProduct) VendorCode() *string {
+	v := s[VendorCodeKey]
 	if v == "" {
 		return nil
 	}
