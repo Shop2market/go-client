@@ -100,19 +100,19 @@ func (s ShopProduct) DisabledAt() string {
 }
 
 func (s ShopProduct) VendorCode() *string {
-	v := s[VendorCodeKey]
-	if v == "" {
+	v, exists := s[VendorCodeKey]
+	if !exists {
 		return nil
 	}
 	return &v
 }
 func (s ShopProduct) UserField(field int) *string {
 	key := fmt.Sprintf("User%d", field)
-	v := s[key]
-	if v != "" {
-		return &v
+	v, exists := s[key]
+	if !exists {
+		return nil
 	}
-	return nil
+	return &v
 }
 
 type Finder func(int) (<-chan ShopProduct, <-chan error)
