@@ -15,7 +15,7 @@ import (
 
 var _ = Describe("AggregatedStatistic", func() {
 	It("Finds statistics with timperiod", func() {
-		startTime := NewTimeId(time.Now().AddDate(0, 0, -31))
+		startTime := NewTimeId(time.Now().AddDate(0, 0, -30))
 		stopTime := NewTimeId(time.Now().AddDate(0, 0, -1))
 		queryString := fmt.Sprintf("start=%s&stop=%s", startTime, stopTime)
 
