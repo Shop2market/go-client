@@ -15,8 +15,8 @@ import (
 
 var _ = Describe("AggregatedStatistic", func() {
 	It("Finds statistics with timperiod", func() {
-		startTime := NewTimeId(time.Now().AddDate(0, 0, -30))
-		stopTime := NewTimeId(time.Now())
+		startTime := NewTimeId(time.Now().AddDate(0, 0, -31))
+		stopTime := NewTimeId(time.Now().AddDate(0, 0, -1))
 		queryString := fmt.Sprintf("start=%s&stop=%s", startTime, stopTime)
 
 		content, err := ioutil.ReadFile("fixtures/product_statistic.jsonl")
