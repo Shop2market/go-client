@@ -20,8 +20,8 @@ type Product struct {
 	Active             bool             `json:"active"`
 	Enabled            bool             `json:"enabled"`
 	ManuallySet        *bool            `json:"manually_set,omitempty"`
-	ChannelCategoryIDs []int            `json:"channel_category_ids"`
-	Taxonomies         map[string][]int `json:"taxonomies"`
+	ChannelCategoryIDs []int            `json:"manual_channel_category_ids"`
+	Taxonomies         map[string][]int `json:"manual_taxonomies"`
 }
 
 type ProductId struct {
