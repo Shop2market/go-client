@@ -47,6 +47,8 @@ var _ = Describe("Product", func() {
 			Expect(product.SellingPriceExcl()).To(Equal("909"))
 			Expect(product.Enabled()).To(Equal("false"))
 			Expect(product.DisabledAt()).To(Equal("2016-10-25T09:28:48.715Z"))
+			Expect(*product.VendorCode()).To(Equal("vendor4543"))
+			Expect(*product.UserField(2)).To(Equal("26621028"))
 
 			product = <-productChan
 			Expect(product.ShopCode()).To(Equal("13861613"))
