@@ -33,6 +33,7 @@ var _ = Describe("Connection", func() {
 					MarketPlaceID:       stringPtr("abc"),
 					MWSToken:            stringPtr("abs"),
 					PublicKey:           stringPtr("756374"),
+					PrivateKey:          stringPtr("fdfhdhfdksjhfkjdhbf"),
 				},
 			},
 		}))
@@ -73,6 +74,7 @@ var _ = Describe("Connection", func() {
 					MarketPlaceID:       stringPtr("abc"),
 					MWSToken:            stringPtr("abs"),
 					PublicKey:           stringPtr("756374"),
+					PrivateKey:          stringPtr("fdfhdhfdksjhfkjdhbf"),
 				},
 			},
 		}))
