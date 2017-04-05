@@ -30,6 +30,7 @@ var _ = Describe("Connection", func() {
 					ShopId:              stringPtr("46834"),
 					ProductUpdateApiKey: stringPtr("6754856"),
 					PublicKey:           stringPtr("756374"),
+					PrivateKey:          stringPtr("fdfhdhfdksjhfkjdhbf"),
 				},
 			},
 		}))
@@ -67,6 +68,7 @@ var _ = Describe("Connection", func() {
 					ShopId:              stringPtr("46834"),
 					ProductUpdateApiKey: stringPtr("6754856"),
 					PublicKey:           stringPtr("756374"),
+					PrivateKey:          stringPtr("fdfhdhfdksjhfkjdhbf"),
 				},
 			},
 		}))

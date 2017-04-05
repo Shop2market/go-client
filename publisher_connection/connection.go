@@ -11,6 +11,7 @@ type ConnectionDetails struct {
 	ShopId              *string `json:"shop_id,omitempty"`
 	ProductUpdateApiKey *string `json:"product_update_api_key,omitempty"`
 	PublicKey           *string `json:"public_key,omitempty"`
+	PrivateKey          *string `json:"private_key,omitempty"`
 }
 
 type Connection struct {
