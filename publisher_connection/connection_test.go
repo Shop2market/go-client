@@ -29,6 +29,9 @@ var _ = Describe("Connection", func() {
 				ConnectionDetails: &ConnectionDetails{
 					ShopId:              stringPtr("46834"),
 					ProductUpdateApiKey: stringPtr("6754856"),
+					SellerID:            stringPtr("sellthk"),
+					MarketPlaceID:       stringPtr("abc"),
+					MWSToken:            stringPtr("abs"),
 					PublicKey:           stringPtr("756374"),
 					PrivateKey:          stringPtr("fdfhdhfdksjhfkjdhbf"),
 				},
@@ -67,6 +70,9 @@ var _ = Describe("Connection", func() {
 				ConnectionDetails: &ConnectionDetails{
 					ShopId:              stringPtr("46834"),
 					ProductUpdateApiKey: stringPtr("6754856"),
+					SellerID:            stringPtr("sellthk"),
+					MarketPlaceID:       stringPtr("abc"),
+					MWSToken:            stringPtr("abs"),
 					PublicKey:           stringPtr("756374"),
 					PrivateKey:          stringPtr("fdfhdhfdksjhfkjdhbf"),
 				},
