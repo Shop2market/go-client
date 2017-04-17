@@ -41,6 +41,7 @@ type ProductsQuery struct {
 	ManuallySetTip    *bool
 	LastUpdatedBefore *time.Time
 	ShopCodes         *[]string
+	Quarantine        *bool
 }
 
 func (productsQuery *ProductsQuery) RawQuery() string {
@@ -77,6 +78,13 @@ func (productsQuery *ProductsQuery) RawQuery() string {
 	if productsQuery.ShopCodes != nil {
 		for _, shopCode := range *productsQuery.ShopCodes {
 			query.Add("shop_codes[]", shopCode)
+		}
+	}
+	if productsQuery.Quarantine != nil {
+		if *productsQuery.Quarantine {
+			query.Add("quarantine", "true")
+		} else {
+			query.Add("quarantine", "false")
 		}
 	}
 

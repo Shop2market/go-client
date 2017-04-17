@@ -229,7 +229,7 @@ var _ = Describe("Store", func() {
 				manuallyDeactivated := false
 				Find(&ProductsQuery{ShopId: 1, PublisherId: 5, ManuallySet: &manuallyDeactivated})
 			})
-			It("supports last_updated_before, false", func() {
+			It("supports last_updated_before", func() {
 				server := ghttp.NewServer()
 				server.AppendHandlers(
 					ghttp.CombineHandlers(
@@ -242,6 +242,32 @@ var _ = Describe("Store", func() {
 				lastUpdatedBefore := time.Date(2014, 9, 12, 0, 0, 0, 0, time.UTC)
 
 				Find(&ProductsQuery{ShopId: 1, PublisherId: 5, LastUpdatedBefore: &lastUpdatedBefore})
+			})
+			It("supports quarantine", func() {
+				server := ghttp.NewServer()
+				server.AppendHandlers(
+					ghttp.CombineHandlers(
+						ghttp.VerifyRequest("GET", "/shops/1/publishers/5/products", "quarantine=true"),
+						ghttp.RespondWith(http.StatusOK, "[]"),
+					),
+				)
+				Endpoint = server.URL()
+
+				quarantine := true
+				Find(&ProductsQuery{ShopId: 1, PublisherId: 5, Quarantine: &quarantine})
+			})
+			It("supports quarantine, false", func() {
+				server := ghttp.NewServer()
+				server.AppendHandlers(
+					ghttp.CombineHandlers(
+						ghttp.VerifyRequest("GET", "/shops/1/publishers/5/products", "quarantine=false"),
+						ghttp.RespondWith(http.StatusOK, "[]"),
+					),
+				)
+				Endpoint = server.URL()
+
+				quarantine := false
+				Find(&ProductsQuery{ShopId: 1, PublisherId: 5, Quarantine: &quarantine})
 			})
 		})
 		It("sends correct parameters", func() {
