@@ -11,26 +11,32 @@ import (
 
 type Ad struct {
 	*Product
-	RulesTaxonomies map[string][]int `json:"taxonomies"`
-	ProductName     string           `json:"product_name"`
-	PictureLink     string           `json:"picture_link"`
-	Deeplink        string           `json:"deeplink"`
-	ShopCode        string           `json:"shop_code"`
-	ProductEan      string           `json:"product_ean"`
-	Category        string           `json:"category"`
-	Brand           string           `json:"brand"`
-	DeliveryPeriod  string           `json:"delivery_period"`
-	ProductsInStock int              `json:"products_in_stock"`
-	Price           int              `json:"price"`
-	Traffic         int              `json:"traffic"`
-	Profit          float64          `json:"profit"`
-	Costs           float64          `json:"costs"`
-	ROI             *float64         `json:"roi"`
-	Revenue         float64          `json:"revenue"`
-	Margin          float64          `json:"margin"`
-	QuarantinedAt   *time.Time       `json:"quarantined_at"`
-	StockStatus     string           `json:"stock_status"`
-	DisabledAt      *time.Time       `json:"disabled_at"`
+	RulesTaxonomies         map[string][]int `json:"taxonomies"`
+	ProductName             string           `json:"product_name"`
+	PictureLink             string           `json:"picture_link"`
+	Deeplink                string           `json:"deeplink"`
+	ShopCode                string           `json:"shop_code"`
+	ProductEan              string           `json:"product_ean"`
+	Category                string           `json:"category"`
+	Brand                   string           `json:"brand"`
+	DeliveryPeriod          string           `json:"delivery_period"`
+	ProductsInStock         int              `json:"products_in_stock"`
+	Price                   int              `json:"price"`
+	Traffic                 int              `json:"traffic"`
+	Profit                  float64          `json:"profit"`
+	Costs                   float64          `json:"costs"`
+	ROI                     *float64         `json:"roi"`
+	Revenue                 float64          `json:"revenue"`
+	Margin                  float64          `json:"margin"`
+	OrderAmountExcludingTax float64          `json:"order_amount_excluding_tax"`
+	OrderAmountIncludingTax float64          `json:"order_amount_including_tax"`
+	Assists                 float64          `json:"assists"`
+	Orders                  float64          `json:"orders"`
+	Contributed             float64          `json:"contribution"`
+	Quantity                float64          `json:"quantity"`
+	QuarantinedAt           *time.Time       `json:"quarantined_at"`
+	StockStatus             string           `json:"stock_status"`
+	DisabledAt              *time.Time       `json:"disabled_at"`
 }
 
 type AdQuery struct {

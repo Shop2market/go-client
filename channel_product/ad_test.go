@@ -57,6 +57,8 @@ var _ = Describe("Ads", func() {
 		Expect(ads[0].StockStatus).To(Equal("yes"))
 		Expect(ads[0].ProductsInStock).To(Equal(0))
 
+		Expect(ads[2].OrderAmountExcludingTax).To(Equal(33.33))
+
 		Expect(ads[2].ChannelCategoryIDs).To(Equal([]int{414341}))
 		Expect(ads[2].Taxonomies).To(Equal(map[string][]int{"297": []int{401856}}))
 		Expect(ads[2].RulesTaxonomies).To(Equal(map[string][]int{"326": []int{414381}}))
