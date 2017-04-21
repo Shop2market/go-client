@@ -11,25 +11,26 @@ import (
 
 type Ad struct {
 	*Product
-	ProductName     string     `json:"product_name"`
-	PictureLink     string     `json:"picture_link"`
-	Deeplink        string     `json:"deeplink"`
-	ShopCode        string     `json:"shop_code"`
-	ProductEan      string     `json:"product_ean"`
-	Category        string     `json:"category"`
-	Brand           string     `json:"brand"`
-	DeliveryPeriod  string     `json:"delivery_period"`
-	ProductsInStock int        `json:"products_in_stock"`
-	Price           int        `json:"price"`
-	Traffic         int        `json:"traffic"`
-	Profit          float64    `json:"profit"`
-	Costs           float64    `json:"costs"`
-	ROI             *float64   `json:"roi"`
-	Revenue         float64    `json:"revenue"`
-	Margin          float64    `json:"margin"`
-	QuarantinedAt   *time.Time `json:"quarantined_at"`
-	StockStatus     string     `json:"stock_status"`
-	DisabledAt      *time.Time `json:"disabled_at"`
+	RulesTaxonomies map[string][]int `json:"taxonomies"`
+	ProductName     string           `json:"product_name"`
+	PictureLink     string           `json:"picture_link"`
+	Deeplink        string           `json:"deeplink"`
+	ShopCode        string           `json:"shop_code"`
+	ProductEan      string           `json:"product_ean"`
+	Category        string           `json:"category"`
+	Brand           string           `json:"brand"`
+	DeliveryPeriod  string           `json:"delivery_period"`
+	ProductsInStock int              `json:"products_in_stock"`
+	Price           int              `json:"price"`
+	Traffic         int              `json:"traffic"`
+	Profit          float64          `json:"profit"`
+	Costs           float64          `json:"costs"`
+	ROI             *float64         `json:"roi"`
+	Revenue         float64          `json:"revenue"`
+	Margin          float64          `json:"margin"`
+	QuarantinedAt   *time.Time       `json:"quarantined_at"`
+	StockStatus     string           `json:"stock_status"`
+	DisabledAt      *time.Time       `json:"disabled_at"`
 }
 
 type AdQuery struct {
@@ -37,6 +38,33 @@ type AdQuery struct {
 	StartTimeId   string
 	EndTimeId     string
 	OnlyWithStats bool
+}
+
+type AdsFinder func(productsQuery *AdQuery) ([]*Ad, error)
+
+// Useful for tests
+func DummyAdsFinder(productsQuery *AdQuery) ([]*Ad, error) {
+	return []*Ad{}, nil
+}
+
+func (ad *Ad) AllTaxonomies(channelCategoryTaxonomyId string) []int {
+	taxonomies := map[string][]int{}
+	for id, ruleTaxonomy := range ad.RulesTaxonomies {
+		taxonomies[id] = ruleTaxonomy
+	}
+	for id, taxonomy := range ad.Taxonomies {
+		taxonomies[id] = taxonomy
+	}
+	if len(ad.ChannelCategoryIDs) != 0 {
+		// dirty hack for a while PD-3912 is not done
+		taxonomies[channelCategoryTaxonomyId] = ad.ChannelCategoryIDs
+		// dirty hack for a while PD-3912 is not done
+	}
+	flattenedTaxonomies := []int{}
+	for _, taxonomy := range taxonomies {
+		flattenedTaxonomies = append(flattenedTaxonomies, taxonomy...)
+	}
+	return flattenedTaxonomies
 }
 
 func (adQuery *AdQuery) RawQuery() string {
@@ -51,6 +79,9 @@ func (adQuery *AdQuery) RawQuery() string {
 
 func FindAds(productsQuery *AdQuery) ([]*Ad, error) {
 	productUrl, err := buildAdsQueryUrl(productsQuery)
+	if err != nil {
+		return nil, err
+	}
 	response, err := http.Get(productUrl)
 	if err != nil {
 		return nil, err

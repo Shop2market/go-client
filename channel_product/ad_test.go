@@ -11,7 +11,7 @@ import (
 	"github.com/onsi/gomega/ghttp"
 )
 
-var _ = Describe("Channel product", func() {
+var _ = Describe("Ads", func() {
 	Context("parameters construction", func() {
 		It("supports time ranges", func() {
 			server := ghttp.NewServer()
@@ -40,7 +40,7 @@ var _ = Describe("Channel product", func() {
 		})
 	})
 
-	It("deserializes response", func() {
+	It("Ads deserializes response", func() {
 		content, err := ioutil.ReadFile("fixtures/ads_response.json")
 		Expect(err).NotTo(HaveOccurred())
 
@@ -51,10 +51,19 @@ var _ = Describe("Channel product", func() {
 
 		Endpoint = server.URL()
 		ads, _ := FindAds(&AdQuery{ProductsQuery: &ProductsQuery{ShopId: 1, PublisherId: 5}})
-		Expect(ads).To((HaveLen(2)))
+		Expect(ads).To((HaveLen(4)))
 		timestr := "2015-11-04 14:16:58.52 +0000 UTC"
 		Expect(ads[0].QuarantinedAt.String()).To(Equal(timestr))
 		Expect(ads[0].StockStatus).To(Equal("yes"))
 		Expect(ads[0].ProductsInStock).To(Equal(0))
+
+		Expect(ads[2].ChannelCategoryIDs).To(Equal([]int{414341}))
+		Expect(ads[2].Taxonomies).To(Equal(map[string][]int{"297": []int{401856}}))
+		Expect(ads[2].RulesTaxonomies).To(Equal(map[string][]int{"326": []int{414381}}))
+
+		Expect(ads[2].AllTaxonomies("326")).To(Equal([]int{414341, 401856}))
+
+		Expect(ads[3].RulesTaxonomies).To(Equal(map[string][]int{"326": []int{414381}}))
+		Expect(ads[3].AllTaxonomies("326")).To(Equal([]int{414381}))
 	})
 })
