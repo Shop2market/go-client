@@ -5,6 +5,7 @@
     "name": "Categories",
     "is_category": true,
     "custom": false,
+    "mapping_mandatory": true,
     "categories": [
       {
         "id": 20001,
