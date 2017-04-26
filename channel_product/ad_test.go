@@ -56,16 +56,21 @@ var _ = Describe("Ads", func() {
 		Expect(ads[0].QuarantinedAt.String()).To(Equal(timestr))
 		Expect(ads[0].StockStatus).To(Equal("yes"))
 		Expect(ads[0].ProductsInStock).To(Equal(0))
+		Expect(ads[0].IsMappedToTaxonomy("297", false)).To(BeFalse())
 
 		Expect(ads[2].OrderAmountExcludingTax).To(Equal(33.33))
 
 		Expect(ads[2].ChannelCategoryIDs).To(Equal([]int{414341}))
 		Expect(ads[2].Taxonomies).To(Equal(map[string][]int{"297": []int{401856}}))
 		Expect(ads[2].RulesTaxonomies).To(Equal(map[string][]int{"326": []int{414381}}))
-
+		Expect(ads[2].IsMappedToTaxonomy("297", false)).To(BeTrue())
+		Expect(ads[2].IsMappedToTaxonomy("326", true)).To(BeTrue())
 		Expect(ads[2].AllTaxonomies("326")).To(Equal([]int{414341, 401856}))
 
 		Expect(ads[3].RulesTaxonomies).To(Equal(map[string][]int{"326": []int{414381}}))
 		Expect(ads[3].AllTaxonomies("326")).To(Equal([]int{414381}))
+		Expect(ads[3].IsMappedToTaxonomy("297", false)).To(BeFalse())
+		Expect(ads[3].IsMappedToTaxonomy("326", true)).To(BeTrue())
+
 	})
 })
