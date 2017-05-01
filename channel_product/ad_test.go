@@ -17,7 +17,7 @@ var _ = Describe("Ads", func() {
 			server := ghttp.NewServer()
 			server.AppendHandlers(
 				ghttp.CombineHandlers(
-					ghttp.VerifyRequest("GET", "/shops/1/publishers/5/ads", "start=20150105&end=20150505"),
+					ghttp.VerifyRequest("GET", "/shops/1/publishers/5/ads", "start=20150105&stop=20150505"),
 					ghttp.RespondWith(http.StatusOK, "[]"),
 				),
 			)
@@ -30,7 +30,7 @@ var _ = Describe("Ads", func() {
 			server := ghttp.NewServer()
 			server.AppendHandlers(
 				ghttp.CombineHandlers(
-					ghttp.VerifyRequest("GET", "/shops/1/publishers/5/ads", "start=20150105&end=20150505&only_with_stats=true"),
+					ghttp.VerifyRequest("GET", "/shops/1/publishers/5/ads", "start=20150105&stop=20150505&only_with_stats=true"),
 					ghttp.RespondWith(http.StatusOK, "[]"),
 				),
 			)

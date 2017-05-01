@@ -76,7 +76,7 @@ func (ad *Ad) AllTaxonomies(channelCategoryTaxonomyId string) []int {
 func (adQuery *AdQuery) RawQuery() string {
 	values, _ := url.ParseQuery(adQuery.ProductsQuery.RawQuery())
 	values.Add("start", adQuery.StartTimeId)
-	values.Add("end", adQuery.EndTimeId)
+	values.Add("stop", adQuery.EndTimeId)
 	if adQuery.OnlyWithStats {
 		values.Add("only_with_stats", "true")
 	}
