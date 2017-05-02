@@ -43,6 +43,7 @@ var _ = Describe("Product", func() {
 			Expect(product.StockStatus()).To(Equal("true"))
 			Expect(product.SubCategory()).To(Equal(""))
 			Expect(product.DeliveryPeriod()).To(Equal("1 week"))
+			Expect(product.DeliveryCosts()).To(Equal("0"))
 			Expect(product.SellingPriceIncl()).To(Equal("1000"))
 			Expect(product.SellingPriceExcl()).To(Equal("909"))
 			Expect(product.Enabled()).To(Equal("false"))

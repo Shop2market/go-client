@@ -31,6 +31,7 @@ var _ = Describe("ShopProduct", func() {
 		Expect(product["Selling Price Ex"]).To(Equal("2000"))
 		Expect(product["Enabled"]).To(Equal("false"))
 		Expect(product["Disabled At"]).To(Equal("2016-11-08T00:00:01Z"))
+		Expect(product["Delivery Costs"]).To(Equal("0"))
 
 		product = <-productChan
 		Expect(product["Shop Code"]).To(Equal("20301"))
