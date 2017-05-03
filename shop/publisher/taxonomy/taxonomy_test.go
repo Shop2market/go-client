@@ -12,6 +12,38 @@ import (
 )
 
 var _ = Describe("Shop/Publisher/Taxonomy", func() {
+	It("fetches publisher taxonomy and categories by publisher only", func() {
+		content, err := ioutil.ReadFile("fixtures/shop_publisher_taxonomy.json")
+		Expect(err).NotTo(HaveOccurred())
+		server := ghttp.NewServer()
+		server.AppendHandlers(
+			ghttp.CombineHandlers(
+				ghttp.VerifyRequest("GET", "/api/v1/publishers/2/taxonomies.json"),
+				ghttp.VerifyBasicAuth("username", "password"),
+				ghttp.RespondWith(http.StatusOK, string(content)),
+			),
+		)
+		Username = "username"
+		Password = "password"
+		Endpoint = server.URL()
+
+		taxonomies, err := Find(&Query{PublisherId: 2})
+		cpc := 13.0
+		Expect(err).NotTo(HaveOccurred())
+		Expect(taxonomies).To(HaveLen(4))
+		Expect(taxonomies[0].Categories[1].Path).To(Equal("Shoes»Boots"))
+		Expect(taxonomies[0].Name).To(Equal("Categories"))
+		Expect(taxonomies[0].IsCategory).To(Equal(true))
+
+		Expect(taxonomies[1].Name).To(Equal("Age group"))
+		Expect(taxonomies[1].IsCategory).To(Equal(false))
+		Expect(taxonomies[1].ID).To(Equal(234))
+		Expect(taxonomies[1].Categories).To(HaveLen(10))
+		Expect(taxonomies[1].Categories[0].Name).To(Equal("1-3 years"))
+		Expect(taxonomies[1].Categories[0].CPC).To(Equal(&cpc))
+		Expect(taxonomies[1].Categories[0].ID).To(Equal(335990))
+		Expect(taxonomies[1].Categories[0].ParentID).To(Equal(0))
+	})
 	It("fetches publisher taxonomy and categories", func() {
 		content, err := ioutil.ReadFile("fixtures/shop_publisher_taxonomy.json")
 		Expect(err).NotTo(HaveOccurred())
