@@ -22,6 +22,7 @@ type Publisher struct {
 	ProductApiEnabled     bool     `json:"product_api_enabled"`
 	TipTypes              []string `json:"tip_types"`
 	ExportMappedInAdcurve bool     `json:"export_mapped_in_adcurve"`
+	RoiTipsEnabled        bool     `json:"roi_tips_enabled"`
 }
 
 // Finder - Main find functor, can be overloaded for stubs or assigned with package Find function

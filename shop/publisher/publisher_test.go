@@ -33,6 +33,7 @@ var _ = Describe("Shop/Publisher", func() {
 		Expect(publisher.Name).To(Equal("Kieskeurig.nl"))
 		Expect(publisher.ProductApiEnabled).To(Equal(false))
 		Expect(publisher.ExportMappedInAdcurve).To(Equal(false))
+		Expect(publisher.RoiTipsEnabled).To(Equal(false))
 		Expect(publisher.TipTypes).To(HaveLen(1))
 		Expect(publisher.TipTypes[0]).To(Equal("ROI"))
 
