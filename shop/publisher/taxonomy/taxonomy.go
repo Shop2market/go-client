@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"net/url"
 	"sort"
 	"strings"
 )
@@ -79,11 +78,7 @@ func buildPath(category Category, categories []Category) []string {
 }
 
 func Find(query *Query) ([]Taxonomy, error) {
-	url, err := apiUrl(query)
-	if err != nil {
-		return nil, err
-	}
-	request, err := http.NewRequest("GET", url, nil)
+	request, err := http.NewRequest("GET", apiUrl(query), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -116,10 +111,9 @@ func FindById(taxonomies []Taxonomy, taxonomyId int) (*Category, *Taxonomy) {
 	return nil, nil
 }
 
-func apiUrl(query *Query) (string, error) {
-	url, err := url.Parse(fmt.Sprintf("%s/api/v1/shops/%d/publishers/%d/publisher_taxonomies.json", Endpoint, query.ShopId, query.PublisherId))
-	if err != nil {
-		return "", err
+func apiUrl(query *Query) string {
+	if query.ShopId == 0 {
+		return fmt.Sprintf("%s/api/v1/publishers/%d/taxonomies.json", Endpoint, query.PublisherId)
 	}
-	return url.String(), nil
+	return fmt.Sprintf("%s/api/v1/shops/%d/publishers/%d/publisher_taxonomies.json", Endpoint, query.ShopId, query.PublisherId)
 }
