@@ -27,6 +27,7 @@ const (
 	ProductEanKey       = "Product Ean"
 	ProductBrandKey     = "Product Brand"
 	DeliveryPeriodKey   = "Delivery Period"
+	DeliveryCostsKey    = "Delivery Costs"
 	ProductInStockKey   = "Product in stock"
 	StockStatusKey      = "Stock Status"
 	EnabledKey          = "Enabled"
@@ -78,6 +79,9 @@ func (s ShopProduct) ProductBrand() string {
 }
 func (s ShopProduct) DeliveryPeriod() string {
 	return s[DeliveryPeriodKey]
+}
+func (s ShopProduct) DeliveryCosts() string {
+	return s[DeliveryCostsKey]
 }
 func (s ShopProduct) ProductInStock() string {
 	return s[ProductInStockKey]

@@ -29,6 +29,7 @@ const (
 	ProductEanKey       = "Product Ean"
 	ProductBrandKey     = "Product Brand"
 	DeliveryPeriodKey   = "Delivery Period"
+	DeliveryCostsKey    = "Delivery Costs"
 	ProductInStockKey   = "Product in stock"
 	StockStatusKey      = "Stock Status"
 	EnabledKey          = "Enabled"
@@ -80,6 +81,9 @@ func (s ShopProduct) ProductBrand() string {
 }
 func (s ShopProduct) DeliveryPeriod() string {
 	return s[DeliveryPeriodKey]
+}
+func (s ShopProduct) DeliveryCosts() string {
+	return s[DeliveryCostsKey]
 }
 func (s ShopProduct) ProductInStock() string {
 	return s[ProductInStockKey]
@@ -158,6 +162,7 @@ func (bp BonoboProduct) toShopProducts() []ShopProduct {
 		shopProduct[ProductInStockKey] = fetchNumberValue(variant, "product_in_stock")
 		shopProduct[StockStatusKey] = fetchValue(variant, "stock_status")
 		shopProduct[DeliveryPeriodKey] = fetchValue(variant, "delivery_period")
+		shopProduct[DeliveryCostsKey] = fetchNumberValue(variant, "delivery_cost")
 		shopProduct[SellingPriceInclKey] = fetchNumberValue(variant, "price_incl")
 		shopProduct[SellingPriceExclKey] = fetchNumberValue(variant, "price_excl")
 		shopProduct[EnabledKey] = fetchBool(variant, "enabled")
