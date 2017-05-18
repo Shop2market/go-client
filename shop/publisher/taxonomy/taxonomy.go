@@ -25,14 +25,16 @@ type Category struct {
 	Path       string   `json:"-"`
 	ID         int      `json:"id"`
 	CPC        *float64 `json:"cpc"`
+	Keywords   string   `json:"keywords"`
 }
 
 // Taxonomy - Root structure to hold Taxonomy type
 type Taxonomy struct {
-	ID         int        `json:"id"`
-	Name       string     `json:"name"`
-	IsCategory bool       `json:"is_category"`
-	Categories []Category `json:"categories"`
+	ID            int        `json:"id"`
+	Name          string     `json:"name"`
+	IsCategory    bool       `json:"is_category"`
+	MappingConfig string     `json:"mapping_config"`
+	Categories    []Category `json:"categories"`
 }
 
 // Finder - Main find functor, can be overloaded for stubs or assigned with package Find function

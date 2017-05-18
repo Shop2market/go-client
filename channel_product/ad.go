@@ -73,6 +73,22 @@ func (ad *Ad) AllTaxonomies(channelCategoryTaxonomyId string) []int {
 	return flattenedTaxonomies
 }
 
+func (ad *Ad) IsMappedToTaxonomy(taxonomyId string, isCategory bool) bool {
+	taxonomies := map[string][]int{}
+	for id, ruleTaxonomy := range ad.RulesTaxonomies {
+		taxonomies[id] = ruleTaxonomy
+	}
+	for id, taxonomy := range ad.Taxonomies {
+		taxonomies[id] = taxonomy
+	}
+	if isCategory && len(ad.ChannelCategoryIDs) != 0 {
+		// dirty hack for a while PD-3912 is not done
+		taxonomies[taxonomyId] = ad.ChannelCategoryIDs
+		// dirty hack for a while PD-3912 is not done
+	}
+	return len(taxonomies[taxonomyId]) > 0
+}
+
 func (adQuery *AdQuery) RawQuery() string {
 	values, _ := url.ParseQuery(adQuery.ProductsQuery.RawQuery())
 	values.Add("start", adQuery.StartTimeId)

@@ -17,10 +17,14 @@ type Query struct {
 }
 
 type Publisher struct {
-	ID                int      `json:"id"`
-	Name              string   `json:"name"`
-	ProductApiEnabled bool     `json:"product_api_enabled"`
-	TipTypes          []string `json:"tip_types"`
+	ID                    int      `json:"id"`
+	Name                  string   `json:"name"`
+	ProductApiEnabled     bool     `json:"product_api_enabled"`
+	TipTypes              []string `json:"tip_types"`
+	ExportMappedInAdcurve bool     `json:"export_mapped_in_adcurve"`
+	RoiTipsEnabled        bool     `json:"roi_tips_enabled"`
+	FeedsEnabled          bool     `json:"feeds_enabled"`
+	GenerateTips          bool     `json:"generate_tips"`
 }
 
 // Finder - Main find functor, can be overloaded for stubs or assigned with package Find function
