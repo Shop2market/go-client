@@ -64,6 +64,7 @@ var _ = Describe("Shop/Publisher/Taxonomy", func() {
 		Expect(taxonomies).To(HaveLen(4))
 		Expect(taxonomies[0].Categories[1].Path).To(Equal("Shoes»Boots"))
 		Expect(taxonomies[0].Categories[1].Keywords).To(Equal("boots"))
+		Expect(taxonomies[0].Categories[1].MappingPriority).To(Equal(2))
 		Expect(taxonomies[0].Name).To(Equal("Categories"))
 		Expect(taxonomies[0].IsCategory).To(Equal(true))
 		Expect(taxonomies[0].MappingConfig).To(Equal("mandatory"))
@@ -78,6 +79,7 @@ var _ = Describe("Shop/Publisher/Taxonomy", func() {
 		Expect(taxonomies[1].Categories[0].ID).To(Equal(335990))
 		Expect(taxonomies[1].Categories[0].ParentID).To(Equal(0))
 		Expect(taxonomies[1].Categories[0].Keywords).To(Equal(""))
+		Expect(taxonomies[1].Categories[0].MappingPriority).To(Equal(0))
 	})
 	It("find taxonomy by id", func() {
 		content, err := ioutil.ReadFile("fixtures/shop_publisher_taxonomy.json")

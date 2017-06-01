@@ -15,7 +15,8 @@
         "industry_id": 1,
         "parent_id": 0,
         "external_id": "EX20001",
-        "keywords": "Shoes, boots"
+        "keywords": "Shoes, boots",
+        "mapping_priority": 0
       },
       {
         "id": 20002,
@@ -25,7 +26,8 @@
         "industry_id": 1,
         "parent_id": 20001,
         "external_id": "EX20002",
-        "keywords": "boots"
+        "keywords": "boots",
+        "mapping_priority": 2
       }
     ]
   },
@@ -43,7 +45,8 @@
         "industry_id": null,
         "parent_id": 0,
         "external_id": "1234",
-        "keywords": null
+        "keywords": null,
+        "mapping_priority": 0
       },
       {
         "id": 335993,
@@ -53,7 +56,8 @@
         "industry_id": null,
         "parent_id": 0,
         "external_id": "1234",
-        "keywords": null
+        "keywords": null,
+        "mapping_priority": 0
       },
       {
         "id": 335994,
@@ -63,7 +67,8 @@
         "industry_id": null,
         "parent_id": 0,
         "external_id": "1234",
-        "keywords": null
+        "keywords": null,
+        "mapping_priority": 0
       },
       {
         "id": 335995,
@@ -73,7 +78,8 @@
         "industry_id": null,
         "parent_id": 0,
         "external_id": "1234",
-        "keywords": null
+        "keywords": null,
+        "mapping_priority": 0
       },
       {
         "id": 335996,
@@ -83,7 +89,8 @@
         "industry_id": null,
         "parent_id": 0,
         "external_id": "1234",
-        "keywords": null
+        "keywords": null,
+        "mapping_priority": 0
       },
       {
         "id": 335991,
@@ -93,7 +100,8 @@
         "industry_id": null,
         "parent_id": 0,
         "external_id": "1234",
-        "keywords": null
+        "keywords": null,
+        "mapping_priority": 0
       },
       {
         "id": 335997,
@@ -103,7 +111,8 @@
         "industry_id": null,
         "parent_id": 0,
         "external_id": "1234",
-        "keywords": null
+        "keywords": null,
+        "mapping_priority": 0
       },
       {
         "id": 335998,
@@ -113,7 +122,8 @@
         "industry_id": null,
         "parent_id": 0,
         "external_id": "1234",
-        "keywords": null
+        "keywords": null,
+        "mapping_priority": 0
       },
       {
         "id": 335992,
@@ -123,7 +133,8 @@
         "industry_id": null,
         "parent_id": 0,
         "external_id": "1234",
-        "keywords": null
+        "keywords": null,
+        "mapping_priority": 0
       },
       {
         "id": 335999,
@@ -149,7 +160,8 @@
         "industry_id": 8,
         "parent_id": 0,
         "external_id": "1234",
-        "keywords": null
+        "keywords": null,
+        "mapping_priority": 0
       },
       {
         "id": 335989,
@@ -159,7 +171,8 @@
         "industry_id": null,
         "parent_id": 0,
         "external_id": "1234",
-        "keywords": null
+        "keywords": null,
+        "mapping_priority": 0
       },
       {
         "id": 335988,
@@ -169,7 +182,8 @@
         "industry_id": null,
         "parent_id": 0,
         "external_id": "1234",
-        "keywords": null
+        "keywords": null,
+        "mapping_priority": 0
       }
     ]
   },
@@ -187,7 +201,8 @@
         "industry_id": null,
         "parent_id": 0,
         "external_id": "1234",
-        "keywords": null
+        "keywords": null,
+        "mapping_priority": 0
       },
       {
         "id": 335987,
@@ -197,7 +212,8 @@
         "industry_id": null,
         "parent_id": 0,
         "external_id": "1234",
-        "keywords": null
+        "keywords": null,
+        "mapping_priority": 0
       },
       {
         "id": 335985,
@@ -207,7 +223,8 @@
         "industry_id": null,
         "parent_id": 0,
         "external_id": "1234",
-        "keywords": null
+        "keywords": null,
+        "mapping_priority": 0
       }
     ]
   }
