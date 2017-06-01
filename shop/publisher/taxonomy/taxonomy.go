@@ -19,13 +19,14 @@ type Query struct {
 
 // Category - Categories inside taxonomy
 type Category struct {
-	Name       string   `json:"name"`
-	ParentID   int      `json:"parent_id"`
-	ExternalID string   `json:"external_id"`
-	Path       string   `json:"-"`
-	ID         int      `json:"id"`
-	CPC        *float64 `json:"cpc"`
-	Keywords   string   `json:"keywords"`
+	Name            string   `json:"name"`
+	ParentID        int      `json:"parent_id"`
+	ExternalID      string   `json:"external_id"`
+	Path            string   `json:"-"`
+	ID              int      `json:"id"`
+	CPC             *float64 `json:"cpc"`
+	Keywords        string   `json:"keywords"`
+	MappingPriority int      `json:"mapping_priority"`
 }
 
 // Taxonomy - Root structure to hold Taxonomy type
