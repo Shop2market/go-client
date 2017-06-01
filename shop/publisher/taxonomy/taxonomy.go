@@ -54,6 +54,14 @@ func (s Categories) Len() int               { return len(s) }
 func (s Categories) Swap(i, j int)          { s[i], s[j] = s[j], s[i] }
 func (s CategoriesByID) Less(i, j int) bool { return s.Categories[i].ID < s.Categories[j].ID }
 
+type CategoriesByPriority Categories
+
+func (s CategoriesByPriority) Len() int      { return len(s) }
+func (s CategoriesByPriority) Swap(i, j int) { s[i], s[j] = s[j], s[i] }
+func (s CategoriesByPriority) Less(i, j int) bool {
+	return s[i].MappingPriority > s[j].MappingPriority
+}
+
 func buildPaths(categories []Category) {
 	cats := categories
 	for i := range cats {
