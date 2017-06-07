@@ -37,6 +37,7 @@ type Ad struct {
 	QuarantinedAt           *time.Time       `json:"quarantined_at"`
 	StockStatus             string           `json:"stock_status"`
 	DisabledAt              *time.Time       `json:"disabled_at"`
+	DeactivationReason      string           `json:"deactivation_reason"`
 }
 
 type AdQuery struct {
