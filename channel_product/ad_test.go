@@ -56,6 +56,7 @@ var _ = Describe("Ads", func() {
 		Expect(ads[0].QuarantinedAt.String()).To(Equal(timestr))
 		Expect(ads[0].StockStatus).To(Equal("yes"))
 		Expect(ads[0].ProductsInStock).To(Equal(0))
+		Expect(ads[0].DeactivationReason).To(Equal("content_rules"))
 		Expect(ads[0].IsMappedToTaxonomy("297", false)).To(BeFalse())
 
 		Expect(ads[2].OrderAmountExcludingTax).To(Equal(33.33))
