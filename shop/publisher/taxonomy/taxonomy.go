@@ -34,6 +34,7 @@ type Taxonomy struct {
 	ID            int        `json:"id"`
 	Name          string     `json:"name"`
 	IsCategory    bool       `json:"is_category"`
+	BiddingGroup  bool       `json:"bidding_group"`
 	MappingConfig string     `json:"mapping_config"`
 	Categories    []Category `json:"categories"`
 }
