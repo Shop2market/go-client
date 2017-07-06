@@ -16,7 +16,6 @@ var _ = Describe("MaxCpcRange", func() {
 		body, _ := ioutil.ReadFile("fixtures/max_cpc_ranges_response.json")
 		json.Unmarshal(body, &maxCpcRanges)
 		Expect(maxCpcRanges[0]).To(Equal(&MaxCpcRange{
-			ID:                3,
 			Name:              "Group A",
 			ChannelCategoryID: 352261,
 			MaxCpcMin:         3.0,

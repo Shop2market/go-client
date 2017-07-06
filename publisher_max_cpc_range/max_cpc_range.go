@@ -8,7 +8,6 @@ import (
 )
 
 type MaxCpcRange struct {
-	ID                int     `json:"id"`
 	Name              string  `json:"name"`
 	ChannelCategoryID int     `json:"channel_category_id"`
 	MaxCpcMin         float64 `json:"max_cpc_min"`
