@@ -1,4 +1,4 @@
-package publisher_max_cpc_range_test
+package max_cpc_range_test
 
 import (
 	. "github.com/onsi/ginkgo"

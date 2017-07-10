@@ -1,10 +1,10 @@
-package publisher_max_cpc_range_test
+package max_cpc_range_test
 
 import (
 	"encoding/json"
 	"io/ioutil"
 
-	. "github.com/Shop2market/go-client/publisher_max_cpc_range"
+	. "github.com/Shop2market/go-client/shop/publisher/max_cpc_range"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"

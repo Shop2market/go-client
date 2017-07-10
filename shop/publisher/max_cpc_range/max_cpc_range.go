@@ -1,4 +1,4 @@
-package publisher_max_cpc_range
+package max_cpc_range
 
 import (
 	"encoding/json"
