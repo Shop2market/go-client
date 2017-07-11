@@ -12,6 +12,7 @@ type MaxCpcRange struct {
 	ChannelCategoryID int     `json:"channel_category_id"`
 	MaxCpcMin         float64 `json:"max_cpc_min"`
 	MaxCpcMax         float64 `json:"max_cpc_max"`
+	Enabled           bool    `json:"enabled"`
 }
 
 var Endpoint string
