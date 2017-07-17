@@ -25,6 +25,7 @@ type Publisher struct {
 	RoiTipsEnabled        bool     `json:"roi_tips_enabled"`
 	FeedsEnabled          bool     `json:"feeds_enabled"`
 	GenerateTips          bool     `json:"generate_tips"`
+	CantChangeCategory    bool     `json:"cant_change_category"`
 }
 
 // Finder - Main find functor, can be overloaded for stubs or assigned with package Find function
