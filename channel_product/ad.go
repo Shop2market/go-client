@@ -26,6 +26,8 @@ type Ad struct {
 	Profit                  float64          `json:"profit"`
 	Costs                   float64          `json:"costs"`
 	ROI                     *float64         `json:"roi"`
+	MaxCPC                  *float64         `json:"max_cpc"`
+	Ecpc                    *float64         `json:"ecpc"`
 	Revenue                 float64          `json:"revenue"`
 	Margin                  float64          `json:"margin"`
 	OrderAmountExcludingTax float64          `json:"order_amount_excluding_tax"`

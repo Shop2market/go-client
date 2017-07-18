@@ -1,0 +1,72 @@
+[
+  {
+    "id": 3,
+    "name": "Group A",
+    "channel_category_id": 352261,
+    "max_cpc_max": 7,
+    "max_cpc_min": 3
+  },
+  {
+    "id": 4,
+    "name": "Group B",
+    "channel_category_id": 352265,
+    "max_cpc_max": 23,
+    "max_cpc_min": 3
+  },
+  {
+    "id": null,
+    "name": "Group C",
+    "channel_category_id": 335984,
+    "max_cpc_max": null,
+    "max_cpc_min": null
+  },
+  {
+    "id": null,
+    "name": "Group D",
+    "channel_category_id": 341370,
+    "max_cpc_max": null,
+    "max_cpc_min": null
+  },
+  {
+    "id": null,
+    "name": "Group E",
+    "channel_category_id": 341383,
+    "max_cpc_max": null,
+    "max_cpc_min": null
+  },
+  {
+    "id": null,
+    "name": "Group F",
+    "channel_category_id": 341384,
+    "max_cpc_max": null,
+    "max_cpc_min": null
+  },
+  {
+    "id": null,
+    "name": "Group G",
+    "channel_category_id": 352262,
+    "max_cpc_max": null,
+    "max_cpc_min": null
+  },
+  {
+    "id": null,
+    "name": "Group H",
+    "channel_category_id": 352263,
+    "max_cpc_max": null,
+    "max_cpc_min": null
+  },
+  {
+    "id": null,
+    "name": "Group I",
+    "channel_category_id": 352264,
+    "max_cpc_max": null,
+    "max_cpc_min": null
+  },
+  {
+    "id": null,
+    "name": "Group J",
+    "channel_category_id": 341385,
+    "max_cpc_max": null,
+    "max_cpc_min": null
+  }
+]
