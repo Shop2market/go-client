@@ -24,7 +24,6 @@ type Publisher struct {
 	ExportMappedInAdcurve bool     `json:"export_mapped_in_adcurve"`
 	RoiTipsEnabled        bool     `json:"roi_tips_enabled"`
 	FeedsEnabled          bool     `json:"feeds_enabled"`
-	GenerateTips          bool     `json:"generate_tips"`
 	CantChangeCategory    bool     `json:"cant_change_category"`
 }
 
