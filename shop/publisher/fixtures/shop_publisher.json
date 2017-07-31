@@ -46,7 +46,6 @@
    ],
    "cost_type":"CPC",
    "enough_visits":true,
-   "generate_tips":true,
    "custom_auth_param_name":"Filename (provided by Kieskeurig)",
    "in_all_industries":true,
    "feed_format":"xml",
