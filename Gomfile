@@ -1,3 +1,4 @@
 gom 'github.com/onsi/ginkgo/ginkgo', :tag => 'v1.1.0'
 gom 'github.com/onsi/gomega'
 gom 'github.com/golang/protobuf/proto'
+gom 'github.com/cthulhu/go-steun', :tag => 'v0.0.2'
