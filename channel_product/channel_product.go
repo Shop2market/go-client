@@ -118,6 +118,9 @@ func FindSorted(productsQuery *ProductsQuery) ([]*Product, error) {
 
 func Find(productsQuery *ProductsQuery) ([]*Product, error) {
 	productUrl, err := buildQueryUrl(productsQuery)
+	if err != nil {
+		return nil, err
+	}
 	response, err := http.Get(productUrl)
 	if err != nil {
 		return nil, err
@@ -148,6 +151,7 @@ func Touch(shopId, publisherId int, shopCodes []string) error {
 	defer res.Body.Close()
 	return err
 }
+
 func Webhook(shopId int, shopCodes []string) error {
 	if len(shopCodes) == 0 {
 		return nil
@@ -169,6 +173,7 @@ func Webhook(shopId int, shopCodes []string) error {
 	defer res.Body.Close()
 	return err
 }
+
 func buildTouchUrl(shopId, publisherId int) (string, error) {
 	uri, err := url.Parse(fmt.Sprintf("%s/shops/%d/publishers/%d/products/touch", Endpoint, shopId, publisherId))
 	return uri.String(), err
