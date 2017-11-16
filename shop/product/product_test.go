@@ -34,6 +34,7 @@ var _ = Describe("Product", func() {
 			Expect(product.VariantID()).To(Equal("26621028"))
 			Expect(product.Description()).To(Equal("dolor.\r\n\r\nNieuwe regel test."))
 			Expect(product.FloorPrice()).To(Equal("998"))
+			Expect(product.MarkedPrice()).To(Equal("10"))
 			Expect(product.ProductBrand()).To(Equal("Adidas"))
 			Expect(product.Deeplink()).To(Equal("http://freek-en-dreesman.webshopapp.com/adidas-adidas-black-leather-backpack.html"))
 			Expect(product.PictureLink()).To(Equal("http://static.webshopapp.com/shops/073661/files/028410639/file.jpg"))

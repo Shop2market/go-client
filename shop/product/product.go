@@ -37,8 +37,12 @@ const (
 	SellingPriceExclKey = "Selling Price Ex"
 	SellingPriceInclKey = "Selling Price"
 	VendorCodeKey       = "Vendor Code"
+	MarkedPriceKey      = "Marked Price"
 )
 
+func (s ShopProduct) MarkedPrice() string {
+	return s[MarkedPriceKey]
+}
 func (s ShopProduct) Description() string {
 	return s[DescriptionKey]
 }
@@ -165,6 +169,7 @@ func (bp BonoboProduct) toShopProducts() []ShopProduct {
 		shopProduct[DeliveryCostsKey] = fetchNumberValue(variant, "delivery_cost")
 		shopProduct[SellingPriceInclKey] = fetchNumberValue(variant, "price_incl")
 		shopProduct[SellingPriceExclKey] = fetchNumberValue(variant, "price_excl")
+		shopProduct[MarkedPriceKey] = fetchNumberValue(variant, "marked_price")
 		shopProduct[EnabledKey] = fetchBool(variant, "enabled")
 		shopProduct[DisabledAtKey] = fetchValue(variant, "disabled_at")
 		shopProduct[VendorCodeKey] = fetchValue(variant, "vendor_code")
