@@ -15,6 +15,7 @@ type ShopProduct map[string]string
 const (
 	DescriptionKey      = "Product Description"
 	FloorPriceKey       = "Cost Price"
+	MarkedPriceKey      = "Marked Price"
 	StockKey            = "Product in stock"
 	CategoryPathKey     = "Category Path"
 	CategoryKey         = "Category"
@@ -43,6 +44,9 @@ func (s ShopProduct) Description() string {
 func (s ShopProduct) FloorPrice() string {
 	return s[FloorPriceKey]
 }
+func (s ShopProduct) MarkedPrice() string {
+	return s[MarkedPriceKey]
+}
 func (s ShopProduct) Stock() (int, error) {
 	return strconv.Atoi(s[StockKey])
 }
@@ -58,7 +62,6 @@ func (s ShopProduct) SubCategory() string {
 func (s ShopProduct) ShopCode() string {
 	return s[ShopCodeKey]
 }
-
 func (s ShopProduct) VariantID() string {
 	return s[VariantIDKey]
 }
@@ -89,7 +92,6 @@ func (s ShopProduct) ProductInStock() string {
 func (s ShopProduct) StockStatus() string {
 	return s[StockStatusKey]
 }
-
 func (s ShopProduct) SellingPriceIncl() string {
 	return s[SellingPriceInclKey]
 }
@@ -102,7 +104,6 @@ func (s ShopProduct) Enabled() string {
 func (s ShopProduct) DisabledAt() string {
 	return s[DisabledAtKey]
 }
-
 func (s ShopProduct) VendorCode() *string {
 	v, exists := s[VendorCodeKey]
 	if !exists {

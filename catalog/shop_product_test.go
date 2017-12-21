@@ -29,6 +29,7 @@ var _ = Describe("ShopProduct", func() {
 		Expect(product["Variant ID"]).To(Equal("2"))
 		Expect(product["Selling Price"]).To(Equal("2095"))
 		Expect(product["Selling Price Ex"]).To(Equal("2000"))
+		Expect(product["Marked Price"]).To(Equal("2095"))
 		Expect(product["Enabled"]).To(Equal("false"))
 		Expect(product["Disabled At"]).To(Equal("2016-11-08T00:00:01Z"))
 		Expect(product["Delivery Costs"]).To(Equal("0"))
