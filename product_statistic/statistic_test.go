@@ -68,6 +68,60 @@ var _ = Describe("AggregatedStatistic", func() {
 		Expect(iterator.More()).To(BeFalse())
 		Expect(iterator.Next()).To(BeNil())
 	})
+	It("PD-4406: Finds statistics with timperiod - until today", func() {
+		startTime := NewTimeId(time.Now().AddDate(0, 0, -29))
+		stopTime := NewTimeId(time.Now())
+		queryString := fmt.Sprintf("start=%s&stop=%s", startTime, stopTime)
+
+		content, err := ioutil.ReadFile("fixtures/product_statistic.jsonl")
+		Expect(err).NotTo(HaveOccurred())
+
+		server := ghttp.NewServer()
+		server.AppendHandlers(
+			ghttp.CombineHandlers(
+				ghttp.VerifyRequest("GET", "/shops/155/publishers/4/statistics", queryString),
+				ghttp.RespondWith(http.StatusOK, string(content)),
+			),
+		)
+		Endpoint = server.URL()
+
+		iterator := FindForTimePeriod(155, 4, -30)
+		Expect(err).NotTo(HaveOccurred())
+
+		Expect(iterator.More()).To(BeTrue())
+		Expect(iterator.Next()).To(Equal(&Statistic{
+			ShopCode: "100337",
+			Quantity: 1,
+		}))
+
+		Expect(iterator.More()).To(BeTrue())
+		roi := -1.0
+		maxCPC := 0.02
+		eCPC := 0.1
+		Expect(iterator.Next()).To(Equal(&Statistic{
+			ShopCode: "100964",
+			Traffic:  2,
+			Costs:    0.22,
+			Profit:   -0.22,
+			MaxCPC:   &maxCPC,
+			ECPC:     &eCPC,
+			ROI:      &roi,
+		}))
+
+		Expect(iterator.More()).To(BeTrue())
+		Expect(iterator.Next()).NotTo(BeNil())
+		Expect(iterator.More()).To(BeTrue())
+		Expect(iterator.Next()).NotTo(BeNil())
+		Expect(iterator.More()).To(BeTrue())
+		Expect(iterator.Next()).NotTo(BeNil())
+		Expect(iterator.More()).To(BeTrue())
+		Expect(iterator.Next()).NotTo(BeNil())
+
+		Expect(iterator.More()).To(BeFalse())
+		Expect(iterator.Next()).To(BeNil())
+		Expect(iterator.More()).To(BeFalse())
+		Expect(iterator.Next()).To(BeNil())
+	})
 	It("Finds statistics", func() {
 		content, err := ioutil.ReadFile("fixtures/product_statistic.jsonl")
 		Expect(err).NotTo(HaveOccurred())

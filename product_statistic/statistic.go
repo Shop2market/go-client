@@ -36,8 +36,16 @@ func NewTimeId(date time.Time) TimeId {
 }
 
 func FindForTimePeriod(shopId, publisherId int, timePeriod int) *StatisticIterator {
-	startTime := NewTimeId(time.Now().AddDate(0, 0, timePeriod*-1))
-	stopTime := NewTimeId(time.Now().AddDate(0, 0, -1))
+	var endDate int
+	if timePeriod < 0 {
+		timePeriod = timePeriod + 1
+		endDate = 0
+	} else {
+		timePeriod = timePeriod * -1
+		endDate = -1
+	}
+	startTime := NewTimeId(time.Now().AddDate(0, 0, timePeriod))
+	stopTime := NewTimeId(time.Now().AddDate(0, 0, endDate))
 	iterator, _ := Find(shopId, publisherId, startTime, stopTime)
 	return iterator
 }
