@@ -46,6 +46,9 @@ func Find(query *Query) (*Publisher, error) {
 		return nil, err
 	}
 	defer response.Body.Close()
+	if response.StatusCode >= 400 {
+		return nil, fmt.Errorf("Error fetching connections: %s", response.Status)
+	}
 	publisher := Publisher{}
 
 	if err := json.NewDecoder(response.Body).Decode(&publisher); err != nil {

@@ -53,6 +53,9 @@ func Find(query *Query) ([]*Connection, error) {
 		return nil, err
 	}
 	defer response.Body.Close()
+	if response.StatusCode >= 400 {
+		return nil, fmt.Errorf("Error fetching connections: %s", response.Status)
+	}
 	connections := []*Connection{}
 
 	if err := json.NewDecoder(response.Body).Decode(&connections); err != nil {
