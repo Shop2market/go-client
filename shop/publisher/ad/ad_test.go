@@ -55,5 +55,34 @@ var _ = Describe("Ad", func() {
 			Expect(user1Aggregations["27298"].Costs).To(BeNumerically("~", 51.69, 0.01))
 
 		})
+		It("returns aggregated by user1 with negative time", func() {
+
+			startTime := time_id.NewByDays(-29)
+			stopTime := time_id.NewByDays(0)
+			queryString := fmt.Sprintf("start=%s&stop=%s", startTime, stopTime)
+
+			server := ghttp.NewServer()
+			defer server.Close()
+
+			server.AppendHandlers(
+				ghttp.CombineHandlers(
+					ghttp.VerifyRequest("GET", "/shops/1/publishers/1/ads", queryString),
+					ghttp.RespondWith(http.StatusOK, fixture.Read("ads.json")),
+				),
+			)
+			Endpoint = server.URL()
+
+			agg, err := FindAggregationsWithTimePeriod(1, 1, []string{"User1"}, -30)
+			Expect(err).NotTo(HaveOccurred())
+			Expect(agg).NotTo(BeNil())
+			user1Aggregations := (*agg)["User1"]
+			Expect(len(user1Aggregations)).To(Equal(52))
+			Expect(user1Aggregations["25761"].Traffic).To(Equal(125.0))
+			Expect(user1Aggregations["25761"].Costs).To(BeNumerically("~", 194.1799, 0.01))
+
+			Expect(user1Aggregations["27298"].Traffic).To(Equal(100.0))
+			Expect(user1Aggregations["27298"].Costs).To(BeNumerically("~", 51.69, 0.01))
+
+		})
 	})
 })
