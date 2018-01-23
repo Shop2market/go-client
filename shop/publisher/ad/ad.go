@@ -120,9 +120,17 @@ func FindAggregationsWithTimePeriod(shopID, publisherID int, aggregationKeys []s
 	if len(aggregationKeys) == 0 || Endpoint == "" {
 		return nil, nil
 	}
+	var endDate int
+	if timePeriod < 0 {
+		timePeriod = timePeriod + 1
+		endDate = 0
+	} else {
+		timePeriod = timePeriod * -1
+		endDate = -1
+	}
 	aggregationsByKey := make(AggregationsByKey)
-	startTime := time_id.NewByDays(timePeriod * -1)
-	stopTime := time_id.NewByDays(-1)
+	startTime := time_id.NewByDays(timePeriod)
+	stopTime := time_id.NewByDays(endDate)
 
 	url := buildURL(shopID, publisherID, startTime, stopTime)
 
