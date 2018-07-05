@@ -18,14 +18,15 @@ type ConnectionDetails struct {
 }
 
 type Connection struct {
-	ID                 int    `json:"id"`
-	Imported           bool   `json:"imported"`
-	Connected          bool   `json:"connected"`
-	ConnectionType     string `json:"connection_type"`
-	ConnectionProvider string `json:"connection_provider"`
-	ConnectToLive      bool   `json:"connect_to_live"`
-	ProductApiEnabled  bool   `json:"product_api_enabled"`
-	*ConnectionDetails `json:"connection"`
+	ID                   int    `json:"id"`
+	Imported             bool   `json:"imported"`
+	Connected            bool   `json:"connected"`
+	ConnectionType       string `json:"connection_type"`
+	ConnectionProvider   string `json:"connection_provider"`
+	ConnectToLive        bool   `json:"connect_to_live"`
+	ProductApiEnabled    bool   `json:"product_api_enabled"`
+	PatchOnProductUpdate bool   `json:"patch_on_product_update"`
+	*ConnectionDetails   `json:"connection"`
 }
 
 var Endpoint string
