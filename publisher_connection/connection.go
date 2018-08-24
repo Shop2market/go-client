@@ -7,6 +7,10 @@ import (
 	"net/url"
 )
 
+type MiabConnection struct {
+	FeedID     *string `json:"feedID,omitempty"`
+	CampaignID *string `json:"campaignID,omitempty"`
+}
 type ConnectionDetails struct {
 	ShopId              *string `json:"shop_id,omitempty"`
 	ProductUpdateApiKey *string `json:"product_update_api_key,omitempty"`
@@ -15,6 +19,7 @@ type ConnectionDetails struct {
 	SellerID            *string `json:"seller_id,omitempty"`
 	MarketPlaceID       *string `json:"marketplace_id,omitempty"`
 	MWSToken            *string `json:"mws_token,omitempty"`
+	MiabConnection
 }
 
 type Connection struct {

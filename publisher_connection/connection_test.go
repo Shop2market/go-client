@@ -34,6 +34,10 @@ var _ = Describe("Connection", func() {
 					MWSToken:            stringPtr("abs"),
 					PublicKey:           stringPtr("756374"),
 					PrivateKey:          stringPtr("fdfhdhfdksjhfkjdhbf"),
+					MiabConnection: MiabConnection{
+						FeedID:     stringPtr("287678"),
+						CampaignID: stringPtr("2018"),
+					},
 				},
 			},
 		}))
@@ -75,6 +79,10 @@ var _ = Describe("Connection", func() {
 					MWSToken:            stringPtr("abs"),
 					PublicKey:           stringPtr("756374"),
 					PrivateKey:          stringPtr("fdfhdhfdksjhfkjdhbf"),
+					MiabConnection: MiabConnection{
+						FeedID:     stringPtr("287678"),
+						CampaignID: stringPtr("2018"),
+					},
 				},
 			},
 		}))
