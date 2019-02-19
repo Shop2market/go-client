@@ -19,7 +19,7 @@ type TaxonomyParams struct {
 	UserID     int                `json:"user_id"`
 }
 
-func Taxonomize(shopId, publisherId int, shopCodes []string, taxonomyTypeID, taxonomyID int) error {
+func Taxonomize(shopId, publisherId int, shopCodes []string, taxonomyTypeID, taxonomyID int) (err error) {
 	url, err := buildMapTaxonomyUrl(shopId, publisherId)
 	if err != nil {
 		return err
@@ -35,7 +35,9 @@ func Taxonomize(shopId, publisherId int, shopCodes []string, taxonomyTypeID, tax
 	}
 	req.Header.Set("Content-Type", "application/json")
 	res, err := http.DefaultClient.Do(req)
-	defer res.Body.Close()
+	if err == nil {
+		res.Body.Close()
+	}
 	return err
 }
 func buildMapTaxonomyUrl(shopId, publisherId int) (string, error) {
