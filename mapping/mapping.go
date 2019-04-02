@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"net/url"
+	"strings"
 	"time"
 )
 
@@ -14,7 +14,7 @@ type creds struct {
 	Password string
 }
 type cache struct {
-	data map[string]map[string]string
+	data map[string][][]string
 	date *time.Time
 }
 type Repo struct {
@@ -22,15 +22,20 @@ type Repo struct {
 	cache
 }
 
-const PATH = "api/v1/mapping_files.json"
+const PATH = "/api/v1/mapping_files.json"
 
-func New(endpoint, username, password string) *Repo {
+func New(endpoint, username, password string) (repo *Repo, err error) {
+	if !strings.HasSuffix(endpoint, PATH) {
+		err = fmt.Errorf("wrong endpoint: `%s`", endpoint)
+		return
+	}
 	creds := creds{Endpoint: endpoint, Username: username, Password: password}
-	cache := cache{make(map[string]map[string]string), nil}
-	return &Repo{creds, cache}
+	cache := cache{make(map[string][][]string), nil}
+	repo = &Repo{creds, cache}
+	return
 }
 
-func (repo *Repo) FindAllMappings() (mappings map[string]map[string]string, err error) {
+func (repo *Repo) FindAllMappings() (mappings map[string][][]string, err error) {
 	if repo.hasCache() {
 		mappings = repo.cache.data
 		return
@@ -58,7 +63,7 @@ func (repo *Repo) FindAllMappings() (mappings map[string]map[string]string, err 
 	return
 }
 
-func (repo *Repo) Find(name string) (mapping map[string]string, err error) {
+func (repo *Repo) Find(name string) (mapping [][]string, err error) {
 	mappings, err := repo.FindAllMappings()
 	if err != nil {
 		return
@@ -72,11 +77,7 @@ func (repo *Repo) Find(name string) (mapping map[string]string, err error) {
 }
 
 func (repo *Repo) prepareRequest() (request *http.Request, err error) {
-	requestURL, err := url.Parse(fmt.Sprintf("%s/%s", repo.Endpoint, PATH))
-	if err != nil {
-		return
-	}
-	request, err = http.NewRequest("GET", requestURL.String(), nil)
+	request, err = http.NewRequest("GET", repo.Endpoint, nil)
 	if err != nil {
 		return
 	}
