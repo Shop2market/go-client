@@ -60,11 +60,10 @@ var _ = Describe("Mapping package", func() {
 					repo = New(endpoint, username, password)
 					mapping, err := repo.Find("first")
 					Expect(err).ShouldNot(HaveOccurred())
-					fmt.Printf("\n\n\nHERE: %#v\n\n\n", mapping)
 					expected := map[string]string{}
 					expected["100500"] = "1050"
 					expected["500100"] = "5010"
-					Expect(mappings["first"]).To(Equal(expected))
+					Expect(mapping).To(Equal(expected))
 				})
 			})
 
