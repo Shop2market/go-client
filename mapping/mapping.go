@@ -8,6 +8,11 @@ import (
 	"time"
 )
 
+const (
+	PATH      = "/api/v1/mapping_files.json"
+	CACHE_TTL = 1 * time.Hour
+)
+
 type creds struct {
 	Endpoint string
 	Username string
@@ -22,8 +27,6 @@ type Repo struct {
 	cache
 }
 
-const PATH = "/api/v1/mapping_files.json"
-
 func New(endpoint, username, password string) (repo *Repo, err error) {
 	if !strings.HasSuffix(endpoint, PATH) {
 		err = fmt.Errorf("wrong endpoint: `%s`", endpoint)
@@ -36,7 +39,7 @@ func New(endpoint, username, password string) (repo *Repo, err error) {
 }
 
 func (repo *Repo) FindAllMappings() (mappings map[string][][]string, err error) {
-	if repo.hasCache() {
+	if repo.cache.IsValid() {
 		mappings = repo.cache.data
 		return
 	}
@@ -57,9 +60,8 @@ func (repo *Repo) FindAllMappings() (mappings map[string][][]string, err error) 
 	if err != nil {
 		return
 	}
-	repo.cache.data = mappings
-	now := time.Now().UTC()
-	repo.cache.date = &now
+	repo.cache.Update(mappings)
+
 	return
 }
 
@@ -85,6 +87,21 @@ func (repo *Repo) prepareRequest() (request *http.Request, err error) {
 	return
 }
 
-func (repo *Repo) hasCache() bool {
-	return repo.cache.date != nil
+func (c *cache) Update(mappings map[string][][]string) {
+	now := time.Now().UTC()
+	c.data = mappings
+	c.date = &now
+}
+
+func (c *cache) IsValid() bool {
+	if c.IsEmpty() {
+		return false
+	}
+	now := time.Now().UTC()
+	expiration := c.date.Add(CACHE_TTL)
+	return expiration.After(now)
+}
+
+func (c *cache) IsEmpty() bool {
+	return c.data == nil || c.date == nil
 }
