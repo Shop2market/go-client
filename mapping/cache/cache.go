@@ -1,6 +1,9 @@
 package cache
 
-import "time"
+import (
+	"errors"
+	"time"
+)
 
 const CACHE_TTL = 1 * time.Hour
 
@@ -10,7 +13,16 @@ type Cache struct {
 }
 
 func New(cached map[string][][]string) *Cache {
-	return &Cache{cached, nil}
+	now := time.Now().UTC()
+	return &Cache{cached, &now}
+}
+
+func (c *Cache) Get() (mappings map[string][][]string, err error) {
+	mappings = c.Data
+	if c.IsValid() {
+		return
+	}
+	return nil, errors.New("cache is not valid!")
 }
 
 func (c *Cache) Update(mappings map[string][][]string) {
@@ -23,9 +35,18 @@ func (c *Cache) IsValid() bool {
 	if c.IsEmpty() {
 		return false
 	}
+	if c.IsOutdated() {
+		return false
+	}
+
+	return true
+}
+
+func (c *Cache) IsOutdated() bool {
 	now := time.Now().UTC()
 	expiration := c.Date.Add(CACHE_TTL)
-	return expiration.After(now)
+	dObj := &expiration
+	return dObj.Before(now)
 }
 
 func (c *Cache) IsEmpty() bool {
