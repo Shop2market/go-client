@@ -18,13 +18,13 @@ type creds struct {
 	Username string
 	Password string
 }
-type cache struct {
-	data map[string][][]string
-	date *time.Time
+type Cache struct {
+	Data map[string][][]string
+	Date *time.Time
 }
 type Repo struct {
 	creds
-	cache
+	Cache
 }
 
 func New(endpoint, username, password string) (repo *Repo, err error) {
@@ -33,14 +33,14 @@ func New(endpoint, username, password string) (repo *Repo, err error) {
 		return
 	}
 	creds := creds{Endpoint: endpoint, Username: username, Password: password}
-	cache := cache{make(map[string][][]string), nil}
-	repo = &Repo{creds, cache}
+	Cache := Cache{make(map[string][][]string), nil}
+	repo = &Repo{creds, Cache}
 	return
 }
 
 func (repo *Repo) FindAllMappings() (mappings map[string][][]string, err error) {
-	if repo.cache.IsValid() {
-		mappings = repo.cache.data
+	if repo.Cache.IsValid() {
+		mappings = repo.Cache.Data
 		return
 	}
 	request, err := repo.prepareRequest()
@@ -60,7 +60,7 @@ func (repo *Repo) FindAllMappings() (mappings map[string][][]string, err error) 
 	if err != nil {
 		return
 	}
-	repo.cache.Update(mappings)
+	repo.Cache.Update(mappings)
 
 	return
 }
@@ -87,21 +87,21 @@ func (repo *Repo) prepareRequest() (request *http.Request, err error) {
 	return
 }
 
-func (c *cache) Update(mappings map[string][][]string) {
+func (c *Cache) Update(mappings map[string][][]string) {
 	now := time.Now().UTC()
-	c.data = mappings
-	c.date = &now
+	c.Data = mappings
+	c.Date = &now
 }
 
-func (c *cache) IsValid() bool {
+func (c *Cache) IsValid() bool {
 	if c.IsEmpty() {
 		return false
 	}
 	now := time.Now().UTC()
-	expiration := c.date.Add(CACHE_TTL)
+	expiration := c.Date.Add(CACHE_TTL)
 	return expiration.After(now)
 }
 
-func (c *cache) IsEmpty() bool {
-	return c.data == nil || c.date == nil
+func (c *Cache) IsEmpty() bool {
+	return c.Data == nil || c.Date == nil
 }
