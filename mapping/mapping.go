@@ -5,26 +5,21 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
-	"time"
+
+	"github.com/Shop2market/go-client/mapping/cache"
 )
 
-const (
-	PATH      = "/api/v1/mapping_files.json"
-	CACHE_TTL = 1 * time.Hour
-)
+const PATH = "/api/v1/mapping_files.json"
 
 type creds struct {
 	Endpoint string
 	Username string
 	Password string
 }
-type cache struct {
-	data map[string][][]string
-	date *time.Time
-}
+
 type Repo struct {
 	creds
-	cache
+	cache.Cache
 }
 
 func New(endpoint, username, password string) (repo *Repo, err error) {
@@ -33,14 +28,14 @@ func New(endpoint, username, password string) (repo *Repo, err error) {
 		return
 	}
 	creds := creds{Endpoint: endpoint, Username: username, Password: password}
-	cache := cache{make(map[string][][]string), nil}
-	repo = &Repo{creds, cache}
+	cached := cache.New(nil)
+	repo = &Repo{creds, *cached}
 	return
 }
 
 func (repo *Repo) FindAllMappings() (mappings map[string][][]string, err error) {
-	if repo.cache.IsValid() {
-		mappings = repo.cache.data
+	if repo.Cache.IsValid() {
+		mappings, err = repo.Cache.Get()
 		return
 	}
 	request, err := repo.prepareRequest()
@@ -60,7 +55,7 @@ func (repo *Repo) FindAllMappings() (mappings map[string][][]string, err error) 
 	if err != nil {
 		return
 	}
-	repo.cache.Update(mappings)
+	repo.Cache.Update(mappings)
 
 	return
 }
@@ -85,23 +80,4 @@ func (repo *Repo) prepareRequest() (request *http.Request, err error) {
 	}
 	request.SetBasicAuth(repo.Username, repo.Password)
 	return
-}
-
-func (c *cache) Update(mappings map[string][][]string) {
-	now := time.Now().UTC()
-	c.data = mappings
-	c.date = &now
-}
-
-func (c *cache) IsValid() bool {
-	if c.IsEmpty() {
-		return false
-	}
-	now := time.Now().UTC()
-	expiration := c.date.Add(CACHE_TTL)
-	return expiration.After(now)
-}
-
-func (c *cache) IsEmpty() bool {
-	return c.data == nil || c.date == nil
 }
