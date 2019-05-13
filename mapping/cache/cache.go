@@ -9,6 +9,10 @@ type Cache struct {
 	Date *time.Time
 }
 
+func New(cached map[string][][]string) *Cache {
+	return &Cache{cached, nil}
+}
+
 func (c *Cache) Update(mappings map[string][][]string) {
 	now := time.Now().UTC()
 	c.Data = mappings

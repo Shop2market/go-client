@@ -28,8 +28,8 @@ func New(endpoint, username, password string) (repo *Repo, err error) {
 		return
 	}
 	creds := creds{Endpoint: endpoint, Username: username, Password: password}
-	Cache := cache.Cache{make(map[string][][]string), nil}
-	repo = &Repo{creds, Cache}
+	cached := cache.New(nil)
+	repo = &Repo{creds, *cached}
 	return
 }
 
