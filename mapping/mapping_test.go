@@ -22,6 +22,7 @@ var _ = Describe("Mapping package", func() {
 			username = "test"
 			password = "test"
 		)
+
 		BeforeEach(func() {
 			content, _ := ioutil.ReadFile("fixtures/mappings.json")
 			server = ghttp.NewServer()

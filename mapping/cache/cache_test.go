@@ -53,17 +53,14 @@ var _ = Describe("Cache", func() {
 				now := time.Now().UTC()
 				tObj := &now
 				oldDate := tObj.Add(-1*60*60*24*time.Second - 1*time.Second)
-				tObj = &oldDate
-				cache := &Cache{mappings, tObj}
+				cache := NewWithTime(mappings, oldDate)
 				Expect(cache.IsOutdated()).To(BeTrue())
 			})
 		})
 
 		Context("when cached data is not outdated", func() {
 			It("returns false", func() {
-				now := time.Now().UTC()
-				tObj := &now
-				cache := &Cache{mappings, tObj}
+				cache := New(mappings)
 				Expect(cache.IsOutdated()).To(BeFalse())
 			})
 		})
@@ -82,17 +79,14 @@ var _ = Describe("Cache", func() {
 				now := time.Now().UTC()
 				tObj := &now
 				oldDate := tObj.Add(-1*60*60*24*time.Second - 1*time.Second)
-				tObj = &oldDate
-				cache := &Cache{mappings, tObj}
+				cache := NewWithTime(mappings, oldDate)
 				Expect(cache.IsValid()).To(BeFalse())
 			})
 		})
 
 		Context("when cache contains fresh data", func() {
 			It("returns true", func() {
-				now := time.Now().UTC()
-				tObj := &now
-				cache := &Cache{mappings, tObj}
+				cache := New(mappings)
 				Expect(cache.IsValid()).To(BeTrue())
 			})
 		})
@@ -113,8 +107,7 @@ var _ = Describe("Cache", func() {
 				now := time.Now().UTC()
 				tObj := &now
 				oldDate := tObj.Add(-1*60*60*24*time.Second - 1*time.Second)
-				tObj = &oldDate
-				cache := &Cache{mappings, tObj}
+				cache := NewWithTime(mappings, oldDate)
 				data, err := cache.Get()
 				Expect(err).To(HaveOccurred())
 				Expect(data).To(BeNil())
