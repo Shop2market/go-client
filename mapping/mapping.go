@@ -73,7 +73,7 @@ func (repo *Repo) Find(name string) (mapping [][]string, err error) {
 }
 
 func (repo *Repo) prepareRequest() (request *http.Request, err error) {
-	request, err = http.NewRequest("GET", repo.Endpoint, nil)
+	request, err = http.NewRequest("GET", repo.creds.Endpoint, nil)
 	if err != nil {
 		return
 	}
