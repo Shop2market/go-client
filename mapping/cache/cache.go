@@ -41,6 +41,9 @@ func (c *Cache) IsValid() bool {
 
 func (c *Cache) IsOutdated() bool {
 	now := time.Now().UTC()
+	if c.data == nil {
+		return true
+	}
 	if c.date != nil {
 		expiration := c.date.Add(CACHE_TTL)
 		dObj := &expiration
