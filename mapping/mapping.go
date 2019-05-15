@@ -33,7 +33,7 @@ func New(endpoint, username, password string) (repo *Repo, err error) {
 }
 
 func (repo *Repo) FindAllMappings() (mappings map[string][][]string, err error) {
-	if repo.Cache.IsValid() {
+	if (*repo).Cache.IsValid() {
 		mappings, err = repo.Cache.Get()
 		return
 	}
@@ -54,7 +54,7 @@ func (repo *Repo) FindAllMappings() (mappings map[string][][]string, err error) 
 	if err != nil {
 		return
 	}
-	repo.Cache.Update(mappings)
+	(*repo).Cache.Update(mappings)
 
 	return
 }
@@ -73,10 +73,10 @@ func (repo *Repo) Find(name string) (mapping [][]string, err error) {
 }
 
 func (repo *Repo) prepareRequest() (request *http.Request, err error) {
-	request, err = http.NewRequest("GET", repo.Creds.Endpoint, nil)
+	request, err = http.NewRequest("GET", (*repo).Creds.Endpoint, nil)
 	if err != nil {
 		return
 	}
-	request.SetBasicAuth(repo.Creds.Username, repo.Creds.Password)
+	request.SetBasicAuth((*repo).Creds.Username, (*repo).Creds.Password)
 	return
 }
