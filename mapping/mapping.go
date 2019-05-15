@@ -33,10 +33,10 @@ func New(endpoint, username, password string) (repo *Repo, err error) {
 }
 
 func (repo *Repo) FindAllMappings() (mappings map[string][][]string, err error) {
-	if repo.cache.IsValid() {
-		mappings, err = repo.cache.Get()
-		return
-	}
+	// if repo.cache.IsValid() {
+	// 	mappings, err = repo.cache.Get()
+	// 	return
+	// }
 	request, err := repo.prepareRequest()
 	if err != nil {
 		return
@@ -54,7 +54,7 @@ func (repo *Repo) FindAllMappings() (mappings map[string][][]string, err error) 
 	if err != nil {
 		return
 	}
-	repo.cache.Update(mappings)
+	// repo.cache.Update(mappings)
 
 	return
 }
