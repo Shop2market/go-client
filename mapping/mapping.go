@@ -19,7 +19,7 @@ type creds struct {
 
 type Repo struct {
 	creds
-	cache.Cache
+	cache *cache.Cache
 }
 
 func New(endpoint, username, password string) (repo *Repo, err error) {
@@ -28,14 +28,13 @@ func New(endpoint, username, password string) (repo *Repo, err error) {
 		return
 	}
 	creds := creds{Endpoint: endpoint, Username: username, Password: password}
-	cached := cache.New(nil)
-	repo = &Repo{creds, *cached}
+	repo = &Repo{creds, cache.New(nil)}
 	return
 }
 
 func (repo *Repo) FindAllMappings() (mappings map[string][][]string, err error) {
-	if repo.Cache.IsValid() {
-		mappings, err = repo.Cache.Get()
+	if repo.cache.IsValid() {
+		mappings, err = repo.cache.Get()
 		return
 	}
 	request, err := repo.prepareRequest()
@@ -55,7 +54,7 @@ func (repo *Repo) FindAllMappings() (mappings map[string][][]string, err error) 
 	if err != nil {
 		return
 	}
-	repo.Cache.Update(mappings)
+	repo.cache.Update(mappings)
 
 	return
 }
