@@ -39,15 +39,41 @@ var _ = Describe("Mapping package", func() {
 				ghttp.RespondWith(http.StatusOK, string(content)),
 			))
 		})
+
+		Describe("New()", func() {
+			It("returns repo", func() {
+				username := "TestUser"
+				pwd := "TestPwd"
+				repo, err := New(endpoint, username, pwd)
+				Expect(err).NotTo(HaveOccurred())
+				Expect(repo.Creds.Endpoint).To(Equal(endpoint))
+				Expect(repo.Creds.Username).To(Equal(username))
+				Expect(repo.Creds.Password).To(Equal(pwd))
+			})
+		})
+
+		Describe(".PrepareRequest()", func() {
+			It("returns request", func() {
+				username := "TestUser"
+				pwd := "TestPwd"
+				repo, err := New(endpoint, username, pwd)
+				Expect(err).NotTo(HaveOccurred())
+				request, err := repo.PrepareRequest()
+				Expect(err).NotTo(HaveOccurred())
+				Expect(request).NotTo(BeNil())
+			})
+		})
+
 		Describe(".FindAllMappings()", func() {
 			It("returns a number of mappings", func() {
 				repo, err = New(endpoint, username, password)
 				Expect(err).ShouldNot(HaveOccurred())
-				mappings, err = repo.FindAllMappings()
+				gotMappings, err := repo.FindAllMappings()
+				Expect(err).NotTo(HaveOccurred())
 				expected := [][]string{}
 				expected = append(expected, []string{"4386", "9002514"})
 				expected = append(expected, []string{"4916", "9002514"})
-				Expect(mappings["test"]).To(Equal(expected))
+				Expect(gotMappings["test"]).To(Equal(expected))
 			})
 		})
 		Describe(".Find()", func() {

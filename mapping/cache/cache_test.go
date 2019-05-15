@@ -21,27 +21,37 @@ var _ = Describe("Cache", func() {
 
 	Describe("New()", func() {
 		It("returns cache", func() {
-			Expect(New(nil)).To(BeAssignableToTypeOf(&Cache{}))
+			Expect(New()).To(BeAssignableToTypeOf(&Cache{}))
 		})
 	})
 
 	Describe(".Update()", func() {
 		It("updates cached data", func() {
-
+			cache := New()
+			Expect(cache.IsEmpty()).To(BeTrue())
+			data, err := cache.Get()
+			Expect(err).To(HaveOccurred())
+			Expect(data).To(BeNil())
+			cache.Update(mappings)
+			Expect(cache.IsEmpty()).To(BeFalse())
+			data, err = cache.Get()
+			Expect(err).NotTo(HaveOccurred())
+			Expect(data).To(Equal(mappings))
 		})
 	})
 
 	Describe(".IsEmpty()", func() {
 		Context("when cache is empty", func() {
 			It("returns true", func() {
-				cache := New(nil)
+				cache := New()
 				Expect(cache.IsEmpty()).To(BeTrue())
 			})
 		})
 
 		Context("when cache is not empty", func() {
 			It("returns false", func() {
-				cache := New(mappings)
+				cache := New()
+				cache.Update(mappings)
 				Expect(cache.IsEmpty()).To(BeFalse())
 			})
 		})
@@ -60,7 +70,8 @@ var _ = Describe("Cache", func() {
 
 		Context("when cached data is not outdated", func() {
 			It("returns false", func() {
-				cache := New(mappings)
+				cache := New()
+				cache.Update(mappings)
 				Expect(cache.IsOutdated()).To(BeFalse())
 			})
 		})
@@ -69,7 +80,7 @@ var _ = Describe("Cache", func() {
 	Describe(".IsValid()", func() {
 		Context("when cache is empty", func() {
 			It("returns false", func() {
-				cache := New(nil)
+				cache := New()
 				Expect(cache.IsValid()).To(BeFalse())
 			})
 		})
@@ -86,7 +97,8 @@ var _ = Describe("Cache", func() {
 
 		Context("when cache contains fresh data", func() {
 			It("returns true", func() {
-				cache := New(mappings)
+				cache := New()
+				cache.Update(mappings)
 				Expect(cache.IsValid()).To(BeTrue())
 			})
 		})
@@ -95,7 +107,8 @@ var _ = Describe("Cache", func() {
 	Describe(".Get()", func() {
 		Context("when cache is valid", func() {
 			It("returns cached data", func() {
-				cache := New(mappings)
+				cache := New()
+				cache.Update(mappings)
 				data, err := cache.Get()
 				Expect(err).NotTo(HaveOccurred())
 				Expect(data).To(Equal(mappings))

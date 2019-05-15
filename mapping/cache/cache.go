@@ -12,9 +12,9 @@ type Cache struct {
 	date *time.Time
 }
 
-func New(cached map[string][][]string) *Cache {
+func New() *Cache {
 	now := time.Now().UTC()
-	return &Cache{cached, &now}
+	return &Cache{map[string][][]string{}, &now}
 }
 
 func NewWithTime(cached map[string][][]string, t time.Time) *Cache {
@@ -53,5 +53,5 @@ func (c *Cache) IsOutdated() bool {
 }
 
 func (c *Cache) IsEmpty() bool {
-	return c.data == nil || c.date == nil
+	return c.data == nil || len(c.data) == 0 || c.date == nil
 }
