@@ -28,16 +28,16 @@ func New(endpoint, username, password string) (repo *Repo, err error) {
 		return
 	}
 	creds := creds{Endpoint: endpoint, Username: username, Password: password}
-	repo = &Repo{creds, cache.New(map[string][][]string{})}
+	repo = &Repo{creds, cache.New()}
 	return
 }
 
 func (repo *Repo) FindAllMappings() (mappings map[string][][]string, err error) {
-	if (*repo).Cache.IsValid() {
+	if repo.Cache.IsValid() {
 		mappings, err = repo.Cache.Get()
 		return
 	}
-	request, err := repo.prepareRequest()
+	request, err := repo.PrepareRequest()
 	if err != nil {
 		return
 	}
@@ -72,7 +72,7 @@ func (repo *Repo) Find(name string) (mapping [][]string, err error) {
 	return
 }
 
-func (repo *Repo) prepareRequest() (request *http.Request, err error) {
+func (repo *Repo) PrepareRequest() (request *http.Request, err error) {
 	request, err = http.NewRequest("GET", (*repo).Creds.Endpoint, nil)
 	if err != nil {
 		return
