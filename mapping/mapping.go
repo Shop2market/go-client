@@ -18,8 +18,8 @@ type creds struct {
 }
 
 type Repo struct {
-	creds
-	cache *cache.Cache
+	Creds creds
+	Cache *cache.Cache
 }
 
 func New(endpoint, username, password string) (repo *Repo, err error) {
@@ -33,10 +33,10 @@ func New(endpoint, username, password string) (repo *Repo, err error) {
 }
 
 func (repo *Repo) FindAllMappings() (mappings map[string][][]string, err error) {
-	// if repo.cache.IsValid() {
-	// 	mappings, err = repo.cache.Get()
-	// 	return
-	// }
+	if repo.Cache.IsValid() {
+		mappings, err = repo.Cache.Get()
+		return
+	}
 	request, err := repo.prepareRequest()
 	if err != nil {
 		return
@@ -54,7 +54,7 @@ func (repo *Repo) FindAllMappings() (mappings map[string][][]string, err error) 
 	if err != nil {
 		return
 	}
-	// repo.cache.Update(mappings)
+	repo.Cache.Update(mappings)
 
 	return
 }
@@ -73,10 +73,10 @@ func (repo *Repo) Find(name string) (mapping [][]string, err error) {
 }
 
 func (repo *Repo) prepareRequest() (request *http.Request, err error) {
-	request, err = http.NewRequest("GET", repo.creds.Endpoint, nil)
+	request, err = http.NewRequest("GET", repo.Creds.Endpoint, nil)
 	if err != nil {
 		return
 	}
-	request.SetBasicAuth(repo.Username, repo.Password)
+	request.SetBasicAuth(repo.Creds.Username, repo.Creds.Password)
 	return
 }
