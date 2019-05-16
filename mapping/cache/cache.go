@@ -36,20 +36,19 @@ func (c *Cache) Update(mappings map[string][][]string) {
 }
 
 func (c *Cache) IsValid() bool {
-	return !c.IsEmpty() && !c.IsOutdated()
+	return !(c.IsEmpty() && c.IsOutdated())
 }
 
 func (c *Cache) IsOutdated() bool {
 	now := time.Now().UTC()
-	if c.data == nil {
+	if c.data == nil || c.date == nil {
 		return true
 	}
-	if c.date != nil {
-		expiration := c.date.Add(CACHE_TTL)
-		dObj := &expiration
-		return dObj.Before(now)
-	}
-	return true
+
+	expiration := c.date.Add(CACHE_TTL)
+	dObj := &expiration
+	return dObj.Before(now)
+
 }
 
 func (c *Cache) IsEmpty() bool {
