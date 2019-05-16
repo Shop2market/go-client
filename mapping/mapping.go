@@ -33,7 +33,7 @@ func (repo *Repo) FindAllMappings() (mappings map[string][][]string, err error) 
 	// 	mappings, err = repo.Cache.Get()
 	// 	return
 	// }
-	request, err := repo.PrepareRequest()
+	request, err := PrepareRequest(repo)
 	if err != nil {
 		return
 	}
@@ -68,7 +68,7 @@ func (repo *Repo) Find(name string) (mapping [][]string, err error) {
 	return
 }
 
-func (repo *Repo) PrepareRequest() (request *http.Request, err error) {
+func PrepareRequest(repo *Repo) (request *http.Request, err error) {
 	request, err = http.NewRequest("GET", repo.endpoint, nil)
 	if err != nil {
 		return

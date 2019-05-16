@@ -50,13 +50,13 @@ var _ = Describe("Mapping package", func() {
 			})
 		})
 
-		Describe(".PrepareRequest()", func() {
+		Describe("PrepareRequest()", func() {
 			It("returns request", func() {
 				username := "TestUser"
 				pwd := "TestPwd"
 				repo, err := New(endpoint, username, pwd)
 				Expect(err).NotTo(HaveOccurred())
-				request, err := repo.PrepareRequest()
+				request, err := PrepareRequest(repo)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(request).NotTo(BeNil())
 			})
