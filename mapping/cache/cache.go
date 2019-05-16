@@ -8,21 +8,20 @@ import (
 const CACHE_TTL = 1 * time.Hour
 
 type Cache struct {
-	data map[string][][]string
-	date *time.Time
+	mappings map[string][][]string
+	date     time.Time
 }
 
 func New() *Cache {
-	now := time.Now().UTC()
-	return &Cache{map[string][][]string{}, &now}
+	return &Cache{map[string][][]string{}, time.Now().UTC()}
 }
 
 func NewWithTime(cached map[string][][]string, t time.Time) *Cache {
-	return &Cache{cached, &t}
+	return &Cache{cached, t}
 }
 
 func (c *Cache) Get() (mappings map[string][][]string, err error) {
-	mappings = c.data
+	mappings = c.mappings
 	if c.IsValid() {
 		return
 	}
@@ -30,27 +29,16 @@ func (c *Cache) Get() (mappings map[string][][]string, err error) {
 }
 
 func (c *Cache) Update(mappings map[string][][]string) {
-	now := time.Now().UTC()
-	c.data = mappings
-	c.date = &now
+	c.mappings = mappings
+	c.date = time.Now().UTC()
 }
 
 func (c *Cache) IsValid() bool {
-	return !(c.IsEmpty() && c.IsOutdated())
-}
-
-func (c *Cache) IsOutdated() bool {
-	now := time.Now().UTC()
-	if c.data == nil || c.date == nil {
-		return true
+	if len(c.mappings) == 0 {
+		return false
 	}
 
 	expiration := c.date.Add(CACHE_TTL)
 	dObj := &expiration
-	return dObj.Before(now)
-
-}
-
-func (c *Cache) IsEmpty() bool {
-	return c.data == nil || len(c.data) == 0 || c.date == nil
+	return dObj.After(time.Now().UTC())
 }
