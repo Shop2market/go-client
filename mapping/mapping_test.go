@@ -46,9 +46,7 @@ var _ = Describe("Mapping package", func() {
 				pwd := "TestPwd"
 				repo, err := New(endpoint, username, pwd)
 				Expect(err).NotTo(HaveOccurred())
-				Expect(repo.Creds.Endpoint).To(Equal(endpoint))
-				Expect(repo.Creds.Username).To(Equal(username))
-				Expect(repo.Creds.Password).To(Equal(pwd))
+				Expect(repo).To(BeAssignableToTypeOf(&Repo{}))
 			})
 		})
 

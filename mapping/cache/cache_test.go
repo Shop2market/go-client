@@ -28,52 +28,15 @@ var _ = Describe("Cache", func() {
 	Describe(".Update()", func() {
 		It("updates cached data", func() {
 			cache := New()
-			Expect(cache.IsEmpty()).To(BeTrue())
+			Expect(cache.IsValid()).To(BeFalse())
 			data, err := cache.Get()
 			Expect(err).To(HaveOccurred())
 			Expect(data).To(BeNil())
 			cache.Update(mappings)
-			Expect(cache.IsEmpty()).To(BeFalse())
+			Expect(cache.IsValid()).To(BeTrue())
 			data, err = cache.Get()
 			Expect(err).NotTo(HaveOccurred())
 			Expect(data).To(Equal(mappings))
-		})
-	})
-
-	Describe(".IsEmpty()", func() {
-		Context("when cache is empty", func() {
-			It("returns true", func() {
-				cache := New()
-				Expect(cache.IsEmpty()).To(BeTrue())
-			})
-		})
-
-		Context("when cache is not empty", func() {
-			It("returns false", func() {
-				cache := New()
-				cache.Update(mappings)
-				Expect(cache.IsEmpty()).To(BeFalse())
-			})
-		})
-	})
-
-	Describe(".IsOutdated()", func() {
-		Context("when cached data is outdated", func() {
-			It("returns true", func() {
-				now := time.Now().UTC()
-				tObj := &now
-				oldDate := tObj.Add(-1*60*60*24*time.Second - 1*time.Second)
-				cache := NewWithTime(mappings, oldDate)
-				Expect(cache.IsOutdated()).To(BeTrue())
-			})
-		})
-
-		Context("when cached data is not outdated", func() {
-			It("returns false", func() {
-				cache := New()
-				cache.Update(mappings)
-				Expect(cache.IsOutdated()).To(BeFalse())
-			})
 		})
 	})
 

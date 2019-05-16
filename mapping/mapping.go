@@ -11,14 +11,11 @@ import (
 
 const PATH = "/api/v1/mapping_files.json"
 
-type creds struct {
-	Endpoint string
-	Username string
-	Password string
-}
-
 type Repo struct {
-	Creds creds
+	endpoint string
+	username string
+	password string
+
 	Cache *cache.Cache
 }
 
@@ -27,8 +24,7 @@ func New(endpoint, username, password string) (repo *Repo, err error) {
 		err = fmt.Errorf("wrong endpoint: `%s`", endpoint)
 		return
 	}
-	creds := creds{Endpoint: endpoint, Username: username, Password: password}
-	repo = &Repo{creds, cache.New()}
+	repo = &Repo{endpoint, username, password, cache.New()}
 	return
 }
 
@@ -73,10 +69,10 @@ func (repo *Repo) Find(name string) (mapping [][]string, err error) {
 }
 
 func (repo *Repo) PrepareRequest() (request *http.Request, err error) {
-	request, err = http.NewRequest("GET", (*repo).Creds.Endpoint, nil)
+	request, err = http.NewRequest("GET", repo.endpoint, nil)
 	if err != nil {
 		return
 	}
-	request.SetBasicAuth((*repo).Creds.Username, (*repo).Creds.Password)
+	request.SetBasicAuth(repo.username, repo.password)
 	return
 }
