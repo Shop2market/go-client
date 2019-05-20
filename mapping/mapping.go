@@ -29,10 +29,10 @@ func New(endpoint, username, password string) (repo *Repo, err error) {
 }
 
 func (repo *Repo) FindAllMappings() (mappings map[string][][]string, err error) {
-	// if repo.Cache.IsValid() {
-	// 	mappings, err = repo.Cache.Get()
-	// 	return
-	// }
+	if repo.Cache.IsValid() {
+		mappings, err = repo.Cache.Get()
+		return
+	}
 
 	request, err := http.NewRequest("GET", repo.endpoint, nil)
 	request.SetBasicAuth(repo.username, repo.password)
@@ -49,7 +49,7 @@ func (repo *Repo) FindAllMappings() (mappings map[string][][]string, err error) 
 	if err != nil {
 		return
 	}
-	//repo.Cache.Update(mappings)
+	repo.Cache.Update(mappings)
 
 	return
 }
