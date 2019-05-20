@@ -33,10 +33,9 @@ func (repo *Repo) FindAllMappings() (mappings map[string][][]string, err error) 
 	// 	mappings, err = repo.Cache.Get()
 	// 	return
 	// }
-	request, err := PrepareRequest(repo)
-	if err != nil {
-		return
-	}
+
+	request, err := http.NewRequest("GET", repo.endpoint, nil)
+	request.SetBasicAuth(repo.username, repo.password)
 	response, err := http.DefaultClient.Do(request)
 	if err != nil {
 		return
