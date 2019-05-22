@@ -102,7 +102,7 @@ func (adQuery *AdQuery) RawQuery() string {
 	return values.Encode()
 }
 
-func FindAds(productsQuery *AdQuery) ([]*Ad, error) {
+func FindAds(productsQuery *AdQuery) (ads []*Ad, err error) {
 	productUrl, err := buildAdsQueryUrl(productsQuery)
 	if err != nil {
 		return nil, err
@@ -117,7 +117,6 @@ func FindAds(productsQuery *AdQuery) ([]*Ad, error) {
 		return nil, fmt.Errorf("Failed fetching ads: %s, code %d\n%s", productUrl, response.StatusCode, string(body))
 	}
 
-	ads := []*Ad{}
 	err = json.NewDecoder(response.Body).Decode(&ads)
 	if err != nil {
 		return nil, err

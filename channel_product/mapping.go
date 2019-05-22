@@ -14,7 +14,7 @@ type MappingParams struct {
 	UserID             int      `json:"user_id"`
 }
 
-func Map(shopId, publisherId int, shopCodes []string, taxonomyTypeID, taxonomyID int) error {
+func Map(shopId, publisherId int, shopCodes []string, taxonomyTypeID, taxonomyID int) (err error) {
 	url, err := buildMapUrl(shopId, publisherId)
 	if err != nil {
 		return err
@@ -30,7 +30,10 @@ func Map(shopId, publisherId int, shopCodes []string, taxonomyTypeID, taxonomyID
 	}
 	req.Header.Set("Content-Type", "application/json")
 	res, err := http.DefaultClient.Do(req)
-	defer res.Body.Close()
+	if err == nil {
+		res.Body.Close()
+	}
+
 	return err
 }
 func buildMapUrl(shopId, publisherId int) (string, error) {

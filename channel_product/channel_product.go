@@ -116,7 +116,7 @@ func FindSorted(productsQuery *ProductsQuery) ([]*Product, error) {
 	return products, err
 }
 
-func Find(productsQuery *ProductsQuery) ([]*Product, error) {
+func Find(productsQuery *ProductsQuery) (products []*Product, err error) {
 	productUrl, err := buildQueryUrl(productsQuery)
 	if err != nil {
 		return nil, err
@@ -124,16 +124,16 @@ func Find(productsQuery *ProductsQuery) ([]*Product, error) {
 	response, err := http.Get(productUrl)
 	if err != nil {
 		return nil, err
+	} else {
+		defer response.Body.Close()
 	}
-	defer response.Body.Close()
-	products := []*Product{}
 	err = json.NewDecoder(response.Body).Decode(&products)
 	if err != nil {
 		return nil, err
 	}
 	return products, nil
 }
-func Touch(shopId, publisherId int, shopCodes []string) error {
+func Touch(shopId, publisherId int, shopCodes []string) (err error) {
 	url, err := buildTouchUrl(shopId, publisherId)
 	if err != nil {
 		return err
@@ -148,7 +148,10 @@ func Touch(shopId, publisherId int, shopCodes []string) error {
 	}
 	req.Header.Set("Content-Type", "application/json")
 	res, err := http.DefaultClient.Do(req)
-	defer res.Body.Close()
+	if err == nil {
+		res.Body.Close()
+	}
+
 	return err
 }
 
@@ -156,7 +159,7 @@ func Webhook(shopId int, shopCodes []string) error {
 	if len(shopCodes) == 0 {
 		return nil
 	}
-	url, err := buildWebhoookUrl(shopId)
+	url, err := buildWebhookUrl(shopId)
 	if err != nil {
 		return err
 	}
@@ -170,7 +173,9 @@ func Webhook(shopId int, shopCodes []string) error {
 	}
 	req.Header.Set("Content-Type", "application/json")
 	res, err := http.DefaultClient.Do(req)
-	defer res.Body.Close()
+	if err == nil {
+		res.Body.Close()
+	}
 	return err
 }
 
@@ -178,7 +183,7 @@ func buildTouchUrl(shopId, publisherId int) (string, error) {
 	uri, err := url.Parse(fmt.Sprintf("%s/shops/%d/publishers/%d/products/touch", Endpoint, shopId, publisherId))
 	return uri.String(), err
 }
-func buildWebhoookUrl(shopId int) (string, error) {
+func buildWebhookUrl(shopId int) (string, error) {
 	uri, err := url.Parse(fmt.Sprintf("%s/shops/%d/products/webhook", Endpoint, shopId))
 	return uri.String(), err
 }
