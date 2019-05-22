@@ -9,7 +9,7 @@ import (
 	"github.com/Shop2market/go-client/mapping/cache"
 )
 
-const PATH = "/api/mapping_files.json"
+const PATH = "/api/v1/mapping_files.json"
 
 type Repo struct {
 	Endpoint string
