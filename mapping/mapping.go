@@ -41,6 +41,11 @@ func (repo *Repo) FindAllMappings() (mappings map[string][][]string, err error) 
 	}
 
 	request, err := http.NewRequest("GET", repo.Endpoint, nil)
+	if err != nil {
+		repo.Notifier <- fmt.Sprintf(".FindAllMappings(): failed: %s | Endpoint: %s", err.Error(), repo.Endpoint)
+		return
+	}
+
 	request.SetBasicAuth(repo.Username, repo.Password)
 	response, err := http.DefaultClient.Do(request)
 	if err != nil {
@@ -59,7 +64,7 @@ func (repo *Repo) FindAllMappings() (mappings map[string][][]string, err error) 
 		return
 	}
 	repo.Cache.Update(mappings)
-
+	repo.Notifier <- fmt.Sprintf(".FindAllMappings() successfully executed!")
 	return
 }
 
