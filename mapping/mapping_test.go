@@ -17,7 +17,7 @@ var _ = Describe("Mapping package", func() {
 		var (
 			server   *ghttp.Server
 			repo     *Repo
-			mappings map[string][][]string
+			mappings = map[string][][]string{}
 			endpoint string
 			username = "test"
 			password = "test"
@@ -44,8 +44,7 @@ var _ = Describe("Mapping package", func() {
 			It("returns repo", func() {
 				username := "TestUser"
 				pwd := "TestPwd"
-				repo, err := New(endpoint, username, pwd)
-				Expect(err).NotTo(HaveOccurred())
+				repo := New(endpoint, username, pwd)
 				Expect(repo).To(BeAssignableToTypeOf(&Repo{}))
 			})
 		})
@@ -54,8 +53,7 @@ var _ = Describe("Mapping package", func() {
 			It("returns request", func() {
 				username := "TestUser"
 				pwd := "TestPwd"
-				repo, err := New(endpoint, username, pwd)
-				Expect(err).NotTo(HaveOccurred())
+				repo := New(endpoint, username, pwd)
 				request, err := PrepareRequest(repo)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(request).NotTo(BeNil())
@@ -64,8 +62,7 @@ var _ = Describe("Mapping package", func() {
 
 		Describe(".FindAllMappings()", func() {
 			It("returns a number of mappings", func() {
-				repo, err = New(endpoint, username, password)
-				Expect(err).ShouldNot(HaveOccurred())
+				repo = New(endpoint, username, password)
 				gotMappings, err := repo.FindAllMappings()
 				Expect(err).NotTo(HaveOccurred())
 				expected := [][]string{}
@@ -77,8 +74,7 @@ var _ = Describe("Mapping package", func() {
 		Describe(".Find()", func() {
 			Context("when mapping with given name exists", func() {
 				It("returns mapping", func() {
-					repo, err = New(endpoint, username, password)
-					Expect(err).ShouldNot(HaveOccurred())
+					repo = New(endpoint, username, password)
 					mapping, err := repo.Find("test")
 					Expect(err).ShouldNot(HaveOccurred())
 					expected := [][]string{}
@@ -89,8 +85,7 @@ var _ = Describe("Mapping package", func() {
 			})
 			Context("when mapping with given name doesn't exist", func() {
 				It("returns error", func() {
-					repo, err = New(endpoint, username, password)
-					Expect(err).ShouldNot(HaveOccurred())
+					repo = New(endpoint, username, password)
 					mapping, err := repo.Find("wrong")
 					Expect(err).Should(HaveOccurred())
 					Expect(mapping).To(BeNil())

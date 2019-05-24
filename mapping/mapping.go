@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strings"
 
 	"github.com/Shop2market/go-client/mapping/cache"
 )
@@ -20,14 +19,8 @@ type Repo struct {
 	Cache *cache.Cache
 }
 
-func New(endpoint, username, password string) (repo *Repo, err error) {
-	if !strings.HasSuffix(endpoint, PATH) {
-		err = fmt.Errorf("wrong endpoint: `%s`", endpoint)
-		return
-	}
-
-	repo = &Repo{endpoint, username, password, make(chan string), cache.New()}
-	return
+func New(endpoint, username, password string) *Repo {
+	return &Repo{endpoint, username, password, make(chan string), cache.New()}
 }
 
 func (repo *Repo) FindAllMappings() (mappings map[string][][]string, err error) {
