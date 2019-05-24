@@ -35,7 +35,8 @@ func (repo *Repo) FindAllMappings() (mappings map[string][][]string, err error) 
 
 	request, err := http.NewRequest("GET", repo.Endpoint, nil)
 	if err != nil {
-		repo.Notifier <- fmt.Sprintf(".FindAllMappings(): failed: %s | Endpoint: %s", err.Error(), repo.Endpoint)
+		err = fmt.Errorf(".FindAllMappings(): failed: %s | Endpoint: %s", err.Error(), repo.Endpoint)
+		repo.Notifier <- err.Error()
 		return
 	}
 
