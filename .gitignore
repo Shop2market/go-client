@@ -29,3 +29,5 @@ vendor/*
 *.coverprofile
 .DS_Store
 tmp/
+
+.idea

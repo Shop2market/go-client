@@ -7,6 +7,9 @@ import (
 	"net/url"
 )
 
+type GoogleConnection struct {
+	GoogleMerchantId *string `json:"google_merchant_id,omitempty"`
+}
 type MiabConnection struct {
 	FeedID     *string `json:"feedID,omitempty"`
 	CampaignID *string `json:"campaignID,omitempty"`
@@ -20,6 +23,7 @@ type ConnectionDetails struct {
 	MarketPlaceID       *string `json:"marketplace_id,omitempty"`
 	MWSToken            *string `json:"mws_token,omitempty"`
 	MiabConnection
+	GoogleConnection
 }
 
 type Connection struct {
