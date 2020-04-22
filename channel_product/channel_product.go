@@ -9,6 +9,8 @@ import (
 	"sort"
 	"strconv"
 	"time"
+
+	"github.com/pkg/errors"
 )
 
 // Endpoint - Marmoset endpoint
@@ -119,17 +121,17 @@ func FindSorted(productsQuery *ProductsQuery) ([]*Product, error) {
 func Find(productsQuery *ProductsQuery) (products []*Product, err error) {
 	productUrl, err := buildQueryUrl(productsQuery)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "buildQueryUrl()")
 	}
 	response, err := http.Get(productUrl)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "http.Get()")
 	} else {
 		defer response.Body.Close()
 	}
 	err = json.NewDecoder(response.Body).Decode(&products)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "json.Decoder.Decode()")
 	}
 	return products, nil
 }
