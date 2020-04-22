@@ -137,7 +137,10 @@ func Find(productsQuery *ProductsQuery) (products []*Product, err error) {
 
 	err = json.NewDecoder(bytes.NewReader(bodyBytes)).Decode(&products)
 	if err != nil {
+		message := fmt.Sprintf("%s, %d bytes", productUrl, len(bodyBytes))
+		ioutil.WriteFile("/tmp/request_url", []byte(message), 0644)
 		ioutil.WriteFile("/tmp/body_dump", bodyBytes, 0644)
+
 		return nil, errors.Wrap(err, "json.Decoder.Decode()")
 	}
 	return products, nil
