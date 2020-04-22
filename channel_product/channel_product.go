@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"net/url"
 	"sort"
@@ -126,11 +127,17 @@ func Find(productsQuery *ProductsQuery) (products []*Product, err error) {
 	response, err := http.Get(productUrl)
 	if err != nil {
 		return nil, errors.Wrap(err, "http.Get()")
-	} else {
-		defer response.Body.Close()
 	}
-	err = json.NewDecoder(response.Body).Decode(&products)
+
+	bodyBytes, err := ioutil.ReadAll(response.Body)
+	response.Body.Close()
 	if err != nil {
+		return nil, errors.Wrap(err, "ioutil.ReadAll()")
+	}
+
+	err = json.NewDecoder(bytes.NewReader(bodyBytes)).Decode(&products)
+	if err != nil {
+		ioutil.WriteFile("/tmp/body_dump", bodyBytes, 0644)
 		return nil, errors.Wrap(err, "json.Decoder.Decode()")
 	}
 	return products, nil
